@@ -31,6 +31,7 @@ services:
     name: flexlink-redis
     plan: free
     maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
 
 databases:
   - name: flexlink-postgres
