@@ -52,14 +52,23 @@
   </div>
 
   <div class="dashboard-actions">
-    <div class="action-card primary">
-      <div class="action-content">
-        <h2>🚀 Start New Configuration</h2>
-        <p>Begin the guided wizard to create a new conveyor system configuration</p>
-        <%= link_to "Start Wizard", wizard_step_path(1), class: "btn btn-primary btn-large" %>
+          <div class="action-card primary">
+        <div class="action-content">
+          <h2>🚀 Start New Configuration</h2>
+          <p>Begin the guided wizard to create a new conveyor system configuration</p>
+          <%= link_to "Start Wizard", wizard_step_path(1), class: "btn btn-primary btn-large" %>
+        </div>
+        <div class="action-icon">⚙️</div>
       </div>
-      <div class="action-icon">⚙️</div>
-    </div>
+
+      <div class="action-card secondary">
+        <div class="action-content">
+          <h2>📦 Browse Products</h2>
+          <p>Explore our comprehensive catalog of conveyor systems and components</p>
+          <%= link_to "View Products", products_path, class: "btn btn-secondary btn-large" %>
+        </div>
+        <div class="action-icon">📦</div>
+      </div>
     
     <div class="action-card">
       <div class="action-content">

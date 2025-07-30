@@ -1,0 +1,717 @@
+<div class="product-detail-container">
+  <!-- Breadcrumb Navigation -->
+  <div class="breadcrumb-nav">
+    <%= link_to "Products", products_path, class: "breadcrumb-link" %>
+    <span class="breadcrumb-separator">/</span>
+    <span class="breadcrumb-current"><%= @product[:name] %></span>
+  </div>
+
+  <!-- Product Header -->
+  <div class="product-header">
+    <div class="product-basic-info">
+      <div class="product-image-section">
+        <% if @product[:image_url].present? %>
+          <%= image_tag @product[:image_url], alt: @product[:name], class: "product-main-image" %>
+        <% else %>
+          <div class="product-image-placeholder">
+            <span class="placeholder-icon">📦</span>
+          </div>
+        <% end %>
+        <div class="product-badge <%= @product[:source] %>">
+          <%= @product[:source].titleize %>
+        </div>
+      </div>
+      
+      <div class="product-info">
+        <div class="product-category-badges">
+          <span class="category-badge"><%= @product[:category] %></span>
+          <span class="type-badge"><%= @product[:type].humanize %></span>
+        </div>
+        
+        <h1 class="product-title"><%= @product[:name] %></h1>
+        
+        <p class="product-description">
+          <%= @product[:description] %>
+        </p>
+        
+        <div class="product-meta">
+          <div class="meta-item">
+            <span class="meta-label">Brand:</span>
+            <span class="meta-value"><%= @product[:brand] %></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Source:</span>
+            <span class="meta-value"><%= @product[:source].titleize %></span>
+          </div>
+        </div>
+        
+        <div class="product-price-section">
+          <div class="price-display">
+            <span class="price-currency">$</span>
+            <span class="price-amount"><%= number_with_precision(@product[:price], precision: 2) %></span>
+          </div>
+          <div class="price-note">*Prices may vary based on configuration</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Details Tabs -->
+  <div class="product-tabs">
+    <div class="tab-navigation">
+      <button class="tab-button active" data-tab="specifications">Specifications</button>
+      <button class="tab-button" data-tab="details">Details</button>
+      <button class="tab-button" data-tab="related">Related Products</button>
+    </div>
+    
+    <div class="tab-content">
+      <!-- Specifications Tab -->
+      <div class="tab-panel active" id="specifications">
+        <div class="specifications-grid">
+          <% if @product[:specifications].present? %>
+            <% @product[:specifications].each do |spec| %>
+              <div class="spec-item">
+                <div class="spec-icon">⚙️</div>
+                <div class="spec-content">
+                  <span class="spec-text"><%= spec %></span>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="no-specs">
+              <span class="no-specs-icon">📋</span>
+              <p>No specifications available for this product.</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Details Tab -->
+      <div class="tab-panel" id="details">
+        <div class="details-grid">
+          <div class="detail-section">
+            <h3>Product Information</h3>
+            <div class="detail-list">
+              <div class="detail-item">
+                <span class="detail-label">Product ID:</span>
+                <span class="detail-value"><%= @product[:id] %></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Category:</span>
+                <span class="detail-value"><%= @product[:category] %></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Type:</span>
+                <span class="detail-value"><%= @product[:type].humanize %></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Brand:</span>
+                <span class="detail-value"><%= @product[:brand] %></span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="detail-section">
+            <h3>Pricing Information</h3>
+            <div class="detail-list">
+              <div class="detail-item">
+                <span class="detail-label">Base Price:</span>
+                <span class="detail-value">$<%= number_with_precision(@product[:price], precision: 2) %></span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Currency:</span>
+                <span class="detail-value">USD</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Related Products Tab -->
+      <div class="tab-panel" id="related">
+        <% if @related_products.any? %>
+          <div class="related-products-grid">
+            <% @related_products.each do |related_product| %>
+              <div class="related-product-card">
+                <div class="related-product-image">
+                  <% if related_product[:image_url].present? %>
+                    <%= image_tag related_product[:image_url], alt: related_product[:name], class: "related-product-img" %>
+                  <% else %>
+                    <div class="related-product-placeholder">
+                      <span class="placeholder-icon">📦</span>
+                    </div>
+                  <% end %>
+                </div>
+                
+                <div class="related-product-content">
+                  <h4 class="related-product-name">
+                    <%= link_to related_product[:name], product_path(related_product[:id]), class: "related-product-link" %>
+                  </h4>
+                  
+                  <p class="related-product-description">
+                    <%= truncate(related_product[:description], length: 80) %>
+                  </p>
+                  
+                  <div class="related-product-meta">
+                    <span class="related-category"><%= related_product[:category] %></span>
+                    <span class="related-price">$<%= number_with_precision(related_product[:price], precision: 2) %></span>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="no-related">
+            <span class="no-related-icon">🔍</span>
+            <p>No related products found.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="product-actions">
+    <div class="action-buttons">
+      <%= link_to "Back to Products", products_path, class: "btn btn-secondary" %>
+      <%= link_to "Add to Configuration", "#", class: "btn btn-primary" %>
+      <%= link_to "Request Quote", "#", class: "btn btn-outline" %>
+    </div>
+  </div>
+</div>
+
+<style>
+.product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.breadcrumb-nav {
+  margin-bottom: 30px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.breadcrumb-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  margin: 0 10px;
+  color: #6c757d;
+}
+
+.breadcrumb-current {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.product-header {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.product-basic-info {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.product-image-section {
+  position: relative;
+}
+
+.product-main-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-image-placeholder {
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  opacity: 0.5;
+}
+
+.product-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.product-badge.supabase {
+  background: #28a745;
+  color: white;
+}
+
+.product-badge.fallback {
+  background: #ffc107;
+  color: #212529;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-category-badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.category-badge, .type-badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.category-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.type-badge {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.product-title {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  font-weight: 700;
+}
+
+.product-description {
+  color: #6c757d;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.product-meta {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.meta-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.meta-value {
+  font-size: 1rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.product-price-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+}
+
+.price-display {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.price-currency {
+  font-size: 1.2rem;
+  color: #28a745;
+  font-weight: 600;
+}
+
+.price-amount {
+  font-size: 2.5rem;
+  color: #28a745;
+  font-weight: 700;
+}
+
+.price-note {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.product-tabs {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.tab-navigation {
+  display: flex;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+  background: #f8f9fa;
+  color: #2c3e50;
+}
+
+.tab-button.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+  background: #f8f9fa;
+}
+
+.tab-content {
+  padding: 30px;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.specifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.spec-icon {
+  font-size: 1.2rem;
+}
+
+.spec-content {
+  flex: 1;
+}
+
+.spec-text {
+  font-size: 0.9rem;
+  color: #2c3e50;
+  line-height: 1.4;
+}
+
+.no-specs {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+}
+
+.no-specs-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.detail-section h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.related-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.related-product-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #e1e5e9;
+}
+
+.related-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.related-product-image {
+  height: 150px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.related-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.related-product-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.related-product-content {
+  padding: 15px;
+}
+
+.related-product-name {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.related-product-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.related-product-link:hover {
+  color: #667eea;
+}
+
+.related-product-description {
+  color: #6c757d;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.related-product-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.related-category {
+  font-size: 0.7rem;
+  color: #667eea;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.related-price {
+  font-size: 0.9rem;
+  color: #28a745;
+  font-weight: 600;
+}
+
+.no-related {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+}
+
+.no-related-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.product-actions {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #667eea;
+  border-color: #667eea;
+}
+
+.btn-outline:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .product-basic-info {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .product-title {
+    font-size: 1.5rem;
+  }
+  
+  .tab-navigation {
+    flex-direction: column;
+  }
+  
+  .tab-button {
+    text-align: left;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .specifications-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .related-products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  
+  tabButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+      
+      // Remove active class from all buttons and panels
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabPanels.forEach(panel => panel.classList.remove('active'));
+      
+      // Add active class to clicked button and corresponding panel
+      this.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+    });
+  });
+});
+</script> 

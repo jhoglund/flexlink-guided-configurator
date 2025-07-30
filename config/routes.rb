@@ -30,6 +30,15 @@ Rails.application.routes.draw do
     end
   end
   
+  # Product data management
+  resources :products, only: [:index, :show] do
+    collection do
+      get 'search'
+      get 'by_category/:category', to: 'products#by_category', as: :by_category
+      get 'by_type/:type', to: 'products#by_type', as: :by_type
+    end
+  end
+  
   # API routes for Supabase integration
   namespace :api do
     namespace :v1 do
