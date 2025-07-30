@@ -26,14 +26,14 @@
               <%= link_to "Configurations", configurations_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "New Configuration", new_wizard_configuration_path, class: "nav-link" %>
+              <%= link_to "New Configuration", wizard_step_path(1), class: "nav-link" %>
             </li>
           </ul>
           <ul class="navbar-nav">
             <% if user_signed_in? %>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                  <i class="fas fa-user"></i> <%= current_user.display_name %>
+                  <i class="fas fa-user"></i> <%= current_user.full_name %>
                 </a>
                 <ul class="dropdown-menu">
                   <li><%= link_to "Profile", edit_user_registration_path, class: "dropdown-item" %></li>

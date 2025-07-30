@@ -87,4 +87,34 @@ module WizardHelper
     
     content_tag(:div, steps.join.html_safe, class: "wizard-breadcrumb")
   end
+
+  def get_component_type_icon(component_type)
+    icons = {
+      'belt' => '🔗',
+      'roller' => '⚙️',
+      'chain' => '⛓️',
+      'motor' => '⚡',
+      'sensor' => '📡',
+      'controller' => '🎛️',
+      'frame' => '🏗️',
+      'accessory' => '🔧'
+    }
+    
+    icons[component_type] || '📦'
+  end
+
+  def get_component_type_description(component_type)
+    descriptions = {
+      'belt' => 'Conveyor belts and belt-related components for material transport',
+      'roller' => 'Roller assemblies and roller-based transport systems',
+      'chain' => 'Chain-driven components for heavy-duty applications',
+      'motor' => 'Electric motors and drive systems for conveyor operation',
+      'sensor' => 'Sensors and detection systems for automation',
+      'controller' => 'Control systems and automation equipment',
+      'frame' => 'Structural components and support systems',
+      'accessory' => 'Additional components and accessories'
+    }
+    
+    descriptions[component_type] || 'Specialized conveyor system components'
+  end
 end 

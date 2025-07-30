@@ -10,6 +10,19 @@ end
 
 puts "Created admin user: #{admin_user.email}"
 
+# Create a test user for development
+if Rails.env.development?
+  user = User.find_or_create_by(email: 'test@flexlink.com') do |u|
+    u.first_name = 'Test'
+    u.last_name = 'User'
+    u.company = 'FlexLink Test Company'
+    u.password = 'password123'
+    u.password_confirmation = 'password123'
+  end
+  
+  puts "Test user created: #{user.email}"
+end
+
 # Create a sample configuration
 sample_config = Configuration.find_or_create_by(name: 'Sample Configuration', user: admin_user) do |config|
   config.description = 'A sample configuration for demonstration purposes'
@@ -20,6 +33,9 @@ sample_config = Configuration.find_or_create_by(name: 'Sample Configuration', us
     width: 0.5,
     speed: 0.5
   }
+  config.selected_components = {}
+  config.optimization_results = {}
+  config.wizard_progress = {}
 end
 
 puts "Created sample configuration: #{sample_config.name}"

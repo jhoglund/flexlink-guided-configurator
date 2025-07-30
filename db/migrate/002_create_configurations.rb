@@ -5,6 +5,7 @@ class CreateConfigurations < ActiveRecord::Migration[7.0]
       t.string :name, null: false
       t.text :description
       t.string :status, default: 'draft'
+      t.decimal :total_price, precision: 10, scale: 2, default: 0.0
       t.jsonb :system_specifications, default: {}
       t.jsonb :selected_components, default: {}
       t.jsonb :optimization_results, default: {}

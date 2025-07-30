@@ -6,14 +6,13 @@ class Configuration < ApplicationRecord
   # Validations
   validates :name, presence: true, length: { minimum: 3, maximum: 200 }
   validates :status, presence: true, inclusion: { in: %w[draft in_progress completed] }
-  validates :system_type, presence: true
   validates :total_price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   # Scopes
   scope :recent, -> { order(updated_at: :desc) }
   scope :active, -> { where(status: ['draft', 'in_progress']) }
   scope :completed, -> { where(status: 'completed') }
-  scope :by_system_type, ->(type) { where(system_type: type) }
+  scope :by_system_type, ->(type) { where("system_specifications->>'system_type' = ?", type) }
 
   # Callbacks
   before_save :calculate_total_price
@@ -52,6 +51,10 @@ class Configuration < ApplicationRecord
     component_selections.any? && status != 'completed'
   end
 
+  def system_type
+    system_specifications['system_type']
+  end
+  
   def export_data
     {
       id: id,

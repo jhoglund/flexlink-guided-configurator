@@ -1,9 +1,9 @@
 class WizardSession < ApplicationRecord
   belongs_to :user
-  belongs_to :configuration
+  belongs_to :configuration, optional: true
 
   # Validations
-  validates :session_id, presence: true, uniqueness: true
+  # validates :session_id, presence: true, uniqueness: true  # Temporarily disabled for debugging
   validates :current_step, numericality: { greater_than: 0, less_than_or_equal_to: 8 }
   validates :status, inclusion: { in: %w[active completed abandoned] }
 
@@ -65,6 +65,10 @@ class WizardSession < ApplicationRecord
 
   def get_step_data(step)
     step_data["step_#{step}"] || {}
+  end
+
+  def get_data(key)
+    step_data[key]
   end
 
   def clear_step_data(step)

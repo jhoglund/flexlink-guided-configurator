@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  
+  # Include Devise helper methods
+  include Devise::Controllers::Helpers
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :bad_request
@@ -21,6 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_wizard_session
+    return nil unless current_user
     @current_wizard_session ||= WizardSession.find_by(user: current_user, status: 'active')
   end
 

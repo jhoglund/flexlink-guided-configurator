@@ -1,0 +1,469 @@
+<div class="wizard-container">
+  <%= render 'wizard/steps/wizard_header' %>
+
+  <div class="wizard-content">
+    <%= form_with url: wizard_update_step_path(5), method: :patch, local: true, class: "wizard-form" do |form| %>
+      <div class="component-selection-section">
+        <h2>Select <%= @component_type&.humanize %> Components</h2>
+        <p class="step-description">Choose the specific components you need for your conveyor system.</p>
+        
+        <div class="component-filters">
+          <div class="search-box">
+            <input type="text" id="component-search" placeholder="Search components..." class="search-input">
+            <span class="search-icon">🔍</span>
+          </div>
+          
+          <div class="filter-options">
+            <select id="price-filter" class="filter-select">
+              <option value="">All Prices</option>
+              <option value="low">Under $100</option>
+              <option value="medium">$100 - $500</option>
+              <option value="high">Over $500</option>
+            </select>
+            
+            <select id="brand-filter" class="filter-select">
+              <option value="">All Brands</option>
+              <option value="flexlink">FlexLink</option>
+              <option value="other">Other Brands</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="components-grid">
+          <% @components.each do |component| %>
+            <div class="component-card" 
+                 data-price="<%= component['price'] %>" 
+                 data-brand="<%= component['brand']&.downcase %>"
+                 data-name="<%= component['name']&.downcase %>">
+              <div class="component-image">
+                <img src="<%= component['image_url'] || '/assets/images/component-placeholder.png' %>" 
+                     alt="<%= component['name'] %>"
+                     onerror="this.src='/assets/images/component-placeholder.png'">
+              </div>
+              
+              <div class="component-info">
+                <h4><%= component['name'] %></h4>
+                <p class="component-description"><%= component['description'] %></p>
+                
+                <div class="component-specs">
+                  <% if component['specifications'] %>
+                    <% component['specifications'].first(3).each do |spec| %>
+                      <span class="spec-tag"><%= spec %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+                
+                <div class="component-price">
+                  <span class="price">$<%= number_with_delimiter(component['price']) %></span>
+                  <span class="unit">per unit</span>
+                </div>
+                
+                <div class="component-selection">
+                  <div class="quantity-selector">
+                    <label for="quantity_<%= component['id'] %>">Quantity:</label>
+                    <input type="number" 
+                           name="wizard_step[selected_components][][quantity]" 
+                           id="quantity_<%= component['id'] %>"
+                           min="0" 
+                           max="100" 
+                           value="0"
+                           class="quantity-input">
+                  </div>
+                  
+                  <input type="hidden" 
+                         name="wizard_step[selected_components][][component_id]" 
+                         value="<%= component['id'] %>">
+                  <input type="hidden" 
+                         name="wizard_step[selected_components][][component_name]" 
+                         value="<%= component['name'] %>">
+                  <input type="hidden" 
+                         name="wizard_step[selected_components][][component_type]" 
+                         value="<%= @component_type %>">
+                  <input type="hidden" 
+                         name="wizard_step[selected_components][][price]" 
+                         value="<%= component['price'] %>">
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        
+        <div class="selection-summary">
+          <div class="summary-item">
+            <span class="summary-label">Selected Components:</span>
+            <span class="summary-value" id="selected-count">0</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Total Value:</span>
+            <span class="summary-value" id="total-value">$0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-actions">
+        <div class="action-buttons">
+          <%= link_to "Back", wizard_step_path(4), class: "btn btn-secondary" %>
+          <%= form.submit "Continue to Step 6", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+.wizard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.component-selection-section {
+  margin-bottom: 40px;
+}
+
+.component-selection-section h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.step-description {
+  color: #7f8c8d;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.component-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
+}
+
+.filter-options {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-select {
+  padding: 10px 15px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+}
+
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.component-card {
+  border: 2px solid #ecf0f1;
+  border-radius: 12px;
+  padding: 20px;
+  background: white;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.component-card:hover {
+  border-color: #3498db;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);
+}
+
+.component-image {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.component-image img {
+  max-width: 100%;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.component-info h4 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.component-description {
+  color: #7f8c8d;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+.component-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.spec-tag {
+  background: #ecf0f1;
+  color: #7f8c8d;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.component-price {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 600;
+  color: #27ae60;
+}
+
+.unit {
+  font-size: 12px;
+  color: #7f8c8d;
+}
+
+.component-selection {
+  border-top: 1px solid #ecf0f1;
+  padding-top: 15px;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-selector label {
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.quantity-input {
+  width: 80px;
+  padding: 8px 12px;
+  border: 2px solid #ecf0f1;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.selection-summary {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-label {
+  display: block;
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+
+.summary-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.wizard-actions {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-secondary {
+  background: #ecf0f1;
+  color: #7f8c8d;
+}
+
+.btn-secondary:hover {
+  background: #d5dbdb;
+  color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+  .component-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-box {
+    max-width: none;
+  }
+  
+  .components-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('component-search');
+  const priceFilter = document.getElementById('price-filter');
+  const brandFilter = document.getElementById('brand-filter');
+  const componentCards = document.querySelectorAll('.component-card');
+  const quantityInputs = document.querySelectorAll('.quantity-input');
+  
+  // Search functionality
+  function filterComponents() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const priceValue = priceFilter.value;
+    const brandValue = brandFilter.value;
+    
+    componentCards.forEach(card => {
+      const name = card.dataset.name;
+      const price = parseInt(card.dataset.price);
+      const brand = card.dataset.brand;
+      
+      let show = true;
+      
+      // Search filter
+      if (searchTerm && !name.includes(searchTerm)) {
+        show = false;
+      }
+      
+      // Price filter
+      if (priceValue) {
+        if (priceValue === 'low' && price >= 100) show = false;
+        if (priceValue === 'medium' && (price < 100 || price > 500)) show = false;
+        if (priceValue === 'high' && price <= 500) show = false;
+      }
+      
+      // Brand filter
+      if (brandValue && brand !== brandValue) {
+        show = false;
+      }
+      
+      card.style.display = show ? 'block' : 'none';
+    });
+  }
+  
+  searchInput.addEventListener('input', filterComponents);
+  priceFilter.addEventListener('change', filterComponents);
+  brandFilter.addEventListener('change', filterComponents);
+  
+  // Update summary
+  function updateSummary() {
+    let selectedCount = 0;
+    let totalValue = 0;
+    
+    quantityInputs.forEach(input => {
+      const quantity = parseInt(input.value) || 0;
+      if (quantity > 0) {
+        selectedCount += quantity;
+        const card = input.closest('.component-card');
+        const price = parseInt(card.dataset.price);
+        totalValue += quantity * price;
+      }
+    });
+    
+    document.getElementById('selected-count').textContent = selectedCount;
+    document.getElementById('total-value').textContent = '$' + totalValue.toLocaleString();
+  }
+  
+  quantityInputs.forEach(input => {
+    input.addEventListener('input', updateSummary);
+  });
+  
+  // Form validation
+  const form = document.querySelector('.wizard-form');
+  form.addEventListener('submit', function(e) {
+    const hasSelections = Array.from(quantityInputs).some(input => {
+      return parseInt(input.value) > 0;
+    });
+    
+    if (!hasSelections) {
+      e.preventDefault();
+      alert('Please select at least one component to continue.');
+    }
+  });
+});
+</script> 

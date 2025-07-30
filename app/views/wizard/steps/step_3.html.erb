@@ -1,0 +1,217 @@
+<div class="wizard-container">
+  <%= render 'wizard/steps/wizard_header' %>
+
+  <div class="wizard-content">
+    <%= form_with url: wizard_update_step_path(3), method: :patch, local: true, class: "wizard-form" do |form| %>
+      <div class="component-types-section">
+        <h2>Select Component Types</h2>
+        <p class="step-description">Choose the types of components you need for your conveyor system configuration.</p>
+        
+        <div class="component-types-grid">
+          <% @component_types.each do |component_type| %>
+            <div class="component-type-card">
+              <input type="checkbox" 
+                     name="wizard_step[component_types][]" 
+                     id="component_type_<%= component_type.parameterize %>"
+                     value="<%= component_type %>"
+                     <%= 'checked' if @step_data&.dig('component_types')&.include?(component_type) %>>
+              <label for="component_type_<%= component_type.parameterize %>">
+                <div class="card-content">
+                  <div class="component-icon">
+                    <%= get_component_type_icon(component_type) %>
+                  </div>
+                  <h4><%= component_type_display_name(component_type) %></h4>
+                  <p class="description">
+                    <%= get_component_type_description(component_type) %>
+                  </p>
+                  <div class="features">
+                    <span class="feature">✓ High quality</span>
+                    <span class="feature">✓ Reliable performance</span>
+                    <span class="feature">✓ Easy installation</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="wizard-actions">
+        <div class="action-buttons">
+          <%= link_to "Back", wizard_step_path(2), class: "btn btn-secondary" %>
+          <%= form.submit "Continue to Step 4", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+.wizard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.component-types-section {
+  margin-bottom: 40px;
+}
+
+.component-types-section h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.step-description {
+  color: #7f8c8d;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.component-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.component-type-card {
+  position: relative;
+}
+
+.component-type-card input[type="checkbox"] {
+  display: none;
+}
+
+.component-type-card label {
+  display: block;
+  cursor: pointer;
+  border: 2px solid #ecf0f1;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  background: white;
+  height: 100%;
+}
+
+.component-type-card input[type="checkbox"]:checked + label {
+  border-color: #3498db;
+  box-shadow: 0 4px 20px rgba(52, 152, 219, 0.2);
+  transform: translateY(-2px);
+}
+
+.card-content {
+  text-align: center;
+}
+
+.component-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.card-content h4 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.card-content .description {
+  color: #7f8c8d;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.feature {
+  color: #27ae60;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.wizard-actions {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-secondary {
+  background: #ecf0f1;
+  color: #7f8c8d;
+}
+
+.btn-secondary:hover {
+  background: #d5dbdb;
+  color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+  .component-types-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth transitions for card selection
+  const cards = document.querySelectorAll('.component-type-card label');
+  
+  cards.forEach(card => {
+    card.addEventListener('click', function() {
+      // Toggle active class for checkbox cards
+      this.classList.toggle('active');
+    });
+  });
+  
+  // Update form validation
+  const form = document.querySelector('.wizard-form');
+  const submitBtn = form.querySelector('input[type="submit"]');
+  
+  form.addEventListener('submit', function(e) {
+    const checkedBoxes = form.querySelectorAll('input[type="checkbox"]:checked');
+    if (checkedBoxes.length === 0) {
+      e.preventDefault();
+      alert('Please select at least one component type to continue.');
+    }
+  });
+});
+</script> 

@@ -9,7 +9,8 @@ class User < ApplicationRecord
 
   # Validations
   validates :email, presence: true, uniqueness: true
-  validates :name, presence: true, length: { minimum: 2, maximum: 100 }
+  validates :first_name, presence: true, length: { minimum: 2, maximum: 50 }
+  validates :last_name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :company, length: { maximum: 200 }
 
   # Scopes
@@ -18,7 +19,11 @@ class User < ApplicationRecord
 
   # Instance methods
   def full_name
-    name.presence || email.split('@').first
+    "#{first_name} #{last_name}".strip.presence || email.split('@').first
+  end
+  
+  def name
+    full_name
   end
 
   def active_configurations

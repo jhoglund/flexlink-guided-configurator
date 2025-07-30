@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 4) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,6 +54,7 @@ ActiveRecord::Schema[8.0].define(version: 4) do
     t.datetime "exported_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "total_price"
     t.index ["completed"], name: "index_configurations_on_completed"
     t.index ["current_step"], name: "index_configurations_on_current_step"
     t.index ["optimization_results"], name: "index_configurations_on_optimization_results", using: :gin
@@ -88,7 +89,7 @@ ActiveRecord::Schema[8.0].define(version: 4) do
 
   create_table "wizard_sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "configuration_id", null: false
+    t.bigint "configuration_id"
     t.string "session_id", null: false
     t.integer "current_step", default: 1
     t.jsonb "step_data", default: {}
