@@ -5,6 +5,9 @@ ruby '3.3.1'
 # Rails framework
 gem 'rails', '~> 8.0.0'
 
+# Environment variables
+gem 'dotenv-rails', groups: %i[development test]
+
 # Database
 gem 'pg', '~> 1.1'
 gem 'sqlite3', '~> 2.1'

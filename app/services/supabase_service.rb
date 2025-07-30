@@ -3,7 +3,12 @@ class SupabaseService
   require 'uri'
   require 'json'
 
-  def initialize
+    def initialize
+    # Try to load environment variables if not present
+    if ENV['SUPABASE_URL'].blank?
+      load_env_file
+    end
+    
     @base_url = ENV['SUPABASE_URL']
     @api_key = ENV['SUPABASE_ANON_KEY']
     @headers = {
@@ -13,9 +18,12 @@ class SupabaseService
       'Accept' => 'application/json'
     }
     
-    # Debug logging
+    # Enhanced debug logging
     Rails.logger.info "SupabaseService initialized with URL: #{@base_url}"
     Rails.logger.info "SupabaseService API key present: #{@api_key.present?}"
+    Rails.logger.info "All ENV keys: #{ENV.keys.grep(/SUPABASE/).join(', ')}"
+    Rails.logger.info "ENV['SUPABASE_URL']: #{ENV['SUPABASE_URL']}"
+    Rails.logger.info "ENV['SUPABASE_ANON_KEY']: #{ENV['SUPABASE_ANON_KEY']&.slice(0, 20)}..."
   end
 
   # Conveyor Systems
@@ -69,14 +77,14 @@ class SupabaseService
 
   # Component types
   def get_component_types
-    cache_key = "supabase:component_types"
+    cache_key = 'supabase:component_types'
     Rails.cache.fetch(cache_key, expires_in: 6.hours) do
-      Rails.logger.info "Making Supabase request for component types"
-      
-      response = make_request("component_specifications?select=component_type&component_type=not.is.null")
+      Rails.logger.info 'Making Supabase request for component types'
+
+      response = make_request('component_specifications?select=component_type&component_type=not.is.null')
       Rails.logger.info "Supabase response code: #{response.code}"
       Rails.logger.info "Supabase response body: #{response.body[0..200]}"
-      
+
       data = handle_response(response)
       data.map { |item| item['component_type'] }.uniq.sort
     end
@@ -84,9 +92,9 @@ class SupabaseService
 
   # System specifications
   def get_system_specifications
-    cache_key = "supabase:system_specifications"
+    cache_key = 'supabase:system_specifications'
     Rails.cache.fetch(cache_key, expires_in: 6.hours) do
-      response = make_request("conveyor_systems?select=code,name,description,features,applications&is_active=eq.true")
+      response = make_request('conveyor_systems?select=code,name,description,features,applications&is_active=eq.true')
       data = handle_response(response)
       # Group by applications to create categories
       data.group_by { |item| item['applications']&.first || 'General' }.transform_values do |items|
@@ -97,32 +105,53 @@ class SupabaseService
 
   private
 
+  def load_env_file
+    env_file = Rails.root.join('.env')
+    if File.exist?(env_file)
+      Rails.logger.info "Loading environment variables from #{env_file}"
+      File.readlines(env_file).each do |line|
+        next if line.strip.empty? || line.start_with?('#')
+        
+        key, value = line.split('=', 2)
+        next unless key && value
+        
+        key = key.strip
+        value = value.strip.gsub(/^["']|["']$/, '') # Remove quotes
+        
+        ENV[key] = value
+        Rails.logger.info "Loaded ENV[#{key}] = #{value[0..20]}..."
+      end
+    else
+      Rails.logger.error "Environment file not found: #{env_file}"
+    end
+  end
+
   def make_request(endpoint)
     uri = URI("#{@base_url}/rest/v1/#{endpoint}")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    
+
     request = Net::HTTP::Get.new(uri)
     @headers.each { |key, value| request[key] = value }
-    
+
     # Add debug logging
     Rails.logger.info "Making request to: #{uri}"
-    
+
     response = http.request(request)
-    
+
     # Debug logging
     Rails.logger.info "Response code: #{response.code}"
     Rails.logger.info "Response body preview: #{response.body[0..200]}"
-    
+
     # Handle compression if present
     if response['content-encoding'] == 'gzip'
       require 'zlib'
-      Rails.logger.info "Decompressing gzipped response..."
+      Rails.logger.info 'Decompressing gzipped response...'
       decompressed_body = Zlib::GzipReader.new(StringIO.new(response.body)).read
       response.body = decompressed_body
       Rails.logger.info "Decompressed response preview: #{decompressed_body[0..200]}"
     end
-    
+
     response
   end
 
@@ -137,12 +166,8 @@ class SupabaseService
         end
       elsif value.is_a?(Hash)
         # Handle range queries
-        if value[:gte]
-          query_parts << "#{key}=gte.#{value[:gte]}"
-        end
-        if value[:lte]
-          query_parts << "#{key}=lte.#{value[:lte]}"
-        end
+        query_parts << "#{key}=gte.#{value[:gte]}" if value[:gte]
+        query_parts << "#{key}=lte.#{value[:lte]}" if value[:lte]
       else
         query_parts << "#{key}=eq.#{value}"
       end
@@ -156,18 +181,18 @@ class SupabaseService
     when 200
       # Try to parse as JSON
       begin
-        Rails.logger.info "Parsing JSON response..."
+        Rails.logger.info 'Parsing JSON response...'
         parsed_response = JSON.parse(response.body)
         Rails.logger.info "Successfully parsed JSON with #{parsed_response.length} items"
         parsed_response
       rescue JSON::ParserError => e
         Rails.logger.error "JSON parse error: #{e.message}"
         Rails.logger.error "Response body preview: #{response.body[0..500]}"
-        raise "Invalid response from Supabase"
+        raise 'Invalid response from Supabase'
       end
     when 401
       Rails.logger.error "Supabase authentication failed: #{response.body}"
-      raise "Supabase authentication failed"
+      raise 'Supabase authentication failed'
     when 404
       Rails.logger.warn "Supabase resource not found: #{response.body}"
       []
@@ -175,8 +200,8 @@ class SupabaseService
       Rails.logger.error "Supabase API error (#{response.code}): #{response.body}"
       raise "Supabase API error: #{response.code}"
     end
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Failed to handle Supabase response: #{e.message}"
-    raise "Invalid response from Supabase"
+    raise 'Invalid response from Supabase'
   end
-end 
+end

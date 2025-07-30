@@ -1,6 +1,12 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
+
+# Load environment variables from .env file
+if File.exist?(File.join(__dir__, '..', '.env'))
+  require 'dotenv'
+  Dotenv.load(File.join(__dir__, '..', '.env'))
+end
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -14,7 +20,7 @@ module FlexlinkConfigurator
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -26,7 +32,7 @@ module FlexlinkConfigurator
 
     # Configure Redis for caching and sessions
     config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
-    
+
     # Configure session store
     config.session_store :cookie_store, key: '_flexlink_configurator_session'
 
@@ -42,8 +48,9 @@ module FlexlinkConfigurator
 
     # Configure generators
     config.generators do |g|
-      g.test_framework :rspec, fixtures: true, view_specs: false, helper_specs: false, routing_specs: false, controller_specs: true, request_specs: false
+      g.test_framework :rspec, fixtures: true, view_specs: false, helper_specs: false, routing_specs: false,
+                               controller_specs: true, request_specs: false
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
   end
-end 
+end
