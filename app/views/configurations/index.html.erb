@@ -1,0 +1,119 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2><i class="fas fa-cogs"></i> My Configurations</h2>
+  <%= link_to new_wizard_configuration_path, class: "btn btn-primary" do %>
+    <i class="fas fa-plus"></i> New Configuration
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <% if @configurations.any? %>
+      <div class="card">
+        <div class="card-header">
+          <h5>All Configurations</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Components</th>
+                  <th>Total Price</th>
+                  <th>Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @configurations.each do |config| %>
+                  <tr>
+                    <td>
+                      <strong><%= link_to config.name, configuration_path(config) %></strong>
+                      <% if config.description.present? %>
+                        <br>
+                        <small class="text-muted"><%= config.description %></small>
+                      <% end %>
+                    </td>
+                    <td>
+                      <span class="badge bg-<%= config.status == 'completed' ? 'success' : config.status == 'in_progress' ? 'warning' : 'secondary' %>">
+                        <%= config.status.titleize %>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge bg-info"><%= config.component_count %> components</span>
+                    </td>
+                    <td>
+                      <strong>$<%= number_with_precision(config.total_price, precision: 2) %></strong>
+                    </td>
+                    <td>
+                      <small class="text-muted"><%= time_ago_in_words(config.updated_at) %> ago</small>
+                    </td>
+                    <td>
+                      <div class="btn-group btn-group-sm">
+                        <%= link_to "View", configuration_path(config), class: "btn btn-outline-primary" %>
+                        <% if config.draft? || config.in_progress? %>
+                          <%= link_to "Continue", wizard_configuration_path(config), class: "btn btn-outline-success" %>
+                        <% end %>
+                        <%= link_to "Export", export_configuration_path(config), class: "btn btn-outline-info" %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="card">
+        <div class="card-body text-center py-5">
+          <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">No configurations yet</h5>
+          <p class="text-muted">Start by creating your first configuration</p>
+          <%= link_to "Create Configuration", new_wizard_configuration_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h5>Quick Stats</h5>
+      </div>
+      <div class="card-body">
+        <div class="row text-center">
+          <div class="col-6">
+            <h4 class="text-primary"><%= @active_configurations.count %></h4>
+            <small class="text-muted">Active</small>
+          </div>
+          <div class="col-6">
+            <h4 class="text-success"><%= @completed_configurations.count %></h4>
+            <small class="text-muted">Completed</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-header">
+        <h5>Recent Activity</h5>
+      </div>
+      <div class="card-body">
+        <% if @configurations.any? %>
+          <% @configurations.limit(5).each do |config| %>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <strong><%= config.name %></strong>
+                <br>
+                <small class="text-muted"><%= config.status.titleize %></small>
+              </div>
+              <small class="text-muted"><%= time_ago_in_words(config.updated_at) %> ago</small>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-muted text-center">No recent activity</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+ 

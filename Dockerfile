@@ -1,36 +1,30 @@
-FROM ruby:3.2-alpine
+FROM ruby:3.2.9
 
 # Install system dependencies
-RUN apk add --no-cache \
-    build-base \
-    postgresql-dev \
-    tzdata \
+RUN apt-get update -qq && apt-get install -y \
+    build-essential \
+    libpq-dev \
     nodejs \
     yarn \
-    git
+    libyaml-dev \
+    libffi-dev \
+    libgmp-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Install bundler
-RUN gem install bundler
-
-# Copy Gemfile and install dependencies
-COPY Gemfile Gemfile.lock ./
-RUN bundle install --jobs 4 --retry 3
+# Copy Gemfile and install gems
+COPY Gemfile ./
+RUN bundle install
 
 # Copy the rest of the application
 COPY . .
-
-# Precompile assets
-RUN bundle exec rails assets:precompile
 
 # Add a script to be executed every time the container starts
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-
-EXPOSE 3000
 
 # Start the main process
 CMD ["rails", "server", "-b", "0.0.0.0"] 

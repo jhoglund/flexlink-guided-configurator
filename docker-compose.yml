@@ -36,42 +36,48 @@ services:
     build: .
     ports:
       - "3000:3000"
-    environment:
-      RAILS_ENV: development
-      DATABASE_URL: postgresql://flexlink_user:flexlink_password@postgres:5432/flexlink_config
-      REDIS_URL: redis://redis:6379/0
-      SUPABASE_URL: ${SUPABASE_URL}
-      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
     volumes:
       - .:/app
-      - bundle_cache:/usr/local/bundle
+    working_dir: /app
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_URL=postgresql://flexlink_user:flexlink_password@postgres:5432/flexlink_config
+      - REDIS_URL=redis://redis:6379/0
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: ./bin/rails server -b 0.0.0.0
+    command: >
+      sh -c "
+        bundle install &&
+        bundle exec rails db:create db:migrate &&
+        bundle exec rails server -b 0.0.0.0 -p 3000
+      "
 
   # Background job processor
   sidekiq:
     build: .
-    environment:
-      RAILS_ENV: development
-      DATABASE_URL: postgresql://flexlink_user:flexlink_password@postgres:5432/flexlink_config
-      REDIS_URL: redis://redis:6379/0
-      SUPABASE_URL: ${SUPABASE_URL}
-      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
     volumes:
       - .:/app
-      - bundle_cache:/usr/local/bundle
+    working_dir: /app
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_URL=postgresql://flexlink_user:flexlink_password@postgres:5432/flexlink_config
+      - REDIS_URL=redis://redis:6379/0
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: bundle exec sidekiq
+    command: >
+      sh -c "
+        bundle install &&
+        bundle exec sidekiq
+      "
 
 volumes:
   postgres_data:
   redis_data:
-  bundle_cache:

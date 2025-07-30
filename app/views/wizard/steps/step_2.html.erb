@@ -1,0 +1,284 @@
+<div class="wizard-container">
+  <%= render 'wizard/steps/wizard_header' %>
+
+  <div class="wizard-content">
+    <%= form_with url: wizard_update_step_path(2), method: :patch, local: true, class: "wizard-form" do |form| %>
+      <div class="specifications-grid">
+        <div class="specification-section">
+          <h3>System Dimensions</h3>
+          <div class="form-group">
+            <label for="length">Length (meters)</label>
+            <input type="number" 
+                   name="wizard_step[system_specifications][length]" 
+                   id="length"
+                   value="<%= @step_data&.dig('system_specifications', 'length') %>"
+                   min="1" 
+                   max="100" 
+                   step="0.1" 
+                   required>
+            <small class="form-text">Enter the total length of your conveyor system</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="width">Width (meters)</label>
+            <input type="number" 
+                   name="wizard_step[system_specifications][width]" 
+                   id="width"
+                   value="<%= @step_data&.dig('system_specifications', 'width') %>"
+                   min="0.1" 
+                   max="10" 
+                   step="0.1" 
+                   required>
+            <small class="form-text">Enter the width of your conveyor belt</small>
+          </div>
+        </div>
+
+        <div class="specification-section">
+          <h3>Load Requirements</h3>
+          <div class="form-group">
+            <label for="load_capacity">Load Capacity (kg/m)</label>
+            <input type="number" 
+                   name="wizard_step[system_specifications][load_capacity]" 
+                   id="load_capacity"
+                   value="<%= @step_data&.dig('system_specifications', 'load_capacity') %>"
+                   min="1" 
+                   max="10000" 
+                   step="1" 
+                   required>
+            <small class="form-text">Maximum load per meter of conveyor</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="speed">Speed (m/min)</label>
+            <input type="number" 
+                   name="wizard_step[system_specifications][speed]" 
+                   id="speed"
+                   value="<%= @step_data&.dig('system_specifications', 'speed') %>"
+                   min="1" 
+                   max="200" 
+                   step="1" 
+                   required>
+            <small class="form-text">Desired conveyor speed</small>
+          </div>
+        </div>
+
+        <div class="specification-section">
+          <h3>Environment</h3>
+          <div class="form-group">
+            <label for="environment">Operating Environment</label>
+            <select name="wizard_step[system_specifications][environment]" id="environment" required>
+              <option value="">Select environment...</option>
+              <option value="indoor" <%= 'selected' if @step_data&.dig('system_specifications', 'environment') == 'indoor' %>>Indoor</option>
+              <option value="outdoor" <%= 'selected' if @step_data&.dig('system_specifications', 'environment') == 'outdoor' %>>Outdoor</option>
+              <option value="hazardous" <%= 'selected' if @step_data&.dig('system_specifications', 'environment') == 'hazardous' %>>Hazardous</option>
+              <option value="food_grade" <%= 'selected' if @step_data&.dig('system_specifications', 'environment') == 'food_grade' %>>Food Grade</option>
+            </select>
+            <small class="form-text">Select the operating environment</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="temperature">Temperature Range (°C)</label>
+            <div class="temperature-range">
+              <input type="number" 
+                     name="wizard_step[system_specifications][temp_min]" 
+                     id="temp_min"
+                     value="<%= @step_data&.dig('system_specifications', 'temp_min') %>"
+                     placeholder="Min" 
+                     min="-50" 
+                     max="100">
+              <span>to</span>
+              <input type="number" 
+                     name="wizard_step[system_specifications][temp_max]" 
+                     id="temp_max"
+                     value="<%= @step_data&.dig('system_specifications', 'temp_max') %>"
+                     placeholder="Max" 
+                     min="-50" 
+                     max="100">
+            </div>
+            <small class="form-text">Operating temperature range</small>
+          </div>
+        </div>
+
+        <div class="specification-section">
+          <h3>Additional Requirements</h3>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" 
+                     name="wizard_step[system_specifications][incline]" 
+                     value="true"
+                     <%= 'checked' if @step_data&.dig('system_specifications', 'incline') == 'true' %>>
+              Incline/Decline Operation
+            </label>
+            <small class="form-text">System will operate on an incline or decline</small>
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" 
+                     name="wizard_step[system_specifications][curved]" 
+                     value="true"
+                     <%= 'checked' if @step_data&.dig('system_specifications', 'curved') == 'true' %>>
+              Curved Sections
+            </label>
+            <small class="form-text">System includes curved conveyor sections</small>
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" 
+                     name="wizard_step[system_specifications][sorting]" 
+                     value="true"
+                     <%= 'checked' if @step_data&.dig('system_specifications', 'sorting') == 'true' %>>
+              Sorting/Diverting
+            </label>
+            <small class="form-text">System includes sorting or diverting capabilities</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-actions">
+        <div class="action-buttons">
+          <%= link_to "Back to Step 1", wizard_step_path(1), class: "btn btn-secondary" %>
+          <%= form.submit "Continue to Step 3", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+.specifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.specification-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ecf0f1;
+}
+
+.specification-section h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ecf0f1;
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"],
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-group input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.form-group input[type="checkbox"] + label {
+  display: inline;
+  font-weight: normal;
+}
+
+.temperature-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.temperature-range input {
+  flex: 1;
+}
+
+.temperature-range span {
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.form-text {
+  display: block;
+  margin-top: 5px;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.wizard-actions {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-secondary {
+  background: #ecf0f1;
+  color: #7f8c8d;
+}
+
+.btn-secondary:hover {
+  background: #d5dbdb;
+  color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+  .specifications-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+</style> 
