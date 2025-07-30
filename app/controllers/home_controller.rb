@@ -1,7 +1,19 @@
 class HomeController < ApplicationController
   def index
-    # For testing, just return a simple HTML response
-    render html: '<h1>🎉 FlexLink Configurator is Working!</h1><p>The Rails application is running successfully!</p>'.html_safe
+    # Load data for the homepage
+    @recent_configurations = ::Configuration.order(created_at: :desc).limit(5)
+    @completed_configurations = ::Configuration.where(status: 'completed')
+    @active_configurations = ::Configuration.where(status: 'active')
+    @total_value = @completed_configurations.joins(:component_selections).sum('component_selections.price * component_selections.quantity')
+    
+    # Load system specifications and component types for display
+    @system_specifications = {
+      'conveyor' => ['belt_conveyor', 'roller_conveyor', 'chain_conveyor'],
+      'material_handling' => ['pallet_conveyor', 'overhead_conveyor', 'sorting_conveyor'],
+      'packaging' => ['accumulation_conveyor', 'divert_conveyor', 'merge_conveyor']
+    }
+    
+    @component_types = ['belt', 'roller', 'motor', 'sensor', 'controller', 'frame', 'accessory', 'chain', 'drive_unit']
   end
 
   def dashboard
