@@ -89,17 +89,17 @@ class ProductsController < ApplicationController
   def get_system_specifications_products
     begin
       supabase_service = SupabaseService.new
-      systems = supabase_service.get_system_specifications
+      systems = supabase_service.get_conveyor_systems
       
       systems.map do |system|
         {
           id: "system_#{system['id']}",
           name: system['name'],
           description: system['description'],
-          category: 'System Specifications',
+          category: 'Conveyor Systems',
           type: 'conveyor_system',
-          price: system['price'],
-          specifications: system['specifications'],
+          price: nil, # Price not available in conveyor_systems table
+          specifications: system['features'] || [],
           brand: 'FlexLink',
           image_url: system['image_url'],
           source: 'supabase'
@@ -123,9 +123,9 @@ class ProductsController < ApplicationController
           description: component['description'],
           category: 'Component Specifications',
           type: component['component_type'],
-          price: component['price'],
-          specifications: component['specifications'],
-          brand: component['brand'],
+          price: component['price_euro'], # Use price_euro from the schema
+          specifications: component['specifications'] || [],
+          brand: 'FlexLink',
           image_url: component['image_url'],
           source: 'supabase'
         }

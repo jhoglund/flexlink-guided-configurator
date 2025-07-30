@@ -1,5 +1,7 @@
 class SupabaseService
-  include HTTParty
+  require 'net/http'
+  require 'uri'
+  require 'json'
 
   def initialize
     @base_url = ENV['SUPABASE_URL']
@@ -8,8 +10,7 @@ class SupabaseService
       'Content-Type' => 'application/json',
       'Authorization' => "Bearer #{@api_key}",
       'apikey' => @api_key,
-      'Accept' => 'application/json',
-      'Accept-Encoding' => 'gzip, deflate'
+      'Accept' => 'application/json'
     }
     
     # Debug logging
@@ -20,24 +21,24 @@ class SupabaseService
   # Conveyor Systems
   def get_conveyor_systems(filters = {})
     query = build_query('conveyor_systems', filters)
-    response = HTTParty.get("#{@base_url}/rest/v1/conveyor_systems#{query}", headers: @headers)
+    response = make_request("conveyor_systems#{query}")
     handle_response(response)
   end
 
   def get_conveyor_system(id)
-    response = HTTParty.get("#{@base_url}/rest/v1/conveyor_systems?id=eq.#{id}", headers: @headers)
+    response = make_request("conveyor_systems?id=eq.#{id}")
     handle_response(response).first
   end
 
   # Component Specifications
   def get_component_specifications(filters = {})
     query = build_query('component_specifications', filters)
-    response = HTTParty.get("#{@base_url}/rest/v1/component_specifications#{query}", headers: @headers)
+    response = make_request("component_specifications#{query}")
     handle_response(response)
   end
 
   def get_component_specification(id)
-    response = HTTParty.get("#{@base_url}/rest/v1/component_specifications?id=eq.#{id}", headers: @headers)
+    response = make_request("component_specifications?id=eq.#{id}")
     handle_response(response).first
   end
 
@@ -70,10 +71,9 @@ class SupabaseService
   def get_component_types
     cache_key = "supabase:component_types"
     Rails.cache.fetch(cache_key, expires_in: 6.hours) do
-      url = "#{@base_url}/rest/v1/component_specifications?select=component_type&component_type=not.is.null"
-      Rails.logger.info "Making Supabase request to: #{url}"
+      Rails.logger.info "Making Supabase request for component types"
       
-      response = HTTParty.get(url, headers: @headers)
+      response = make_request("component_specifications?select=component_type&component_type=not.is.null")
       Rails.logger.info "Supabase response code: #{response.code}"
       Rails.logger.info "Supabase response body: #{response.body[0..200]}"
       
@@ -86,13 +86,28 @@ class SupabaseService
   def get_system_specifications
     cache_key = "supabase:system_specifications"
     Rails.cache.fetch(cache_key, expires_in: 6.hours) do
-      response = HTTParty.get("#{@base_url}/rest/v1/conveyor_systems?select=system_type,system_category&system_type=not.is.null", headers: @headers)
+      response = make_request("conveyor_systems?select=code,name,description,features,applications&is_active=eq.true")
       data = handle_response(response)
-      data.group_by { |item| item['system_category'] }.transform_values { |items| items.map { |item| item['system_type'] }.uniq }
+      # Group by applications to create categories
+      data.group_by { |item| item['applications']&.first || 'General' }.transform_values do |items|
+        items.map { |item| item['name'] }.uniq
+      end
     end
   end
 
   private
+
+  def make_request(endpoint)
+    uri = URI("#{@base_url}/rest/v1/#{endpoint}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    
+    request = Net::HTTP::Get.new(uri)
+    @headers.each { |key, value| request[key] = value }
+    
+    response = http.request(request)
+    response
+  end
 
   def build_query(table, filters)
     return '' if filters.empty?
@@ -120,22 +135,15 @@ class SupabaseService
   end
 
   def handle_response(response)
-    case response.code
+    case response.code.to_i
     when 200
-      # Try to parse as JSON, but handle potential encoding issues
+      # Try to parse as JSON
       begin
         JSON.parse(response.body)
       rescue JSON::ParserError => e
         Rails.logger.error "JSON parse error: #{e.message}"
         Rails.logger.error "Response body preview: #{response.body[0..500]}"
-        # Try to decode if it's compressed
-        begin
-          decoded_body = response.body.force_encoding('UTF-8')
-          JSON.parse(decoded_body)
-        rescue => e2
-          Rails.logger.error "Failed to decode response: #{e2.message}"
-          raise "Invalid response from Supabase"
-        end
+        raise "Invalid response from Supabase"
       end
     when 401
       Rails.logger.error "Supabase authentication failed: #{response.body}"
