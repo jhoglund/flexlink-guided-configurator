@@ -7,8 +7,14 @@ class SupabaseService
     @headers = {
       'Content-Type' => 'application/json',
       'Authorization' => "Bearer #{@api_key}",
-      'apikey' => @api_key
+      'apikey' => @api_key,
+      'Accept' => 'application/json',
+      'Accept-Encoding' => 'gzip, deflate'
     }
+    
+    # Debug logging
+    Rails.logger.info "SupabaseService initialized with URL: #{@base_url}"
+    Rails.logger.info "SupabaseService API key present: #{@api_key.present?}"
   end
 
   # Conveyor Systems
@@ -64,7 +70,13 @@ class SupabaseService
   def get_component_types
     cache_key = "supabase:component_types"
     Rails.cache.fetch(cache_key, expires_in: 6.hours) do
-      response = HTTParty.get("#{@base_url}/rest/v1/component_specifications?select=component_type&component_type=not.is.null", headers: @headers)
+      url = "#{@base_url}/rest/v1/component_specifications?select=component_type&component_type=not.is.null"
+      Rails.logger.info "Making Supabase request to: #{url}"
+      
+      response = HTTParty.get(url, headers: @headers)
+      Rails.logger.info "Supabase response code: #{response.code}"
+      Rails.logger.info "Supabase response body: #{response.body[0..200]}"
+      
       data = handle_response(response)
       data.map { |item| item['component_type'] }.uniq.sort
     end
@@ -110,7 +122,21 @@ class SupabaseService
   def handle_response(response)
     case response.code
     when 200
-      JSON.parse(response.body)
+      # Try to parse as JSON, but handle potential encoding issues
+      begin
+        JSON.parse(response.body)
+      rescue JSON::ParserError => e
+        Rails.logger.error "JSON parse error: #{e.message}"
+        Rails.logger.error "Response body preview: #{response.body[0..500]}"
+        # Try to decode if it's compressed
+        begin
+          decoded_body = response.body.force_encoding('UTF-8')
+          JSON.parse(decoded_body)
+        rescue => e2
+          Rails.logger.error "Failed to decode response: #{e2.message}"
+          raise "Invalid response from Supabase"
+        end
+      end
     when 401
       Rails.logger.error "Supabase authentication failed: #{response.body}"
       raise "Supabase authentication failed"
@@ -121,8 +147,8 @@ class SupabaseService
       Rails.logger.error "Supabase API error (#{response.code}): #{response.body}"
       raise "Supabase API error: #{response.code}"
     end
-  rescue JSON::ParserError => e
-    Rails.logger.error "Failed to parse Supabase response: #{e.message}"
+  rescue => e
+    Rails.logger.error "Failed to handle Supabase response: #{e.message}"
     raise "Invalid response from Supabase"
   end
 end 
