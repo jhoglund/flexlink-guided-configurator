@@ -95,10 +95,12 @@ Rails.application.configure do
   # Configure Redis for caching and sessions (only if REDIS_URL is available)
   if ENV['REDIS_URL'].present?
     config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
-    config.session_store :redis_store, { servers: [{ url: ENV['REDIS_URL'] }] }
+    # Use cookie store for sessions in production (simpler and more reliable)
+    config.session_store :cookie_store, key: '_flexlink_session', secure: true
   else
     # Fallback to memory store if Redis is not available
     config.cache_store = :memory_store, { size: 64.megabytes }
+    config.session_store :cookie_store, key: '_flexlink_session', secure: true
   end
 
   # Configure Sidekiq
