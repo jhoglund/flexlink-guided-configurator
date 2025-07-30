@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -18,10 +18,10 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Enable static file serving from the `/public` folder (turn off if using NGINX/Apache for it).
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
@@ -39,14 +39,14 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -75,7 +75,7 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
@@ -92,10 +92,15 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.hosts_clear = [ "0.0.0.0", "::/0" ]
 
-  # Configure Redis for caching and sessions
-  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
-  config.session_store :redis_store, { servers: [{ url: ENV['REDIS_URL'] }] }
+  # Configure Redis for caching and sessions (only if REDIS_URL is available)
+  if ENV['REDIS_URL'].present?
+    config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+    config.session_store :redis_store, { servers: [{ url: ENV['REDIS_URL'] }] }
+  else
+    # Fallback to memory store if Redis is not available
+    config.cache_store = :memory_store, { size: 64.megabytes }
+  end
 
   # Configure Sidekiq
   config.active_job.queue_adapter = :sidekiq
-end 
+end
