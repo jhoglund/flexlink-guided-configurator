@@ -71,6 +71,11 @@ class WizardSession < ApplicationRecord
     step_data[key]
   end
 
+  def update_step_data(step, data)
+    step_data["step_#{step}"] = data
+    save!
+  end
+
   def clear_step_data(step)
     step_data.delete("step_#{step}")
     save!

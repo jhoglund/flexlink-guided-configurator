@@ -21,6 +21,9 @@ class Wizard::StepsController < ApplicationController
     @step_data = @wizard_session.get_step_data(@step)
     @step_config = STEPS[@step]
     
+    Rails.logger.info "Showing step #{@step} for wizard session #{@wizard_session.id}"
+    Rails.logger.info "Step data: #{@step_data.inspect}"
+    
     # Load data based on step
     case @step
     when 1
@@ -41,26 +44,40 @@ class Wizard::StepsController < ApplicationController
   end
 
   def update
+    Rails.logger.info "=== UPDATE ACTION CALLED ==="
+    Rails.logger.info "Params: #{params.inspect}"
+    
     @step = params[:step].to_i
     step_params = params[:wizard_step] || {}
     
+    Rails.logger.info "Wizard update called for step #{@step}"
+    Rails.logger.info "Step params: #{step_params.inspect}"
+    
     # Validate step data
     if valid_step_data?(@step, step_params)
+      Rails.logger.info "Step data is valid, updating wizard session"
       @wizard_session.update_step_data(@step, step_params)
       @wizard_session.update(current_step: @step)
       
       # Move to next step or complete
       if @step < TOTAL_STEPS
+        Rails.logger.info "Redirecting to step #{@step + 1}"
         redirect_to wizard_step_path(@step + 1)
       else
+        Rails.logger.info "Redirecting to summary"
         redirect_to wizard_summary_path
       end
     else
+      Rails.logger.info "Step data is invalid, re-rendering step #{@step}"
       @step_data = step_params
       @step_config = STEPS[@step]
       flash.now[:error] = "Please correct the errors below."
       render "wizard/steps/step_#{@step}"
     end
+  rescue => e
+    Rails.logger.error "Error in update action: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    raise e
   end
 
   def summary
@@ -115,7 +132,10 @@ class Wizard::StepsController < ApplicationController
     
     # Use the first user for testing
     @current_user = User.first
+    Rails.logger.info "Current user: #{@current_user.inspect}"
+    
     @wizard_session = current_wizard_session || create_wizard_session
+    Rails.logger.info "Wizard session: #{@wizard_session.inspect}"
   end
 
   def create_wizard_session
@@ -133,9 +153,16 @@ class Wizard::StepsController < ApplicationController
   end
 
   def validate_step
+    Rails.logger.info "=== VALIDATE_STEP CALLED ==="
+    Rails.logger.info "Step param: #{params[:step]}"
     step = params[:step].to_i
+    Rails.logger.info "Step as integer: #{step}"
+    Rails.logger.info "STEPS keys: #{STEPS.keys}"
     unless STEPS.key?(step)
+      Rails.logger.info "Invalid step, redirecting to step 1"
       redirect_to wizard_step_path(1), alert: "Invalid step."
+    else
+      Rails.logger.info "Step validation passed"
     end
   end
 
