@@ -27,15 +27,13 @@ services:
         sync: false
       - key: SUPABASE_ANON_KEY
         sync: false
+  - type: redis
+    name: flexlink-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
 
 databases:
   - name: flexlink-postgres
     databaseName: flexlink_production
     user: flexlink_user
-    plan: free
-
-services:
-  - type: redis
-    name: flexlink-redis
-    plan: free
-    maxmemoryPolicy: allkeys-lru 
+    plan: free 
