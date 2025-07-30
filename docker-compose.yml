@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # PostgreSQL for Rails app logic
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: flexlink_config
+      POSTGRES_USER: flexlink_user
+      POSTGRES_PASSWORD: flexlink_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U flexlink_user -d flexlink_config" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching and background jobs
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Rails application
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgresql://flexlink_user:flexlink_password@postgres:5432/flexlink_config
+      REDIS_URL: redis://redis:6379/0
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ./bin/rails server -b 0.0.0.0
+
+  # Background job processor
+  sidekiq:
+    build: .
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgresql://flexlink_user:flexlink_password@postgres:5432/flexlink_config
+      REDIS_URL: redis://redis:6379/0
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: bundle exec sidekiq
+
+volumes:
+  postgres_data:
+  redis_data:
+  bundle_cache:
