@@ -1,504 +1,170 @@
-<div class="products-container">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
   <!-- Header Section -->
-  <div class="products-header">
-    <div class="header-content">
-      <h1>📦 Product Catalog</h1>
-      <p class="subtitle">Browse our comprehensive collection of conveyor systems and components</p>
-      <div class="stats">
-        <span class="stat-item">
-          <strong><%= @total_count %></strong> Products
-        </span>
-        <span class="stat-item">
-          <strong><%= @categories.count %></strong> Categories
-        </span>
-        <span class="stat-item">
-          <strong><%= @types.count %></strong> Types
-        </span>
+  <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-xl mb-8">
+    <div class="px-6 py-8 text-center">
+      <h1 class="text-4xl font-bold text-white mb-4">📦 Product Catalog</h1>
+      <p class="text-xl text-blue-100 mb-6">Browse our comprehensive collection of conveyor systems and components</p>
+      <div class="flex justify-center space-x-8">
+        <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2">
+          <span class="text-white font-semibold"><%= @total_count %></span>
+          <span class="text-blue-100 ml-1">Products</span>
+        </div>
+        <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2">
+          <span class="text-white font-semibold"><%= @categories.count %></span>
+          <span class="text-blue-100 ml-1">Categories</span>
+        </div>
+        <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2">
+          <span class="text-white font-semibold"><%= @types.count %></span>
+          <span class="text-blue-100 ml-1">Types</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Search and Filter Section -->
-  <div class="search-filter-section">
-    <div class="search-box">
-      <%= form_with url: search_products_path, method: :get, local: true, class: "search-form" do |form| %>
-        <div class="search-inputs">
-          <div class="search-field">
-            <%= form.text_field :q, 
-                value: params[:q], 
-                placeholder: "Search products...", 
-                class: "search-input" %>
-          </div>
-          
-          <div class="filter-field">
-            <%= form.select :category, 
-                options_for_select([['All Categories'] + @categories], params[:category]), 
-                {}, 
-                class: "filter-select" %>
-          </div>
-          
-          <div class="filter-field">
-            <%= form.select :type, 
-                options_for_select([['All Types'] + @types], params[:type]), 
-                {}, 
-                class: "filter-select" %>
-          </div>
-          
-          <div class="sort-field">
-            <%= form.select :sort, 
-                options_for_select([
-                  ['Name', 'name'],
-                  ['Price', 'price'],
-                  ['Category', 'category'],
-                  ['Type', 'type']
-                ], params[:sort]), 
-                {}, 
-                class: "sort-select" %>
-          </div>
-          
-          <div class="order-field">
-            <%= form.select :order, 
-                options_for_select([
-                  ['Ascending', 'asc'],
-                  ['Descending', 'desc']
-                ], params[:order] || 'asc'), 
-                {}, 
-                class: "order-select" %>
-          </div>
-          
-          <%= form.submit "Search", class: "search-btn" %>
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <%= form_with url: search_products_path, method: :get, local: true, class: "space-y-4" do |form| %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
+        <div class="lg:col-span-2">
+          <%= form.text_field :q, 
+              value: params[:q], 
+              placeholder: "Search products...", 
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
         </div>
-      <% end %>
-    </div>
+        
+        <div>
+          <%= form.select :category, 
+              options_for_select([['All Categories', '']] + @categories.map { |cat| [cat, cat] }, params[:category]), 
+              {}, 
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+        
+        <div>
+          <%= form.select :type, 
+              options_for_select([['All Types', '']] + @types.map { |type| [type.humanize, type] }, params[:type]), 
+              {}, 
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+        
+        <div>
+          <%= form.select :price_range, 
+              options_for_select([
+                ['All Prices', ''],
+                ['Under $100', '0-100'],
+                ['$100 - $500', '100-500'],
+                ['$500 - $1000', '500-1000'],
+                ['Over $1000', '1000+']
+              ], params[:price_range]), 
+              {}, 
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+        
+        <div>
+          <%= form.select :sort, 
+              options_for_select([
+                ['Name', 'name'],
+                ['Price', 'price'],
+                ['Category', 'category'],
+                ['Type', 'type']
+              ], params[:sort]), 
+              {}, 
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+        
+        <div>
+          <%= form.select :order, 
+              options_for_select([
+                ['Ascending', 'asc'],
+                ['Descending', 'desc']
+              ], params[:order] || 'asc'), 
+              {}, 
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+        
+        <div class="flex space-x-2">
+          <%= form.submit "Search", class: "flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
+          <%= link_to "Clear", products_path, class: "bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <!-- Quick Filter Links -->
-  <div class="quick-filters">
-    <h3>Quick Filters:</h3>
-    <div class="filter-links">
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Filters:</h3>
+    <div class="flex flex-wrap gap-2">
       <% @categories.each do |category| %>
         <%= link_to category, by_category_products_path(category: category.downcase), 
-            class: "filter-link #{'active' if params[:category] == category.downcase}" %>
+            class: "px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-blue-100 hover:text-blue-700 transition-colors #{'bg-blue-100 text-blue-700' if params[:category] == category.downcase}" %>
       <% end %>
     </div>
   </div>
 
   <!-- Products Grid -->
-  <div class="products-grid">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
     <% if @products.any? %>
       <% @products.each do |product| %>
-        <div class="product-card">
-          <div class="product-image">
+        <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+          <div class="relative h-48 bg-gray-100 flex items-center justify-center">
             <% if product[:image_url].present? %>
-              <%= image_tag product[:image_url], alt: product[:name], class: "product-img" %>
+              <%= image_tag product[:image_url], alt: product[:name], class: "w-full h-full object-cover" %>
             <% else %>
-              <div class="product-placeholder">
-                <span class="placeholder-icon">📦</span>
-              </div>
+              <div class="text-gray-400 text-4xl">📦</div>
             <% end %>
-            <div class="product-badge <%= product[:source] %>">
-              <%= product[:source].titleize %>
+            <div class="absolute top-2 right-2">
+              <span class="px-2 py-1 text-xs font-semibold rounded-full <%= product[:source] == 'supabase' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+                <%= product[:source].titleize %>
+              </span>
             </div>
           </div>
           
-          <div class="product-content">
-            <div class="product-header">
-              <h3 class="product-name">
-                <%= link_to product[:name], product_path(product[:id]), class: "product-link" %>
-              </h3>
-              <div class="product-category">
-                <span class="category-tag"><%= product[:category] %></span>
-                <span class="type-tag"><%= product[:type].humanize %></span>
-              </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              <%= link_to product[:name], product_path(product[:id]), class: "hover:text-blue-600 transition-colors" %>
+            </h3>
+            
+            <div class="flex space-x-2 mb-3">
+              <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                <%= product[:category] %>
+              </span>
+              <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                <%= product[:type].humanize %>
+              </span>
             </div>
             
-            <p class="product-description">
+            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
               <%= truncate(product[:description], length: 120) %>
             </p>
             
-            <div class="product-specs">
-              <% if product[:specifications].present? %>
-                <div class="specs-preview">
-                  <% product[:specifications].first(2).each do |spec| %>
-                    <span class="spec-item">• <%= spec %></span>
-                  <% end %>
-                  <% if product[:specifications].length > 2 %>
-                    <span class="spec-more">+<%= product[:specifications].length - 2 %> more</span>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-            
-            <div class="product-footer">
-              <div class="product-price">
-                <span class="price-amount">$<%= number_with_precision(product[:price], precision: 2) %></span>
+            <div class="flex justify-between items-center">
+              <div class="text-lg font-bold text-gray-900">
+                <% if product[:price] %>
+                  $<%= number_with_precision(product[:price], precision: 2) %>
+                <% else %>
+                  <span class="text-gray-400">Price N/A</span>
+                <% end %>
               </div>
-              <div class="product-brand">
-                <span class="brand-name"><%= product[:brand] %></span>
+              <div class="text-sm text-gray-500">
+                <%= product[:brand] %>
               </div>
             </div>
           </div>
         </div>
       <% end %>
     <% else %>
-      <div class="no-products">
-        <div class="no-products-content">
-          <span class="no-products-icon">🔍</span>
-          <h3>No products found</h3>
-          <p>Try adjusting your search criteria or browse all products</p>
-          <%= link_to "View All Products", products_path, class: "btn btn-primary" %>
-        </div>
+      <div class="col-span-full text-center py-12">
+        <div class="text-gray-400 text-6xl mb-4">🔍</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
+        <p class="text-gray-600 mb-4">Try adjusting your search criteria or browse all products</p>
+        <%= link_to "View All Products", products_path, class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors" %>
       </div>
     <% end %>
   </div>
 
   <!-- Results Summary -->
   <% if @products.any? %>
-    <div class="results-summary">
+    <div class="mt-8 text-center text-gray-600">
       <p>Showing <strong><%= @products.count %></strong> of <strong><%= @total_count %></strong> products</p>
     </div>
   <% end %>
-</div>
-
-<style>
-.products-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.products-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 40px 30px;
-  border-radius: 12px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.header-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  font-weight: 700;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-bottom: 20px;
-}
-
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 20px;
-}
-
-.stat-item {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
-
-.search-filter-section {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-
-.search-form {
-  width: 100%;
-}
-
-.search-inputs {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
-  gap: 15px;
-  align-items: end;
-}
-
-.search-input, .filter-select, .sort-select, .order-select {
-  padding: 12px 15px;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-
-.search-input:focus, .filter-select:focus, .sort-select:focus, .order-select:focus {
-  border-color: #667eea;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.search-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.search-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-}
-
-.quick-filters {
-  margin-bottom: 30px;
-}
-
-.quick-filters h3 {
-  margin-bottom: 15px;
-  color: #2c3e50;
-  font-size: 1.1rem;
-}
-
-.filter-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.filter-link {
-  background: #f8f9fa;
-  color: #6c757d;
-  padding: 8px 16px;
-  border-radius: 20px;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-.filter-link:hover, .filter-link.active {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 25px;
-  margin-bottom: 30px;
-}
-
-.product-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid #e1e5e9;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-}
-
-.product-image {
-  position: relative;
-  height: 200px;
-  background: #f8f9fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.product-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.product-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-}
-
-.placeholder-icon {
-  font-size: 3rem;
-  opacity: 0.5;
-}
-
-.product-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.product-badge.supabase {
-  background: #28a745;
-  color: white;
-}
-
-.product-badge.fallback {
-  background: #ffc107;
-  color: #212529;
-}
-
-.product-content {
-  padding: 20px;
-}
-
-.product-header {
-  margin-bottom: 15px;
-}
-
-.product-name {
-  margin: 0 0 10px 0;
-  font-size: 1.2rem;
-  color: #2c3e50;
-}
-
-.product-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.product-link:hover {
-  color: #667eea;
-}
-
-.product-category {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.category-tag, .type-tag {
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-.category-tag {
-  background: #e3f2fd;
-  color: #1976d2;
-}
-
-.type-tag {
-  background: #f3e5f5;
-  color: #7b1fa2;
-}
-
-.product-description {
-  color: #6c757d;
-  line-height: 1.5;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
-}
-
-.product-specs {
-  margin-bottom: 15px;
-}
-
-.specs-preview {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.spec-item {
-  font-size: 0.8rem;
-  color: #495057;
-}
-
-.spec-more {
-  font-size: 0.8rem;
-  color: #667eea;
-  font-weight: 600;
-}
-
-.product-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 15px;
-  border-top: 1px solid #e1e5e9;
-}
-
-.product-price {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #28a745;
-}
-
-.brand-name {
-  font-size: 0.8rem;
-  color: #6c757d;
-  font-weight: 600;
-}
-
-.no-products {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.no-products-content {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.no-products-icon {
-  font-size: 4rem;
-  margin-bottom: 20px;
-  display: block;
-}
-
-.no-products h3 {
-  color: #2c3e50;
-  margin-bottom: 10px;
-}
-
-.no-products p {
-  color: #6c757d;
-  margin-bottom: 20px;
-}
-
-.results-summary {
-  text-align: center;
-  color: #6c757d;
-  font-size: 0.9rem;
-  margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-  .search-inputs {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .stats {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .filter-links {
-    justify-content: center;
-  }
-}
-</style> 
+</div> 

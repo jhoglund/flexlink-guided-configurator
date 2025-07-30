@@ -87,3 +87,5 @@ docker-compose.override.yml
 # Ignore temporary files
 *.tmp
 *.temp 
+/app/assets/builds/*
+!/app/assets/builds/.keep

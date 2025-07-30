@@ -1,80 +1,82 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-ruby "3.2.9"
+ruby '3.3.1'
 
 # Rails framework
-gem "rails", "~> 8.0.0"
+gem 'rails', '~> 8.0.0'
 
 # Database
-gem "pg", "~> 1.1"
-gem "sqlite3", "~> 1.4"
+gem 'pg', '~> 1.1'
+gem 'sqlite3', '~> 2.1'
 
 # Web server
-gem "puma", ">= 5.0"
+gem 'puma', '>= 5.0'
 
 # Asset pipeline
-gem "sprockets-rails"
+gem 'sprockets-rails'
 
 # Authentication
-gem "devise"
+gem 'devise'
 
 # Authorization
-gem "pundit"
+gem 'pundit'
 
 # HTTP client for Supabase API
-gem "httparty"
+gem 'httparty'
 
 # Supabase Ruby client
-gem "supabase"
+gem 'supabase'
 
 # Background job processing
-gem "sidekiq"
+gem 'sidekiq'
 
 # Redis for caching and sessions
-gem "redis"
+gem 'redis'
 
-# UI Framework - using a simpler approach
-gem "bootstrap", "~> 5.3.0"
-gem "dartsass-sprockets"
+# UI Framework - Tailwind CSS
+gem 'tailwindcss-rails'
 
 # Modern JavaScript
-gem "importmap-rails"
-gem "turbo-rails"
-gem "stimulus-rails"
+gem 'importmap-rails'
+gem 'stimulus-rails'
+gem 'turbo-rails'
 
 # Forms and UI
-gem "simple_form", "~> 5.2.0"
+gem 'simple_form', '~> 5.2.0'
 
 # JSON handling
-gem "jbuilder", "~> 2.11"
-gem "oj", "~> 3.15"
+gem 'jbuilder', '~> 2.11'
+gem 'oj', '~> 3.15'
 
 # Background jobs
-gem "sidekiq-scheduler", "~> 5.0"
+gem 'sidekiq-scheduler', '~> 5.0'
 
 # Development and testing
 group :development, :test do
-  gem "rspec-rails"
-  gem "factory_bot_rails"
-  gem "faker"
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
 end
 
 group :development do
-  gem "web-console"
-  gem "listen"
-  gem "rack-mini-profiler", "~> 3.0"
-  gem "spring"
+  gem 'listen'
+  gem 'rack-mini-profiler', '~> 3.0'
+  gem 'spring'
+  gem 'web-console'
 end
 
 group :test do
-  gem "capybara", ">= 3.26"
-  gem "selenium-webdriver", ">= 4.0.0.rc3"
-  gem "webdrivers", "~> 5.0"
+  gem 'capybara', '>= 3.26'
+  gem 'selenium-webdriver', '>= 4.0.0.rc3'
+  gem 'webdrivers', '~> 5.0'
 end
 
 group :test, :development do
-  gem "rubocop", "~> 1.50", require: false
-  gem "rubocop-rails", "~> 2.20", require: false
-  gem "rubocop-rspec", "~> 2.20", require: false
-end 
+  gem 'rubocop', '~> 1.50', require: false
+  gem 'rubocop-rails', '~> 2.20', require: false
+  gem 'rubocop-rspec', '~> 2.20', require: false
+end
+gem 'ruby-lsp', '~> 0.26.1', group: :development
+
+gem 'solargraph', '~> 0.56.0', group: :development

@@ -26,8 +26,11 @@ class ProductsController < ApplicationController
     query = params[:q]&.strip
     category = params[:category]
     product_type = params[:type]
+    price_range = params[:price_range]
     
-    @products = search_products(query, category, product_type)
+    @products = search_products(query, category, product_type, price_range)
+    @categories = get_product_categories
+    @types = get_product_types
     @total_count = @products.count
     
     respond_to do |format|
@@ -39,6 +42,8 @@ class ProductsController < ApplicationController
   def by_category
     @category = params[:category]
     @products = get_products_by_category(@category)
+    @categories = get_product_categories
+    @types = get_product_types
     @total_count = @products.count
     
     respond_to do |format|
@@ -50,6 +55,8 @@ class ProductsController < ApplicationController
   def by_type
     @type = params[:type]
     @products = get_products_by_type(@type)
+    @categories = get_product_categories
+    @types = get_product_types
     @total_count = @products.count
     
     respond_to do |format|
@@ -214,7 +221,7 @@ class ProductsController < ApplicationController
     ]
   end
 
-  def search_products(query, category, product_type)
+  def search_products(query, category, product_type, price_range)
     products = load_products
     
     # Filter by query
@@ -223,7 +230,8 @@ class ProductsController < ApplicationController
         product[:name].downcase.include?(query.downcase) ||
         product[:description].downcase.include?(query.downcase) ||
         product[:category].downcase.include?(query.downcase) ||
-        product[:type].downcase.include?(query.downcase)
+        product[:type].downcase.include?(query.downcase) ||
+        (product[:specifications] && product[:specifications].any? { |spec| spec.to_s.downcase.include?(query.downcase) })
       end
     end
     
@@ -235,6 +243,25 @@ class ProductsController < ApplicationController
     # Filter by type
     if product_type.present?
       products = products.select { |product| product[:type].downcase == product_type.downcase }
+    end
+    
+    # Filter by price range
+    if price_range.present?
+      products = products.select do |product|
+        price = product[:price] || 0
+        case price_range
+        when '0-100'
+          price < 100
+        when '100-500'
+          price >= 100 && price <= 500
+        when '500-1000'
+          price > 500 && price <= 1000
+        when '1000+'
+          price > 1000
+        else
+          true
+        end
+      end
     end
     
     sort_products(products, params[:sort], params[:order])

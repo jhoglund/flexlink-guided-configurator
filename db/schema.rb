@@ -11,16 +11,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_catalog.plpgsql"
-
   create_table "component_selections", force: :cascade do |t|
     t.bigint "configuration_id", null: false
     t.string "component_type", null: false
     t.string "component_id", null: false
     t.string "component_name"
-    t.jsonb "specifications", default: {}
-    t.jsonb "options", default: {}
+    t.json "specifications", default: {}
+    t.json "options", default: {}
     t.decimal "price", precision: 10, scale: 2
     t.string "currency", default: "USD"
     t.integer "quantity", default: 1
@@ -32,8 +29,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
     t.index ["component_id"], name: "index_component_selections_on_component_id"
     t.index ["component_type"], name: "index_component_selections_on_component_type"
     t.index ["configuration_id"], name: "index_component_selections_on_configuration_id"
-    t.index ["options"], name: "index_component_selections_on_options", using: :gin
-    t.index ["specifications"], name: "index_component_selections_on_specifications", using: :gin
     t.index ["status"], name: "index_component_selections_on_status"
   end
 
@@ -42,10 +37,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
     t.string "name", null: false
     t.text "description"
     t.string "status", default: "draft"
-    t.jsonb "system_specifications", default: {}
-    t.jsonb "selected_components", default: {}
-    t.jsonb "optimization_results", default: {}
-    t.jsonb "wizard_progress", default: {}
+    t.json "system_specifications", default: {}
+    t.json "selected_components", default: {}
+    t.json "optimization_results", default: {}
+    t.json "wizard_progress", default: {}
     t.integer "current_step", default: 1
     t.boolean "completed", default: false
     t.datetime "completed_at"
@@ -57,12 +52,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
     t.decimal "total_price"
     t.index ["completed"], name: "index_configurations_on_completed"
     t.index ["current_step"], name: "index_configurations_on_current_step"
-    t.index ["optimization_results"], name: "index_configurations_on_optimization_results", using: :gin
-    t.index ["selected_components"], name: "index_configurations_on_selected_components", using: :gin
     t.index ["status"], name: "index_configurations_on_status"
-    t.index ["system_specifications"], name: "index_configurations_on_system_specifications", using: :gin
     t.index ["user_id"], name: "index_configurations_on_user_id"
-    t.index ["wizard_progress"], name: "index_configurations_on_wizard_progress", using: :gin
   end
 
   create_table "users", force: :cascade do |t|
@@ -92,8 +83,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
     t.bigint "configuration_id"
     t.string "session_id", null: false
     t.integer "current_step", default: 1
-    t.jsonb "step_data", default: {}
-    t.jsonb "validation_errors", default: {}
+    t.json "step_data", default: {}
+    t.json "validation_errors", default: {}
     t.datetime "started_at"
     t.datetime "last_activity_at"
     t.datetime "completed_at"
@@ -104,9 +95,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
     t.index ["current_step"], name: "index_wizard_sessions_on_current_step"
     t.index ["session_id"], name: "index_wizard_sessions_on_session_id", unique: true
     t.index ["status"], name: "index_wizard_sessions_on_status"
-    t.index ["step_data"], name: "index_wizard_sessions_on_step_data", using: :gin
     t.index ["user_id"], name: "index_wizard_sessions_on_user_id"
-    t.index ["validation_errors"], name: "index_wizard_sessions_on_validation_errors", using: :gin
   end
 
   add_foreign_key "component_selections", "configurations"

@@ -1,24 +1,15 @@
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>
+  timeout: 5000
 
 development:
   <<: *default
-  database: flexlink_config_development
-  username: flexlink_user
-  password: flexlink_password
-  host: postgres
-  port: 5432
+  database: db/development.sqlite3
 
 test:
   <<: *default
-  database: flexlink_config_test
-  username: flexlink_user
-  password: flexlink_password
-  host: postgres
-  port: 5432
+  database: db/test.sqlite3
 
 production:
   <<: *default
