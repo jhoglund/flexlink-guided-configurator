@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  
+
   # Include Devise helper methods
   include Devise::Controllers::Helpers
 
@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :company])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :company])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name company])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[name company])
   end
 
   def not_found
@@ -23,12 +23,18 @@ class ApplicationController < ActionController::Base
     render json: { error: 'Bad request' }, status: :bad_request
   end
 
+  def current_user
+    # For development/testing without authentication, always return the first user
+    User.first
+  end
+
   def current_wizard_session
     return nil unless current_user
+
     @current_wizard_session ||= WizardSession.find_by(user: current_user, status: 'active')
   end
 
   def supabase_service
     @supabase_service ||= SupabaseService.new
   end
-end 
+end
