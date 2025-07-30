@@ -105,7 +105,24 @@ class SupabaseService
     request = Net::HTTP::Get.new(uri)
     @headers.each { |key, value| request[key] = value }
     
+    # Add debug logging
+    Rails.logger.info "Making request to: #{uri}"
+    
     response = http.request(request)
+    
+    # Debug logging
+    Rails.logger.info "Response code: #{response.code}"
+    Rails.logger.info "Response body preview: #{response.body[0..200]}"
+    
+    # Handle compression if present
+    if response['content-encoding'] == 'gzip'
+      require 'zlib'
+      Rails.logger.info "Decompressing gzipped response..."
+      decompressed_body = Zlib::GzipReader.new(StringIO.new(response.body)).read
+      response.body = decompressed_body
+      Rails.logger.info "Decompressed response preview: #{decompressed_body[0..200]}"
+    end
+    
     response
   end
 
@@ -139,7 +156,10 @@ class SupabaseService
     when 200
       # Try to parse as JSON
       begin
-        JSON.parse(response.body)
+        Rails.logger.info "Parsing JSON response..."
+        parsed_response = JSON.parse(response.body)
+        Rails.logger.info "Successfully parsed JSON with #{parsed_response.length} items"
+        parsed_response
       rescue JSON::ParserError => e
         Rails.logger.error "JSON parse error: #{e.message}"
         Rails.logger.error "Response body preview: #{response.body[0..500]}"
