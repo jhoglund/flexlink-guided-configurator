@@ -1,6 +1,4 @@
 class HealthController < ApplicationController
-  skip_before_action :authenticate_user!
-  
   def index
     health_status = {
       status: 'healthy',
@@ -12,10 +10,10 @@ class HealthController < ApplicationController
         supabase: supabase_healthy?
       }
     }
-    
+
     status_code = health_status[:services].values.all? ? :ok : :service_unavailable
     health_status[:status] = status_code == :ok ? 'healthy' : 'unhealthy'
-    
+
     render json: health_status, status: status_code
   end
 
@@ -24,14 +22,14 @@ class HealthController < ApplicationController
   def database_healthy?
     ActiveRecord::Base.connection.execute('SELECT 1')
     true
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Database health check failed: #{e.message}"
     false
   end
 
   def redis_healthy?
     Rails.cache.redis.ping == 'PONG'
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Redis health check failed: #{e.message}"
     false
   end
@@ -41,8 +39,8 @@ class HealthController < ApplicationController
     supabase_service = SupabaseService.new
     supabase_service.get_component_types
     true
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Supabase health check failed: #{e.message}"
     false
   end
-end 
+end
