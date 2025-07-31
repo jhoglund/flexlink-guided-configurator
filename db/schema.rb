@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_31_134555) do
   create_table "component_selections", force: :cascade do |t|
     t.bigint "configuration_id", null: false
     t.string "component_type", null: false
@@ -26,10 +26,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_115825) do
     t.datetime "selected_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "system_code", limit: 10
     t.index ["component_id"], name: "index_component_selections_on_component_id"
     t.index ["component_type"], name: "index_component_selections_on_component_type"
     t.index ["configuration_id"], name: "index_component_selections_on_configuration_id"
     t.index ["status"], name: "index_component_selections_on_status"
+    t.index ["system_code"], name: "index_component_selections_on_system_code"
   end
 
   create_table "configurations", force: :cascade do |t|

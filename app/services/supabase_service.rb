@@ -3,12 +3,10 @@ class SupabaseService
   require 'uri'
   require 'json'
 
-    def initialize
+  def initialize
     # Try to load environment variables if not present
-    if ENV['SUPABASE_URL'].blank?
-      load_env_file
-    end
-    
+    load_env_file if ENV['SUPABASE_URL'].blank?
+
     @base_url = ENV['SUPABASE_URL']
     @api_key = ENV['SUPABASE_ANON_KEY']
     @headers = {
@@ -17,7 +15,7 @@ class SupabaseService
       'apikey' => @api_key,
       'Accept' => 'application/json'
     }
-    
+
     # Enhanced debug logging
     Rails.logger.info "SupabaseService initialized with URL: #{@base_url}"
     Rails.logger.info "SupabaseService API key present: #{@api_key.present?}"
@@ -26,52 +24,130 @@ class SupabaseService
     Rails.logger.info "ENV['SUPABASE_ANON_KEY']: #{ENV['SUPABASE_ANON_KEY']&.slice(0, 20)}..."
   end
 
-  # Conveyor Systems
-  def get_conveyor_systems(filters = {})
-    query = build_query('conveyor_systems', filters)
-    response = make_request("conveyor_systems#{query}")
+  # Systems (NEW - replaces conveyor_systems)
+  def get_systems(filters = {})
+    query = build_query('systems', filters)
+    response = make_request("systems#{query}")
     handle_response(response)
   end
 
-  def get_conveyor_system(id)
-    response = make_request("conveyor_systems?id=eq.#{id}")
+  def get_system(system_code)
+    response = make_request("systems?system_code=eq.#{system_code}")
     handle_response(response).first
   end
 
-  # Component Specifications
-  def get_component_specifications(filters = {})
-    query = build_query('component_specifications', filters)
-    response = make_request("component_specifications#{query}")
+  def search_systems(search_term, filters = {})
+    # Use the new search_systems function
+    query_params = { search_term: search_term }.merge(filters)
+    query = build_query('rpc/search_systems', query_params)
+    response = make_request("rpc/search_systems#{query}")
     handle_response(response)
   end
 
-  def get_component_specification(id)
-    response = make_request("component_specifications?id=eq.#{id}")
+  def get_system_stats
+    response = make_request('rpc/get_system_stats')
+    handle_response(response).first
+  end
+
+  # Components (RENAMED from component_specifications)
+  def get_components(filters = {})
+    query = build_query('components', filters)
+    response = make_request("components#{query}")
+    handle_response(response)
+  end
+
+  def get_component(id)
+    response = make_request("components?id=eq.#{id}")
     handle_response(response).first
   end
 
   def search_components(query, filters = {})
     search_filters = filters.merge({ search: query })
-    get_component_specifications(search_filters)
+    get_components(search_filters)
   end
 
   def get_components_by_type(component_type, filters = {})
     type_filters = filters.merge({ component_type: component_type })
-    get_component_specifications(type_filters)
+    get_components(type_filters)
+  end
+
+  def get_components_by_system(system_code, filters = {})
+    system_filters = filters.merge({ system_code: system_code })
+    get_components(system_filters)
+  end
+
+  # Product Images
+  def get_product_images(filters = {})
+    query = build_query('product_images', filters)
+    response = make_request("product_images#{query}")
+    handle_response(response)
+  end
+
+  def get_images_by_system(system_code)
+    response = make_request("product_images?system_code=eq.#{system_code}")
+    handle_response(response)
+  end
+
+  # Views
+  def get_system_overview
+    response = make_request('system_overview')
+    handle_response(response)
+  end
+
+  def get_component_compatibility
+    response = make_request('component_compatibility')
+    handle_response(response)
+  end
+
+  def get_system_statistics
+    response = make_request('system_stats')
+    handle_response(response).first
+  end
+
+  # Legacy methods for backward compatibility
+  def get_conveyor_systems(filters = {})
+    # Redirect to new systems table
+    get_systems(filters)
+  end
+
+  def get_conveyor_system(id)
+    # Try to find by system_code first, then by id
+    system = get_system(id)
+    return system if system
+
+    # Fallback to id lookup
+    response = make_request("systems?id=eq.#{id}")
+    handle_response(response).first
+  end
+
+  def get_component_specifications(filters = {})
+    # Redirect to new components table
+    get_components(filters)
+  end
+
+  def get_component_specification(id)
+    get_component(id)
   end
 
   # Caching methods
-  def get_cached_component_specifications(filters = {})
+  def get_cached_components(filters = {})
     cache_key = "supabase:components:#{filters.hash}"
     Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      get_component_specifications(filters)
+      get_components(filters)
     end
   end
 
-  def get_cached_conveyor_systems(filters = {})
-    cache_key = "supabase:conveyors:#{filters.hash}"
+  def get_cached_systems(filters = {})
+    cache_key = "supabase:systems:#{filters.hash}"
     Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      get_conveyor_systems(filters)
+      get_systems(filters)
+    end
+  end
+
+  def get_cached_system_overview
+    cache_key = 'supabase:system_overview'
+    Rails.cache.fetch(cache_key, expires_in: 2.hours) do
+      get_system_overview
     end
   end
 
@@ -81,7 +157,7 @@ class SupabaseService
     Rails.cache.fetch(cache_key, expires_in: 6.hours) do
       Rails.logger.info 'Making Supabase request for component types'
 
-      response = make_request('component_specifications?select=component_type&component_type=not.is.null')
+      response = make_request('components?select=component_type&component_type=not.is.null')
       Rails.logger.info "Supabase response code: #{response.code}"
       Rails.logger.info "Supabase response body: #{response.body[0..200]}"
 
@@ -94,13 +170,43 @@ class SupabaseService
   def get_system_specifications
     cache_key = 'supabase:system_specifications'
     Rails.cache.fetch(cache_key, expires_in: 6.hours) do
-      response = make_request('conveyor_systems?select=code,name,description,features,applications&is_active=eq.true')
+      response = make_request('systems?select=system_code,system_name,category,description,key_features,applications&is_active=eq.true')
       data = handle_response(response)
-      # Group by applications to create categories
-      data.group_by { |item| item['applications']&.first || 'General' }.transform_values do |items|
-        items.map { |item| item['name'] }.uniq
+      # Group by category to create specifications
+      data.group_by { |item| item['category'] || 'General' }.transform_values do |items|
+        items.map { |item| item['system_name'] }.uniq
       end
     end
+  end
+
+  # New methods for enhanced functionality
+  def get_systems_by_category(category)
+    response = make_request("systems?category=eq.#{category}")
+    handle_response(response)
+  end
+
+  def get_systems_by_load_capacity(load_capacity)
+    response = make_request("systems?load_capacity=ilike.*#{load_capacity}*")
+    handle_response(response)
+  end
+
+  def get_compatible_components(system_code)
+    response = make_request("components?compatibility=cs.{#{system_code}}")
+    handle_response(response)
+  end
+
+  def get_system_with_components(system_code)
+    system = get_system(system_code)
+    return nil unless system
+
+    components = get_components_by_system(system_code)
+    images = get_images_by_system(system_code)
+
+    {
+      system: system,
+      components: components,
+      images: images
+    }
   end
 
   private
@@ -111,13 +217,13 @@ class SupabaseService
       Rails.logger.info "Loading environment variables from #{env_file}"
       File.readlines(env_file).each do |line|
         next if line.strip.empty? || line.start_with?('#')
-        
+
         key, value = line.split('=', 2)
         next unless key && value
-        
+
         key = key.strip
         value = value.strip.gsub(/^["']|["']$/, '') # Remove quotes
-        
+
         ENV[key] = value
         Rails.logger.info "Loaded ENV[#{key}] = #{value[0..20]}..."
       end

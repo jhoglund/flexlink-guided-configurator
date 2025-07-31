@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
     @categories = get_product_categories
     @types = get_product_types
     @total_count = @products.count
-    
+
     respond_to do |format|
       format.html
       format.json { render json: { products: @products, meta: { total: @total_count } } }
@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
 
   def show
     @related_products = find_related_products(@product)
-    
+
     respond_to do |format|
       format.html
       format.json { render json: { product: @product, related: @related_products } }
@@ -27,12 +27,12 @@ class ProductsController < ApplicationController
     category = params[:category]
     product_type = params[:type]
     price_range = params[:price_range]
-    
+
     @products = search_products(query, category, product_type, price_range)
     @categories = get_product_categories
     @types = get_product_types
     @total_count = @products.count
-    
+
     respond_to do |format|
       format.html { render :index }
       format.json { render json: { products: @products, meta: { total: @total_count, query: query } } }
@@ -45,7 +45,7 @@ class ProductsController < ApplicationController
     @categories = get_product_categories
     @types = get_product_types
     @total_count = @products.count
-    
+
     respond_to do |format|
       format.html { render :index }
       format.json { render json: { products: @products, meta: { total: @total_count, category: @category } } }
@@ -58,7 +58,7 @@ class ProductsController < ApplicationController
     @categories = get_product_categories
     @types = get_product_types
     @total_count = @products.count
-    
+
     respond_to do |format|
       format.html { render :index }
       format.json { render json: { products: @products, meta: { total: @total_count, type: @type } } }
@@ -69,78 +69,85 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = find_product_by_id(params[:id])
-    unless @product
-      redirect_to products_path, alert: "Product not found."
-    end
+    return if @product
+
+    redirect_to products_path, alert: 'Product not found.'
   end
 
   def load_products
     # Load all available products from different sources
     products = []
-    
-    # Add system specifications as products
-    products += get_system_specifications_products
-    
-    # Add component specifications as products
-    products += get_component_specifications_products
-    
+
+    # Add systems as products
+    products += get_systems_products
+
+    # Add components as products
+    products += get_components_products
+
     # Add fallback products if no data from Supabase
-    if products.empty?
-      products = get_fallback_products
-    end
-    
+    products = get_fallback_products if products.empty?
+
     # Apply sorting and pagination
     sort_products(products, params[:sort], params[:order])
   end
 
-  def get_system_specifications_products
-    begin
-      supabase_service = SupabaseService.new
-      systems = supabase_service.get_conveyor_systems
-      
-      systems.map do |system|
-        {
-          id: "system_#{system['id']}",
-          name: system['name'],
-          description: system['description'],
-          category: 'Conveyor Systems',
-          type: 'conveyor_system',
-          price: nil, # Price not available in conveyor_systems table
-          specifications: system['features'] || [],
-          brand: 'FlexLink',
-          image_url: system['image_url'],
-          source: 'supabase'
-        }
-      end
-    rescue => e
-      Rails.logger.error "Failed to load system specifications: #{e.message}"
-      []
+  def get_systems_products
+    systems = System.all
+
+    systems.map do |system|
+      {
+        id: "system_#{system.system_code}",
+        name: system.system_name,
+        description: system.description,
+        category: system.category || 'Conveyor Systems',
+        type: 'system',
+        price: nil, # Price not available in systems table
+        specifications: system.key_features || [],
+        brand: 'FlexLink',
+        image_url: nil,
+        source: 'supabase',
+        system_code: system.system_code,
+        load_capacity: system.load_capacity,
+        speed_range: system.speed_range,
+        precision_level: system.precision_level,
+        materials: system.materials,
+        applications: system.applications,
+        advantages: system.advantages
+      }
     end
+  rescue StandardError => e
+    Rails.logger.error "Failed to load systems: #{e.message}"
+    []
   end
 
-  def get_component_specifications_products
-    begin
-      supabase_service = SupabaseService.new
-      components = supabase_service.get_component_specifications
-      
-      components.map do |component|
-        {
-          id: "component_#{component['id']}",
-          name: component['name'],
-          description: component['description'],
-          category: 'Component Specifications',
-          type: component['component_type'],
-          price: component['price_euro'], # Use price_euro from the schema
-          specifications: component['specifications'] || [],
-          brand: 'FlexLink',
-          image_url: component['image_url'],
-          source: 'supabase'
-        }
-      end
-    rescue => e
-      Rails.logger.error "Failed to load component specifications: #{e.message}"
-      []
+  def get_components_products
+    components = Component.all
+
+    components.map do |component|
+      {
+        id: "component_#{component.id}",
+        name: component.name,
+        description: component.description,
+        category: 'Components',
+        type: component.component_type,
+        price: component.price,
+        specifications: component.specifications&.values || [],
+        brand: 'FlexLink',
+        image_url: nil,
+        source: 'supabase',
+        system_code: component.system_code,
+        manufacturer: component.manufacturer,
+        part_number: component.part_number,
+        dimensions: component.dimensions,
+        weight: component.weight,
+        material: component.material,
+        color: component.color,
+        compatibility: component.compatibility
+      }
     end
+  rescue StandardError => e
+    Rails.logger.error "Failed to load components: #{e.message}"
+    []
   end
 
   def get_fallback_products
@@ -223,28 +230,26 @@ class ProductsController < ApplicationController
 
   def search_products(query, category, product_type, price_range)
     products = load_products
-    
+
     # Filter by query
     if query.present?
       products = products.select do |product|
         product[:name].downcase.include?(query.downcase) ||
-        product[:description].downcase.include?(query.downcase) ||
-        product[:category].downcase.include?(query.downcase) ||
-        product[:type].downcase.include?(query.downcase) ||
-        (product[:specifications] && product[:specifications].any? { |spec| spec.to_s.downcase.include?(query.downcase) })
+          product[:description].downcase.include?(query.downcase) ||
+          product[:category].downcase.include?(query.downcase) ||
+          product[:type].downcase.include?(query.downcase) ||
+          (product[:specifications] && product[:specifications].any? do |spec|
+            spec.to_s.downcase.include?(query.downcase)
+          end)
       end
     end
-    
+
     # Filter by category
-    if category.present?
-      products = products.select { |product| product[:category].downcase == category.downcase }
-    end
-    
+    products = products.select { |product| product[:category].downcase == category.downcase } if category.present?
+
     # Filter by type
-    if product_type.present?
-      products = products.select { |product| product[:type].downcase == product_type.downcase }
-    end
-    
+    products = products.select { |product| product[:type].downcase == product_type.downcase } if product_type.present?
+
     # Filter by price range
     if price_range.present?
       products = products.select do |product|
@@ -263,7 +268,7 @@ class ProductsController < ApplicationController
         end
       end
     end
-    
+
     sort_products(products, params[:sort], params[:order])
   end
 
@@ -285,8 +290,8 @@ class ProductsController < ApplicationController
   def find_related_products(product)
     products = load_products
     products.select do |p|
-      p[:id] != product[:id] && 
-      (p[:category] == product[:category] || p[:type] == product[:type])
+      p[:id] != product[:id] &&
+        (p[:category] == product[:category] || p[:type] == product[:type])
     end.first(4)
   end
 
@@ -311,8 +316,8 @@ class ProductsController < ApplicationController
     else
       products.sort_by! { |p| p[:name] }
     end
-    
+
     products.reverse! if order == 'desc'
     products
   end
-end 
+end
