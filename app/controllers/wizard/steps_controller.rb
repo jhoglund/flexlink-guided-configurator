@@ -1,7 +1,7 @@
 class Wizard::StepsController < ApplicationController
   before_action :ensure_wizard_session
-  before_action :validate_step, only: [:show, :update]
-  
+  before_action :validate_step, only: %i[show update]
+
   # Step definitions
   STEPS = {
     1 => { name: 'system_type', title: 'System Type Selection' },
@@ -13,17 +13,17 @@ class Wizard::StepsController < ApplicationController
     7 => { name: 'component_selection_4', title: 'Component Selection 4' },
     8 => { name: 'review', title: 'Review and Complete' }
   }
-  
+
   TOTAL_STEPS = STEPS.length
 
   def show
     @step = params[:step].to_i
     @step_data = @wizard_session.get_step_data(@step)
     @step_config = STEPS[@step]
-    
+
     Rails.logger.info "Showing step #{@step} for wizard session #{@wizard_session.id}"
     Rails.logger.info "Step data: #{@step_data.inspect}"
-    
+
     # Load data based on step
     case @step
     when 1
@@ -39,42 +39,42 @@ class Wizard::StepsController < ApplicationController
     when 8
       @configuration_summary = build_configuration_summary
     end
-    
+
     render "wizard/steps/step_#{@step}"
   end
 
   def update
-    Rails.logger.info "=== UPDATE ACTION CALLED ==="
+    Rails.logger.info '=== UPDATE ACTION CALLED ==='
     Rails.logger.info "Params: #{params.inspect}"
-    
+
     @step = params[:step].to_i
     step_params = params[:wizard_step] || {}
-    
+
     Rails.logger.info "Wizard update called for step #{@step}"
     Rails.logger.info "Step params: #{step_params.inspect}"
-    
+
     # Validate step data
     if valid_step_data?(@step, step_params)
-      Rails.logger.info "Step data is valid, updating wizard session"
+      Rails.logger.info 'Step data is valid, updating wizard session'
       @wizard_session.update_step_data(@step, step_params)
       @wizard_session.update(current_step: @step)
-      
+
       # Move to next step or complete
       if @step < TOTAL_STEPS
         Rails.logger.info "Redirecting to step #{@step + 1}"
         redirect_to wizard_step_path(@step + 1)
       else
-        Rails.logger.info "Redirecting to summary"
+        Rails.logger.info 'Redirecting to summary'
         redirect_to wizard_summary_path
       end
     else
       Rails.logger.info "Step data is invalid, re-rendering step #{@step}"
       @step_data = step_params
       @step_config = STEPS[@step]
-      flash.now[:error] = "Please correct the errors below."
+      flash.now[:error] = 'Please correct the errors below.'
       render "wizard/steps/step_#{@step}"
     end
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Error in update action: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
     raise e
@@ -88,7 +88,8 @@ class Wizard::StepsController < ApplicationController
 
   def complete
     # Create configuration from wizard session
-    configuration = current_user.configurations.create!(
+    user = User.first
+    configuration = user.configurations.create!(
       name: @wizard_session.get_data('configuration_name') || "Configuration #{Time.current.strftime('%Y%m%d_%H%M%S')}",
       system_type: @wizard_session.get_data('system_type'),
       status: 'completed',
@@ -96,7 +97,7 @@ class Wizard::StepsController < ApplicationController
       system_specifications: @wizard_session.get_data('system_specifications'),
       completed_at: Time.current
     )
-    
+
     # Create component selections
     @wizard_session.component_selections.each do |selection_data|
       configuration.component_selections.create!(
@@ -108,17 +109,17 @@ class Wizard::StepsController < ApplicationController
         notes: selection_data['notes']
       )
     end
-    
+
     # Mark wizard session as completed
     @wizard_session.update(status: 'completed')
-    
+
     flash[:success] = "Configuration '#{configuration.name}' completed successfully!"
     redirect_to configuration_path(configuration)
   end
 
   def reset
     @wizard_session.destroy
-    redirect_to root_path, notice: "Configuration wizard reset. You can start a new configuration."
+    redirect_to root_path, notice: 'Configuration wizard reset. You can start a new configuration.'
   end
 
   private
@@ -129,40 +130,38 @@ class Wizard::StepsController < ApplicationController
     #   redirect_to root_path, alert: "Please log in to access the configuration wizard."
     #   return
     # end
-    
+
     # Use the first user for testing
     @current_user = User.first
     Rails.logger.info "Current user: #{@current_user.inspect}"
-    
+
     @wizard_session = current_wizard_session || create_wizard_session
     Rails.logger.info "Wizard session: #{@wizard_session.inspect}"
   end
 
   def create_wizard_session
-    begin
-      session = current_user.wizard_sessions.create!(
-        status: 'active',
-        current_step: 1
-      )
-      session
-    rescue => e
-      Rails.logger.error "Failed to create wizard session: #{e.message}"
-      Rails.logger.error e.backtrace.join("\n")
-      raise e
-    end
+    user = User.first
+    user.wizard_sessions.create!(
+      status: 'active',
+      current_step: 1
+    )
+  rescue StandardError => e
+    Rails.logger.error "Failed to create wizard session: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    raise e
   end
 
   def validate_step
-    Rails.logger.info "=== VALIDATE_STEP CALLED ==="
+    Rails.logger.info '=== VALIDATE_STEP CALLED ==='
     Rails.logger.info "Step param: #{params[:step]}"
     step = params[:step].to_i
     Rails.logger.info "Step as integer: #{step}"
     Rails.logger.info "STEPS keys: #{STEPS.keys}"
-    unless STEPS.key?(step)
-      Rails.logger.info "Invalid step, redirecting to step 1"
-      redirect_to wizard_step_path(1), alert: "Invalid step."
+    if STEPS.key?(step)
+      Rails.logger.info 'Step validation passed'
     else
-      Rails.logger.info "Step validation passed"
+      Rails.logger.info 'Invalid step, redirecting to step 1'
+      redirect_to wizard_step_path(1), alert: 'Invalid step.'
     end
   end
 
@@ -206,9 +205,9 @@ class Wizard::StepsController < ApplicationController
   # Fallback data methods for when Supabase is not available
   def get_fallback_system_types
     {
-      'Belt Conveyors' => ['belt_conveyor', 'modular_belt', 'chain_conveyor'],
-      'Roller Conveyors' => ['roller_conveyor', 'gravity_roller', 'powered_roller'],
-      'Specialty Conveyors' => ['screw_conveyor', 'pneumatic_conveyor', 'overhead_conveyor']
+      'Belt Conveyors' => %w[belt_conveyor modular_belt chain_conveyor],
+      'Roller Conveyors' => %w[roller_conveyor gravity_roller powered_roller],
+      'Specialty Conveyors' => %w[screw_conveyor pneumatic_conveyor overhead_conveyor]
     }
   end
 
@@ -232,7 +231,7 @@ class Wizard::StepsController < ApplicationController
   end
 
   def get_fallback_component_types
-    ['belt', 'roller', 'motor', 'sensor', 'controller', 'frame', 'accessory']
+    %w[belt roller motor sensor controller frame accessory]
   end
 
   def get_fallback_components(component_type)
@@ -266,4 +265,4 @@ class Wizard::StepsController < ApplicationController
       }
     ]
   end
-end 
+end

@@ -26,19 +26,10 @@
             </div>
           </div>
           <div class="hidden sm:ml-6 sm:flex sm:items-center">
-            <% if user_signed_in? %>
-              <div class="ml-3 relative">
-                <div class="flex items-center space-x-4">
-                  <span class="text-white text-sm"><%= current_user.full_name %></span>
-                  <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "text-white hover:text-blue-200 text-sm font-medium transition-colors" %>
-                </div>
-              </div>
-            <% else %>
-              <div class="flex space-x-4">
-                <%= link_to "Sign In", new_user_session_path, class: "text-white hover:text-blue-200 text-sm font-medium transition-colors" %>
-                <%= link_to "Sign Up", new_user_registration_path, class: "bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-md text-sm font-medium transition-colors" %>
-              </div>
-            <% end %>
+            <div class="flex space-x-4">
+              <%= link_to "Products", products_path, class: "text-white hover:text-blue-200 text-sm font-medium transition-colors" %>
+              <%= link_to "Health Check", health_path, class: "text-white hover:text-blue-200 text-sm font-medium transition-colors" %>
+            </div>
           </div>
           <!-- Mobile menu button -->
           <div class="flex items-center sm:hidden">

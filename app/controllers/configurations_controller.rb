@@ -1,18 +1,19 @@
 class ConfigurationsController < ApplicationController
-  before_action :set_configuration, only: [:show, :edit, :update, :destroy, :export, :duplicate, :status]
+  before_action :set_configuration, only: %i[show edit update destroy export duplicate status]
 
   def index
-    @configurations = current_user.configurations
-      .includes(:component_selections)
-      .order(updated_at: :desc)
-      .page(params[:page])
-      .per(20)
-    
+    user = User.first # Use first user for demo (no authentication)
+    @configurations = user.configurations
+                          .includes(:component_selections)
+                          .order(updated_at: :desc)
+                          .page(params[:page])
+                          .per(20)
+
     @stats = {
-      total: current_user.configurations.count,
-      completed: current_user.configurations.completed.count,
-      active: current_user.configurations.active.count,
-      total_value: current_user.configurations.joins(:component_selections).sum('component_selections.price * component_selections.quantity')
+      total: user.configurations.count,
+      completed: user.configurations.completed.count,
+      active: user.configurations.active.count,
+      total_value: user.configurations.joins(:component_selections).sum('component_selections.price * component_selections.quantity')
     }
   end
 
@@ -23,12 +24,14 @@ class ConfigurationsController < ApplicationController
   end
 
   def new
-    @configuration = current_user.configurations.build
+    user = User.first
+    @configuration = user.configurations.build
   end
 
   def create
-    @configuration = current_user.configurations.build(configuration_params)
-    
+    user = User.first
+    @configuration = user.configurations.build(configuration_params)
+
     if @configuration.save
       redirect_to @configuration, notice: 'Configuration created successfully.'
     else
@@ -75,7 +78,7 @@ class ConfigurationsController < ApplicationController
     new_configuration.name = "#{@configuration.name} (Copy)"
     new_configuration.status = 'draft'
     new_configuration.completed_at = nil
-    
+
     if new_configuration.save
       # Duplicate component selections
       @configuration.component_selections.each do |selection|
@@ -88,7 +91,7 @@ class ConfigurationsController < ApplicationController
           notes: selection.notes
         )
       end
-      
+
       redirect_to new_configuration, notice: 'Configuration duplicated successfully.'
     else
       redirect_to @configuration, alert: 'Failed to duplicate configuration.'
@@ -97,7 +100,7 @@ class ConfigurationsController < ApplicationController
 
   def status
     new_status = params[:status]
-    
+
     if %w[draft in_progress completed].include?(new_status)
       @configuration.update(status: new_status)
       redirect_to @configuration, notice: "Configuration status updated to #{new_status.humanize}."
@@ -107,17 +110,19 @@ class ConfigurationsController < ApplicationController
   end
 
   def templates
-    @templates = current_user.configurations.completed.limit(10)
+    user = User.first
+    @templates = user.configurations.completed.limit(10)
   end
 
   def from_template
-    template = current_user.configurations.find(params[:template_id])
-    
+    user = User.first
+    template = user.configurations.find(params[:template_id])
+
     new_configuration = template.dup
     new_configuration.name = "Configuration from #{template.name}"
     new_configuration.status = 'draft'
     new_configuration.completed_at = nil
-    
+
     if new_configuration.save
       # Copy component selections
       template.component_selections.each do |selection|
@@ -130,7 +135,7 @@ class ConfigurationsController < ApplicationController
           notes: selection.notes
         )
       end
-      
+
       redirect_to new_configuration, notice: 'Configuration created from template successfully.'
     else
       redirect_to templates_configurations_path, alert: 'Failed to create configuration from template.'
@@ -140,7 +145,8 @@ class ConfigurationsController < ApplicationController
   private
 
   def set_configuration
-    @configuration = current_user.configurations.find(params[:id])
+    user = User.first
+    @configuration = user.configurations.find(params[:id])
   end
 
   def configuration_params
@@ -155,15 +161,15 @@ class ConfigurationsController < ApplicationController
 
   def generate_csv_export(configuration)
     require 'csv'
-    
+
     CSV.generate do |csv|
       csv << ['Configuration', configuration.name]
       csv << ['System Type', configuration.system_type]
       csv << ['Status', configuration.status]
       csv << ['Total Price', configuration.total_price]
       csv << []
-      csv << ['Component', 'Type', 'Quantity', 'Price', 'Notes']
-      
+      csv << %w[Component Type Quantity Price Notes]
+
       configuration.component_selections.each do |selection|
         csv << [
           selection.component_name,
@@ -175,4 +181,4 @@ class ConfigurationsController < ApplicationController
       end
     end
   end
-end 
+end
