@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
-  # Devise routes for authentication
-  devise_for :users
-  
   # Root route
   root 'home#index'
-  
+
   # Dashboard
   get 'dashboard', to: 'home#dashboard'
-  
+
   # Wizard routes for guided configuration
   namespace :wizard do
     get 'step/:step', to: 'steps#show', as: :step
@@ -16,7 +13,7 @@ Rails.application.routes.draw do
     post 'complete', to: 'steps#complete', as: :complete
     delete 'reset', to: 'steps#reset', as: :reset
   end
-  
+
   # Configuration management
   resources :configurations do
     member do
@@ -29,16 +26,16 @@ Rails.application.routes.draw do
       post 'from_template'
     end
   end
-  
+
   # Product data management
-  resources :products, only: [:index, :show] do
+  resources :products, only: %i[index show] do
     collection do
       get 'search'
       get 'by_category/:category', to: 'products#by_category', as: :by_category
       get 'by_type/:type', to: 'products#by_type', as: :by_type
     end
   end
-  
+
   # API routes for Supabase integration
   namespace :api do
     namespace :v1 do
@@ -49,7 +46,7 @@ Rails.application.routes.draw do
       get 'system_specifications', to: 'supabase#system_specifications'
     end
   end
-  
+
   # Health check
   get 'health', to: 'health#index'
-end 
+end

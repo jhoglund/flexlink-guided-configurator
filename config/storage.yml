@@ -1,0 +1,56 @@
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
+# Use Amazon S3 to store uploaded files.
+#
+# Add the `aws-sdk-s3` gem to your Gemfile:
+#
+#   gem "aws-sdk-s3", require: false
+#
+# Uncomment the following block to configure S3 as the storage backend:
+#
+# amazon:
+#   service: S3
+#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
+#   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+#   region: your-region
+#   bucket: your-bucket-name
+
+# Use Google Cloud Storage to store uploaded files.
+#
+# Add the `google-cloud-storage` gem to your Gemfile:
+#
+#   gem "google-cloud-storage", "~> 1.11", require: false
+#
+# Uncomment the following block to configure Google Cloud Storage as the storage backend:
+#
+# google:
+#   service: GCS
+#   project: your-project-id
+#   credentials: <%= Rails.root.join("path/to/keyfile.json") %>
+#   bucket: your-bucket-name
+
+# Use Microsoft Azure Storage to store uploaded files.
+#
+# Add the `azure-storage-blob` gem to your Gemfile:
+#
+#   gem "azure-storage-blob", require: false
+#
+# Uncomment the following block to configure Azure Storage as the storage backend:
+#
+# azure:
+#   service: AzureStorage
+#   storage_account_name: your-storage-account-name
+#   storage_access_key: your-storage-access-key
+#   container: your-container-name
+
+# Mirror the filesystem for local development. This is used in combination
+# with the `:local` service above to provide a fully featured file
+# upload development environment. You can put files in either `storage/`
+# or `public/` and they'll be served and stored respectively.
+#
+# mirror:
+#   service: Mirror
+#   primary: local
+#   mirrors: [amazon, google, azure] 

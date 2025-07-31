@@ -1,19 +1,8 @@
 class ApplicationController < ActionController::Base
-  # before_action :authenticate_user!
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
-  # Include Devise helper methods
-  include Devise::Controllers::Helpers
-
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :bad_request
 
   private
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name company])
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[name company])
-  end
 
   def not_found
     render json: { error: 'Resource not found' }, status: :not_found

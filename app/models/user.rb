@@ -1,7 +1,4 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-
   # Associations
   has_many :configurations, dependent: :destroy
   has_many :wizard_sessions, dependent: :destroy
@@ -21,13 +18,13 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}".strip.presence || email.split('@').first
   end
-  
+
   def name
     full_name
   end
 
   def active_configurations
-    configurations.where(status: ['draft', 'in_progress'])
+    configurations.where(status: %w[draft in_progress])
   end
 
   def completed_configurations
@@ -49,4 +46,4 @@ class User < ApplicationRecord
   def components_count
     component_selections.count
   end
-end 
+end
