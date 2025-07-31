@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 
   def dashboard
     # Use the first user for demo purposes (no authentication)
-    user = User.first
+    user = User.first || create_default_user
 
     @configurations_count = user&.configurations&.count || 0
     @completed_count = user&.completed_configurations&.count || 0
@@ -44,5 +44,20 @@ class HomeController < ApplicationController
         }
       end
     end
+  end
+
+  private
+
+  def create_default_user
+    User.create!(
+      email: 'demo@flexlink.com',
+      first_name: 'Demo',
+      last_name: 'User',
+      company: 'FlexLink Demo'
+    )
+  rescue StandardError => e
+    Rails.logger.error "Failed to create default user: #{e.message}"
+    # Return a user even if creation fails (for demo purposes)
+    User.new(email: 'demo@flexlink.com', first_name: 'Demo', last_name: 'User')
   end
 end

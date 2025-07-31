@@ -2,7 +2,7 @@ class ConfigurationsController < ApplicationController
   before_action :set_configuration, only: %i[show edit update destroy export duplicate status]
 
   def index
-    user = User.first # Use first user for demo (no authentication)
+    user = User.first || create_default_user # Use first user for demo (no authentication)
     @configurations = user.configurations
                           .includes(:component_selections)
                           .order(updated_at: :desc)
@@ -24,12 +24,12 @@ class ConfigurationsController < ApplicationController
   end
 
   def new
-    user = User.first
+    user = User.first || create_default_user
     @configuration = user.configurations.build
   end
 
   def create
-    user = User.first
+    user = User.first || create_default_user
     @configuration = user.configurations.build(configuration_params)
 
     if @configuration.save
@@ -110,12 +110,12 @@ class ConfigurationsController < ApplicationController
   end
 
   def templates
-    user = User.first
+    user = User.first || create_default_user
     @templates = user.configurations.completed.limit(10)
   end
 
   def from_template
-    user = User.first
+    user = User.first || create_default_user
     template = user.configurations.find(params[:template_id])
 
     new_configuration = template.dup
@@ -145,12 +145,25 @@ class ConfigurationsController < ApplicationController
   private
 
   def set_configuration
-    user = User.first
+    user = User.first || create_default_user
     @configuration = user.configurations.find(params[:id])
   end
 
   def configuration_params
     params.require(:configuration).permit(:name, :description, :system_type, :status, :system_specifications)
+  end
+
+  def create_default_user
+    User.create!(
+      email: 'demo@flexlink.com',
+      first_name: 'Demo',
+      last_name: 'User',
+      company: 'FlexLink Demo'
+    )
+  rescue StandardError => e
+    Rails.logger.error "Failed to create default user: #{e.message}"
+    # Return a user even if creation fails (for demo purposes)
+    User.new(email: 'demo@flexlink.com', first_name: 'Demo', last_name: 'User')
   end
 
   def generate_pdf_export(configuration)

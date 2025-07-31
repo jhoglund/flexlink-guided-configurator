@@ -88,7 +88,7 @@ class Wizard::StepsController < ApplicationController
 
   def complete
     # Create configuration from wizard session
-    user = User.first
+    user = User.first || create_default_user
     configuration = user.configurations.create!(
       name: @wizard_session.get_data('configuration_name') || "Configuration #{Time.current.strftime('%Y%m%d_%H%M%S')}",
       system_type: @wizard_session.get_data('system_type'),
@@ -131,8 +131,8 @@ class Wizard::StepsController < ApplicationController
     #   return
     # end
 
-    # Use the first user for testing
-    @current_user = User.first
+    # Use the first user or create one if none exists
+    @current_user = User.first || create_default_user
     Rails.logger.info "Current user: #{@current_user.inspect}"
 
     @wizard_session = current_wizard_session || create_wizard_session
@@ -140,7 +140,7 @@ class Wizard::StepsController < ApplicationController
   end
 
   def create_wizard_session
-    user = User.first
+    user = User.first || create_default_user
     user.wizard_sessions.create!(
       status: 'active',
       current_step: 1
@@ -149,6 +149,19 @@ class Wizard::StepsController < ApplicationController
     Rails.logger.error "Failed to create wizard session: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
     raise e
+  end
+
+  def create_default_user
+    User.create!(
+      email: 'demo@flexlink.com',
+      first_name: 'Demo',
+      last_name: 'User',
+      company: 'FlexLink Demo'
+    )
+  rescue StandardError => e
+    Rails.logger.error "Failed to create default user: #{e.message}"
+    # Return a user even if creation fails (for demo purposes)
+    User.new(email: 'demo@flexlink.com', first_name: 'Demo', last_name: 'User')
   end
 
   def validate_step
