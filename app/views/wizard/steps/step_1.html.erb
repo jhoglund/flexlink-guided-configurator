@@ -1,30 +1,32 @@
-<div class="wizard-container">
+<div class="max-w-6xl mx-auto p-5">
   <%= render 'wizard/steps/wizard_header' %>
 
   <div class="wizard-content">
     <%= form_with url: wizard_update_step_path(1), method: :patch, local: true, class: "wizard-form" do |form| %>
-      <div class="system-types-grid">
+      <div class="space-y-8 mb-10">
         <% @system_types.each do |category, types| %>
           <div class="system-category">
-            <h3><%= category.humanize %></h3>
-            <div class="system-types">
+            <h3 class="text-xl font-semibold text-gray-900 mb-5 pb-3 border-b-2 border-gray-200"><%= category.humanize %></h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <% types.each do |system_type| %>
-                <div class="system-type-card">
+                <div class="system-type-card relative">
                   <input type="radio" 
                          name="wizard_step[system_type]" 
                          id="system_type_<%= system_type.parameterize %>"
                          value="<%= system_type %>"
+                         class="hidden"
                          <%= 'checked' if @step_data&.dig('system_type') == system_type %>>
-                  <label for="system_type_<%= system_type.parameterize %>">
+                  <label for="system_type_<%= system_type.parameterize %>" 
+                         class="block cursor-pointer border-2 border-gray-200 rounded-xl p-5 transition-all duration-300 bg-white hover:border-red-300 hover:shadow-md">
                     <div class="card-content">
-                      <h4><%= system_type.humanize %></h4>
-                      <p class="description">
+                      <h4 class="text-lg font-semibold text-gray-900 mb-3"><%= system_type.humanize %></h4>
+                      <p class="description text-gray-600 mb-4 leading-relaxed">
                         <%= get_system_type_description(system_type) %>
                       </p>
-                      <div class="features">
-                        <span class="feature">✓ Modular design</span>
-                        <span class="feature">✓ Easy maintenance</span>
-                        <span class="feature">✓ Customizable</span>
+                      <div class="features space-y-2">
+                        <span class="feature text-green-600 text-sm font-medium block">✓ Modular design</span>
+                        <span class="feature text-green-600 text-sm font-medium block">✓ Easy maintenance</span>
+                        <span class="feature text-green-600 text-sm font-medium block">✓ Customizable</span>
                       </div>
                     </div>
                   </label>
@@ -35,185 +37,46 @@
         <% end %>
       </div>
 
-      <div class="wizard-actions">
-        <div class="action-buttons">
-          <%= link_to "Cancel", root_path, class: "btn btn-secondary" %>
-          <%= form.submit "Continue to Step 2", class: "btn btn-primary" %>
+      <div class="text-center pt-8 border-t border-gray-200">
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <%= link_to "Cancel", root_path, class: "px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors" %>
+          <%= form.submit "Continue to Step 2", class: "px-6 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 hover:transform hover:-translate-y-0.5 transition-all duration-200 shadow-md" %>
         </div>
       </div>
     <% end %>
   </div>
 </div>
 
-<style>
-.wizard-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.wizard-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.wizard-header h1 {
-  color: #2c3e50;
-  margin-bottom: 10px;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background-color: #ecf0f1;
-  border-radius: 4px;
-  margin: 20px 0;
-  overflow: hidden;
-}
-
-.progress {
-  height: 100%;
-  background: linear-gradient(90deg, #3498db, #2980b9);
-  transition: width 0.3s ease;
-}
-
-.step-description {
-  color: #7f8c8d;
-  font-size: 16px;
-}
-
-.system-types-grid {
-  display: grid;
-  gap: 30px;
-  margin-bottom: 40px;
-}
-
-.system-category h3 {
-  color: #2c3e50;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #ecf0f1;
-}
-
-.system-types {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.system-type-card {
-  position: relative;
-}
-
-.system-type-card input[type="radio"] {
-  display: none;
-}
-
-.system-type-card label {
-  display: block;
-  cursor: pointer;
-  border: 2px solid #ecf0f1;
-  border-radius: 12px;
-  padding: 20px;
-  transition: all 0.3s ease;
-  background: white;
-}
-
-.system-type-card input[type="radio"]:checked + label {
-  border-color: #3498db;
-  box-shadow: 0 4px 20px rgba(52, 152, 219, 0.2);
-  transform: translateY(-2px);
-}
-
-.card-content h4 {
-  color: #2c3e50;
-  margin-bottom: 10px;
-  font-size: 18px;
-}
-
-.card-content .description {
-  color: #7f8c8d;
-  margin-bottom: 15px;
-  line-height: 1.5;
-}
-
-.features {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.feature {
-  color: #27ae60;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.wizard-actions {
-  text-align: center;
-  padding-top: 30px;
-  border-top: 1px solid #ecf0f1;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-}
-
-.btn-secondary {
-  background: #ecf0f1;
-  color: #7f8c8d;
-}
-
-.btn-secondary:hover {
-  background: #d5dbdb;
-  color: #2c3e50;
-}
-
-@media (max-width: 768px) {
-  .system-types {
-    grid-template-columns: 1fr;
-  }
-  
-  .action-buttons {
-    flex-direction: column;
-  }
-}
-</style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Add smooth transitions for card selection
   const cards = document.querySelectorAll('.system-type-card label');
+  const inputs = document.querySelectorAll('.system-type-card input[type="radio"]');
   
-  cards.forEach(card => {
-    card.addEventListener('click', function() {
-      // Remove active class from all cards
-      cards.forEach(c => c.classList.remove('active'));
-      // Add active class to clicked card
-      this.classList.add('active');
+  inputs.forEach(input => {
+    input.addEventListener('change', function() {
+      // Remove active styling from all cards
+      cards.forEach(card => {
+        card.classList.remove('border-red-500', 'shadow-lg', 'transform', '-translate-y-1');
+        card.classList.add('border-gray-200');
+      });
+      
+      // Add active styling to selected card
+      if (this.checked) {
+        const label = this.nextElementSibling;
+        label.classList.remove('border-gray-200');
+        label.classList.add('border-red-500', 'shadow-lg', 'transform', '-translate-y-1');
+      }
     });
+  });
+  
+  // Initialize active state for pre-selected cards
+  inputs.forEach(input => {
+    if (input.checked) {
+      const label = input.nextElementSibling;
+      label.classList.remove('border-gray-200');
+      label.classList.add('border-red-500', 'shadow-lg', 'transform', '-translate-y-1');
+    }
   });
 });
 </script>

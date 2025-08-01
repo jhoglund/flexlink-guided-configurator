@@ -1,171 +1,46 @@
-<div class="wizard-header">
-  <div class="wizard-navigation">
-    <%= link_to root_path, class: "back-link" do %>
-      <i class="fas fa-arrow-left"></i>
+<div class="bg-gradient-to-br from-red-600 to-red-700 text-white p-8 rounded-xl mb-8 shadow-lg">
+  <div class="flex flex-col lg:flex-row justify-between items-center mb-6">
+    <%= link_to root_path, class: "text-red-100 hover:text-white text-sm transition-colors mb-4 lg:mb-0" do %>
+      <i class="fas fa-arrow-left mr-2"></i>
       Back to Dashboard
     <% end %>
-    <div class="wizard-progress">
-      <div class="progress-info">
+    <div class="wizard-progress flex-1 max-w-md mx-4">
+      <div class="flex justify-between mb-2 text-sm">
         <span class="step-number">Step <%= @step %> of 8</span>
         <span class="progress-percentage"><%= wizard_progress_percentage(@step) %>%</span>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill" style="width: <%= wizard_progress_percentage(@step) %>%"></div>
+      <div class="w-full h-2 bg-red-500 bg-opacity-30 rounded-full overflow-hidden">
+        <div class="progress-fill h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-500" 
+             style="width: <%= wizard_progress_percentage(@step) %>%"></div>
       </div>
     </div>
     <%= link_to "Reset Wizard", wizard_reset_path, 
         method: :delete, 
-        class: "reset-link",
+        class: "text-red-100 hover:text-white text-sm transition-colors",
         data: { confirm: "Are you sure you want to reset the wizard? All progress will be lost." } %>
   </div>
-  <div class="wizard-title">
-    <h1><%= wizard_step_title(@step) %></h1>
-    <p class="step-description"><%= wizard_step_description(@step) %></p>
+  <div class="text-center mb-6">
+    <h1 class="text-3xl font-semibold mb-3"><%= wizard_step_title(@step) %></h1>
+    <p class="text-red-100 text-lg"><%= wizard_step_description(@step) %></p>
   </div>
-  <div class="wizard-breadcrumb">
+  <div class="flex justify-center gap-4">
     <% (1..8).each do |step_num| %>
       <% if step_num < @step %>
-        <span class="breadcrumb-step completed" title="<%= wizard_step_title(step_num) %>">
+        <span class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center font-semibold text-sm transition-all duration-300 hover:scale-105" 
+              title="<%= wizard_step_title(step_num) %>">
           <i class="fas fa-check"></i>
         </span>
       <% elsif step_num == @step %>
-        <span class="breadcrumb-step current" title="<%= wizard_step_title(step_num) %>">
+        <span class="w-10 h-10 rounded-full bg-white text-red-600 flex items-center justify-center font-semibold text-sm transform scale-110 transition-all duration-300" 
+              title="<%= wizard_step_title(step_num) %>">
           <%= step_num %>
         </span>
       <% else %>
-        <span class="breadcrumb-step" title="<%= wizard_step_title(step_num) %>">
+        <span class="w-10 h-10 rounded-full bg-red-500 bg-opacity-30 text-red-100 flex items-center justify-center font-semibold text-sm transition-all duration-300 hover:scale-105" 
+              title="<%= wizard_step_title(step_num) %>">
           <%= step_num %>
         </span>
       <% end %>
     <% end %>
   </div>
 </div>
-<style>
-  .wizard-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px 20px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  .wizard-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .back-link, .reset-link {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s ease;
-  }
-
-  .back-link:hover, .reset-link:hover {
-    color: white;
-  }
-
-  .wizard-progress {
-    flex: 1;
-    max-width: 400px;
-    margin: 0 20px;
-  }
-
-  .progress-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-
-  .progress-bar {
-    width: 100%;
-    height: 6px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #4ade80, #22c55e);
-    transition: width 0.5s ease;
-  }
-
-  .wizard-title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .wizard-title h1 {
-    margin: 0 0 10px 0;
-    font-size: 28px;
-    font-weight: 600;
-  }
-
-  .step-description {
-    margin: 0;
-    opacity: 0.9;
-    font-size: 16px;
-  }
-
-  .wizard-breadcrumb {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-
-  .breadcrumb-step {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .breadcrumb-step.completed {
-    background-color: #22c55e;
-    color: white;
-  }
-
-  .breadcrumb-step.current {
-    background-color: white;
-    color: #667eea;
-    transform: scale(1.1);
-  }
-
-  .breadcrumb-step:hover {
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 768px) {
-    .wizard-navigation {
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .wizard-progress {
-      max-width: 100%;
-      margin: 0;
-    }
-
-    .wizard-breadcrumb {
-      gap: 10px;
-    }
-
-    .breadcrumb-step {
-      width: 35px;
-      height: 35px;
-      font-size: 12px;
-    }
-  }
-</style>

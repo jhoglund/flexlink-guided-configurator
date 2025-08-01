@@ -1,0 +1,32 @@
+{
+    "name": "flexlink-guided-configurator",
+    "version": "2.0.0",
+    "description": "Guided configuration tool for FlexLink conveyor belt systems",
+    "main": "index.js",
+    "scripts": {
+        "build:css": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./public/assets/application.css --watch",
+        "build:css:prod": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./public/assets/application.css --minify",
+        "dev": "npm run build:css"
+    },
+    "keywords": [
+        "rails",
+        "tailwindcss",
+        "flexlink",
+        "conveyor",
+        "configuration"
+    ],
+    "author": "FlexLink Team",
+    "license": "MIT",
+    "devDependencies": {
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "@tailwindcss/forms": "^0.5.7",
+        "@tailwindcss/typography": "^0.5.10",
+        "autoprefixer": "^10.4.16",
+        "postcss": "^8.4.32",
+        "tailwindcss": "^3.4.0"
+    },
+    "dependencies": {
+        "@hotwired/stimulus": "^3.2.2",
+        "@hotwired/turbo": "^8.0.4"
+    }
+}
