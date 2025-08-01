@@ -62,4 +62,12 @@ class BasicTest < ActiveSupport::TestCase
     assert component.chain_component?
     assert_not component.drive_component?
   end
+
+  test 'should generate display names' do
+    system = System.new(system_code: 'X45', system_name: 'X45 Chain System')
+    assert_equal 'X45 - X45 Chain System', system.display_name
+
+    component = Component.new(name: 'Chain Link', part_number: 'XL45-001')
+    assert_equal 'Chain Link (XL45-001)', component.display_name
+  end
 end

@@ -67,6 +67,12 @@ group :development do
   gem 'rack-mini-profiler', '~> 3.0'
   gem 'spring'
   gem 'web-console'
+
+  # Automatic testing with Guard
+  gem 'guard'
+  gem 'guard-minitest'
+  gem 'guard-rails'
+  gem 'guard-rspec'
 end
 
 group :test do

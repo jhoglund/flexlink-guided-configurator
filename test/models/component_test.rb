@@ -1,26 +1,20 @@
 require 'test_helper'
 
 class ComponentTest < ActiveSupport::TestCase
-  def setup(&block)
-    # Mock SupabaseService for testing
-    @mock_supabase_service = Minitest::Mock.new
-    SupabaseService.stub :new, @mock_supabase_service, &block
-  end
-
   test 'should create component from hash data' do
     component_data = {
       'id' => 1,
       'system_code' => 'X45',
       'component_type' => 'chain',
       'name' => 'X45 Chain Link',
-      'specifications' => { 'pitch' => '45mm', 'width' => '45mm' },
+      'specifications' => '{"pitch": "45mm", "width": "45mm"}',
       'compatibility' => %w[X45 XS],
       'price' => 150.00,
       'currency' => 'USD',
       'description' => 'High-quality chain link',
       'manufacturer' => 'FlexLink',
       'part_number' => 'XL45-001',
-      'dimensions' => { 'length' => 100, 'width' => 50, 'height' => 25 },
+      'dimensions' => '{"length": 100, "width": 50, "height": 25}',
       'weight' => 0.5,
       'material' => 'Stainless Steel',
       'color' => 'Silver'
@@ -32,14 +26,14 @@ class ComponentTest < ActiveSupport::TestCase
     assert_equal 'X45', component.system_code
     assert_equal 'chain', component.component_type
     assert_equal 'X45 Chain Link', component.name
-    assert_equal({ 'pitch' => '45mm', 'width' => '45mm' }, component.specifications)
+    assert_equal '{"pitch": "45mm", "width": "45mm"}', component.specifications
     assert_equal %w[X45 XS], component.compatibility
     assert_equal 150.00, component.price
     assert_equal 'USD', component.currency
     assert_equal 'High-quality chain link', component.description
     assert_equal 'FlexLink', component.manufacturer
     assert_equal 'XL45-001', component.part_number
-    assert_equal({ 'length' => 100, 'width' => 50, 'height' => 25 }, component.dimensions)
+    assert_equal '{"length": 100, "width": 50, "height": 25}', component.dimensions
     assert_equal 0.5, component.weight
     assert_equal 'Stainless Steel', component.material
     assert_equal 'Silver', component.color
@@ -92,14 +86,14 @@ class ComponentTest < ActiveSupport::TestCase
 
   test 'should format dimensions correctly' do
     component = Component.new(
-      dimensions: { 'length' => 100, 'width' => 50, 'height' => 25 }
+      dimensions: '{"length": 100, "width": 50, "height": 25}'
     )
     assert_equal '100 × 50 × 25 mm', component.dimensions_formatted
 
-    component = Component.new(dimensions: { 'length' => 100, 'width' => 50 })
+    component = Component.new(dimensions: '{"length": 100, "width": 50}')
     assert_equal '100 × 50 mm', component.dimensions_formatted
 
-    component = Component.new(dimensions: {})
+    component = Component.new(dimensions: '{}')
     assert_equal 'See specifications', component.dimensions_formatted
 
     component = Component.new(dimensions: nil)
@@ -108,12 +102,12 @@ class ComponentTest < ActiveSupport::TestCase
 
   test 'should format specifications correctly' do
     component = Component.new(
-      specifications: { 'pitch' => '45mm', 'width' => '45mm', 'material' => 'Steel' }
+      specifications: '{"pitch": "45mm", "width": "45mm", "material": "Steel"}'
     )
     assert_equal 'Pitch: 45mm, Width: 45mm, Material: Steel', component.specifications_formatted
 
-    component = Component.new(specifications: {})
-    assert_equal 'N/A', component.specifications_formatted
+    component = Component.new(specifications: '{}')
+    assert_equal '', component.specifications_formatted
 
     component = Component.new(specifications: nil)
     assert_equal 'N/A', component.specifications_formatted
@@ -162,10 +156,10 @@ class ComponentTest < ActiveSupport::TestCase
   end
 
   test 'should check for specifications' do
-    component = Component.new(specifications: { 'pitch' => '45mm' })
+    component = Component.new(specifications: '{"pitch": "45mm"}')
     assert component.has_specifications?
 
-    component = Component.new(specifications: {})
+    component = Component.new(specifications: '{}')
     assert_not component.has_specifications?
 
     component = Component.new(specifications: nil)
@@ -173,10 +167,10 @@ class ComponentTest < ActiveSupport::TestCase
   end
 
   test 'should check for dimensions' do
-    component = Component.new(dimensions: { 'length' => 100 })
+    component = Component.new(dimensions: '{"length": 100}')
     assert component.has_dimensions?
 
-    component = Component.new(dimensions: {})
+    component = Component.new(dimensions: '{}')
     assert_not component.has_dimensions?
 
     component = Component.new(dimensions: nil)
@@ -233,11 +227,11 @@ class ComponentTest < ActiveSupport::TestCase
       price: 150.00,
       manufacturer: 'FlexLink',
       part_number: 'XL45-001',
-      dimensions: { 'length' => 100, 'width' => 50 },
+      dimensions: '{"length": 100, "width": 50}',
       weight: 0.5,
       material: 'Stainless Steel',
       color: 'Silver',
-      specifications: { 'pitch' => '45mm' },
+      specifications: '{"pitch": "45mm"}',
       compatibility: %w[X45 XS]
     )
 

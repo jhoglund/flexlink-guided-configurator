@@ -1,12 +1,6 @@
 require 'test_helper'
 
 class SystemTest < ActiveSupport::TestCase
-  def setup(&block)
-    # Mock SupabaseService for testing
-    @mock_supabase_service = Minitest::Mock.new
-    SupabaseService.stub :new, @mock_supabase_service, &block
-  end
-
   test 'should create system from hash data' do
     system_data = {
       'id' => 1,
@@ -20,7 +14,7 @@ class SystemTest < ActiveSupport::TestCase
       'applications' => %w[Packaging Assembly],
       'advantages' => ['Low maintenance', 'High reliability'],
       'materials' => ['Aluminium', 'Stainless steel'],
-      'technical_specs' => { 'chain_pitch' => '45mm' }
+      'technical_specs' => '{"chain_pitch": "45mm"}'
     }
 
     system = System.new(system_data)
@@ -33,7 +27,7 @@ class SystemTest < ActiveSupport::TestCase
     assert_equal %w[Packaging Assembly], system.applications
     assert_equal ['Low maintenance', 'High reliability'], system.advantages
     assert_equal ['Aluminium', 'Stainless steel'], system.materials
-    assert_equal({ 'chain_pitch' => '45mm' }, system.technical_specs)
+    assert_equal '{"chain_pitch": "45mm"}', system.technical_specs
   end
 
   test 'should validate system_code presence' do
@@ -110,12 +104,23 @@ class SystemTest < ActiveSupport::TestCase
       speed_range: 'Up to 20 m/min'
     )
 
+    # Mock the components and images methods to avoid API calls
+    def system.components
+      []
+    end
+
+    def system.images
+      []
+    end
+
     summary = system.summary
     assert_equal 'X45', summary[:system_code]
     assert_equal 'X45 Chain System', summary[:system_name]
     assert_equal 'Chain Conveyor', summary[:category]
     assert_equal 'Light duty', summary[:load_capacity]
     assert_equal 'Up to 20 m/min', summary[:speed_range]
+    assert_equal 0, summary[:components_count]
+    assert_equal 0, summary[:images_count]
   end
 
   test 'should handle missing technical specs' do
@@ -126,17 +131,19 @@ class SystemTest < ActiveSupport::TestCase
   test 'should check for images' do
     system = System.new
     # Mock the images method to return an empty array
-    system.stub :images, [] do
-      assert_not system.has_images?
+    def system.images
+      []
     end
+    assert_not system.has_images?
   end
 
   test 'should check for components' do
     system = System.new
     # Mock the components method to return an empty array
-    system.stub :components, [] do
-      assert_not system.has_components?
+    def system.components
+      []
     end
+    assert_not system.has_components?
   end
 
   test 'should use system_code as param' do
