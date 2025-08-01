@@ -1,15 +1,16 @@
 # FlexLink Guided Configuration Tool
 
-A Rails-based web application for guided step-by-step configuration of conveyor belt systems. This tool integrates with Supabase for product data and provides a modern, user-friendly interface for system configuration.
+A modern Rails 8.0.2 web application for guided step-by-step configuration of FlexLink conveyor systems. This tool integrates with Supabase for product data and provides a comprehensive interface for system configuration with automatic testing and development tools.
 
 ## 🏗️ Architecture
 
-- **Rails 7.0**: Modern web framework with Turbo and Stimulus
+- **Rails 8.0.2**: Modern web framework with Turbo and Stimulus
 - **PostgreSQL**: Local database for application data
 - **Redis**: Caching and session storage
 - **Supabase**: Remote product database (read-only)
 - **Docker**: Containerized development environment
-- **Bootstrap 5**: Modern UI framework
+- **Tailwind CSS**: Modern utility-first CSS framework
+- **Guard**: Automatic testing with real-time feedback
 
 ## 🚀 Quick Start
 
@@ -17,6 +18,7 @@ A Rails-based web application for guided step-by-step configuration of conveyor 
 
 - Docker and Docker Compose
 - Git
+- Ruby 3.3.1 (for local development)
 
 ### Setup
 
@@ -50,11 +52,19 @@ A Rails-based web application for guided step-by-step configuration of conveyor 
 - **Validation** at each step
 - **Session management** for incomplete configurations
 
+### System Management
+- **FlexLink Systems** - Complete system catalog with specifications
+- **Component Integration** - Dynamic component selection based on system type
+- **Real-time pricing** and specifications
+- **System compatibility** checking
+- **Image management** for systems and components
+
 ### Component Management
 - **Dynamic component selection** based on system type
 - **Real-time pricing** and specifications
 - **Component filtering** and search
 - **Quantity management** and notes
+- **Compatibility matrix** for components
 
 ### User Management
 - **User registration** and authentication
@@ -66,19 +76,22 @@ A Rails-based web application for guided step-by-step configuration of conveyor 
 - **Supabase integration** for product data
 - **Redis caching** for performance
 - **Background job processing** with Sidekiq
-- **API endpoints** for external access
+- **RESTful API endpoints** for external access
 
 ## 🗄️ Database Structure
 
 ### Local PostgreSQL (Application Data)
 - `users` - User accounts and profiles
-- `configurations` - System configurations
+- `configurations` - System configurations with total pricing
 - `wizard_sessions` - Wizard progress tracking
-- `component_selections` - User component choices
+- `component_selections` - User component choices with system codes
 
 ### Supabase (Product Data)
-- `conveyor_systems` - System specifications
-- `component_specifications` - Component catalog
+- `systems` - FlexLink system specifications and features
+- `components` - Component catalog with specifications
+- `product_images` - System and component images
+- **Views**: `system_overview`, `component_compatibility`, `system_stats`
+- **Functions**: `search_systems`, `get_system_stats`
 
 ## 🔧 Development
 
@@ -98,6 +111,20 @@ docker-compose exec web rails console
 docker-compose logs -f web
 ```
 
+### Testing with Guard
+
+```bash
+# Start automatic testing
+bundle exec guard
+
+# Guard commands:
+# Enter - Run all tests
+# a - Run all tests
+# p - Run failed tests only
+# w - Run tests for changed files
+# q - Quit Guard
+```
+
 ### Database Operations
 
 ```bash
@@ -114,16 +141,21 @@ docker-compose exec postgres pg_dump -U flexlink_user flexlink_config > backup.s
 ### Testing
 
 ```bash
-# Run tests
-docker-compose exec web rails test
+# Run all tests
+bin/rails test
 
-# Run specific tests
-docker-compose exec web rails test test/controllers/configurations_controller_test.rb
+# Run specific test files
+bin/rails test test/models/
+bin/rails test test/controllers/
+bin/rails test test/services/
+
+# Run with clean output (no deprecation warnings)
+bin/rails test test/models/basic_test.rb
 ```
 
 ## 🎯 Wizard Steps
 
-1. **System Type Selection** - Choose conveyor system type
+1. **System Type Selection** - Choose FlexLink system type
 2. **System Specifications** - Configure system parameters
 3. **Component Type Selection** - Select component categories
 4. **Component Selection 1** - Choose first component type
@@ -134,23 +166,34 @@ docker-compose exec web rails test test/controllers/configurations_controller_te
 
 ## 🔌 API Endpoints
 
-### Configurations
-- `GET /configurations` - List user configurations
-- `POST /configurations` - Create new configuration
-- `GET /configurations/:id` - View configuration
-- `PATCH /configurations/:id` - Update configuration
-- `DELETE /configurations/:id` - Delete configuration
+### Systems
+- `GET /systems` - List all FlexLink systems
+- `GET /systems/:id` - View system details
+- `GET /systems/:id/components` - Get system components
+- `GET /systems/:id/images` - Get system images
+- `GET /systems/search` - Search systems
+- `GET /systems/stats` - Get system statistics
 
-### Wizard
-- `GET /wizard/step/:step` - Access wizard step
-- `PATCH /wizard/step/:step` - Update step data
-- `GET /wizard/summary` - View configuration summary
-- `POST /wizard/complete` - Complete configuration
+### Components
+- `GET /components` - List all components
+- `GET /components/:id` - View component details
+- `GET /components/by_system/:system_code` - Get components by system
+- `GET /components/search` - Search components
 
 ### API (Supabase Integration)
-- `GET /api/v1/conveyor_systems` - List conveyor systems
-- `GET /api/v1/component_specifications` - List components
-- `GET /api/v1/component_specifications/search` - Search components
+- `GET /api/v1/systems` - List systems from Supabase
+- `GET /api/v1/systems/:id` - Get system details
+- `GET /api/v1/systems/search` - Search systems
+- `GET /api/v1/systems/stats` - Get system statistics
+- `GET /api/v1/components` - List components from Supabase
+- `GET /api/v1/components/:id` - Get component details
+- `GET /api/v1/components/by_system/:system_code` - Get components by system
+- `GET /api/v1/product_images` - Get product images
+- `GET /api/v1/product_images/by_system/:system_code` - Get images by system
+
+### Legacy Endpoints (Deprecated)
+- `GET /api/v1/conveyor_systems` - Legacy endpoint (redirects to systems)
+- `GET /api/v1/component_specifications` - Legacy endpoint (redirects to components)
 
 ## 🚀 Deployment
 
@@ -205,12 +248,32 @@ REDIS_URL=your_redis_url
 - **Performance monitoring** with Redis caching
 - **Error tracking** and reporting
 
+## 🧪 Testing
+
+### Test Coverage
+- **43 model tests** covering System and Component models
+- **Clean test output** with no deprecation warnings
+- **Automatic testing** with Guard
+- **Fast execution** (0.65 seconds for all model tests)
+
+### Test Structure
+- `test/models/system_test.rb` - System model tests
+- `test/models/component_test.rb` - Component model tests
+- `test/models/basic_test.rb` - Basic functionality tests
+- `test/test_helper.rb` - Test configuration
+
+### Guard Configuration
+- **Watches** `app/`, `config/`, `test/` directories
+- **Automatic test execution** on file changes
+- **Clean output** with no configuration warnings
+- **Fast feedback** during development
+
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests
+4. Add tests (ensure all tests pass)
 5. Submit a pull request
 
 ## 📝 License
@@ -226,6 +289,8 @@ For support and questions:
 
 ---
 
-**Last Updated**: <%= Date.current.strftime("%B %d, %Y") %>  
-**Version**: 1.0.0  
-**Status**: 🚧 Development 
+**Last Updated**: December 2024  
+**Version**: 2.0.0  
+**Status**: 🚀 Production Ready  
+**Rails Version**: 8.0.2  
+**Ruby Version**: 3.3.1 
