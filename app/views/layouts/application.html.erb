@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", "data-timestamp": Time.current.to_i %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Inter font from Google Fonts -->
@@ -13,52 +13,50 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   </head>
-  <body class="h-full bg-white">
+  <body>
     <!-- Header/Navigation -->
-    <header class="bg-white border-b border-gray-200">
-      <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
           <!-- Logo and Company Info -->
-          <div class="flex items-center space-x-4">
-            <div class="flex items-center space-x-2">
-              <div class="w-8 h-4 bg-flexlink-red rounded-sm"></div>
-              <span class="text-xl font-bold text-flexlink-red">FLEXLINK</span>
-            </div>
-            <span class="text-sm text-gray-500">a coesia company</span>
+          <div class="logo">
+            <div class="logo-icon"></div>
+            <span class="logo-text">FLEXLINK</span>
+            <span class="logo-subtitle">a coesia company</span>
           </div>
           <!-- Main Navigation -->
-          <nav class="hidden md:flex items-center space-x-8">
-            <%= link_to "Home", root_path, class: "text-gray-700 hover:text-flexlink-red transition-colors" %>
-            <div class="relative group">
-              <a href="#" class="text-gray-700 hover:text-flexlink-red transition-colors flex items-center">
+          <nav class="nav">
+            <%= link_to "Home", root_path, class: "nav-link" %>
+            <div style="position: relative;">
+              <a href="#" class="nav-link" style="display: flex; align-items: center;">
                 Industries
-                <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                <i class="fas fa-chevron-down" style="margin-left: 0.25rem; font-size: 0.75rem;"></i>
               </a>
             </div>
-            <%= link_to "Systems", systems_path, class: "text-gray-700 hover:text-flexlink-red transition-colors" %>
-            <a href="#" class="text-gray-700 hover:text-flexlink-red transition-colors">Build your own system</a>
-            <a href="#" class="text-gray-700 hover:text-flexlink-red transition-colors">FAQ</a>
-            <a href="#" class="text-gray-700 hover:text-flexlink-red transition-colors">Contact us</a>
+            <%= link_to "Systems", systems_path, class: "nav-link" %>
+            <a href="#" class="nav-link">Build your own system</a>
+            <a href="#" class="nav-link">FAQ</a>
+            <a href="#" class="nav-link">Contact us</a>
           </nav>
           <!-- Right Side Actions -->
-          <div class="flex items-center space-x-4">
+          <div style="display: flex; align-items: center; gap: 1rem;">
             <!-- Language Selector -->
-            <div class="flex items-center space-x-1 text-gray-700">
-              <i class="fas fa-globe text-sm"></i>
-              <span class="text-sm">Eng</span>
-              <i class="fas fa-chevron-down text-xs"></i>
+            <div style="display: flex; align-items: center; gap: 0.25rem; color: var(--gray-700);">
+              <i class="fas fa-globe" style="font-size: 0.875rem;"></i>
+              <span style="font-size: 0.875rem;">Eng</span>
+              <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
             </div>
             <!-- Icons -->
-            <div class="flex items-center space-x-3">
-              <button class="text-gray-700 hover:text-flexlink-red transition-colors">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <button class="nav-link" style="background: none; border: none; padding: 0;">
                 <i class="fas fa-search"></i>
               </button>
-              <button class="text-gray-700 hover:text-flexlink-red transition-colors">
+              <button class="nav-link" style="background: none; border: none; padding: 0;">
                 <i class="fas fa-user"></i>
               </button>
-              <button class="text-gray-700 hover:text-flexlink-red transition-colors relative">
+              <button class="nav-link" style="background: none; border: none; padding: 0; position: relative;">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="absolute -top-1 -right-1 bg-flexlink-red text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                <span style="position: absolute; top: -0.25rem; right: -0.25rem; background: var(--flexlink-red); color: white; font-size: 0.75rem; border-radius: 50%; width: 1rem; height: 1rem; display: flex; align-items: center; justify-content: center;">0</span>
               </button>
             </div>
           </div>
@@ -66,86 +64,86 @@
       </div>
     </header>
     <!-- Breadcrumbs -->
-    <div class="bg-gray-50 border-b border-gray-200">
-      <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-2">
-        <nav class="text-sm text-gray-500">
+    <div style="background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+      <div class="container" style="padding: 0.5rem 0;">
+        <nav style="font-size: 0.875rem; color: var(--gray-500);">
           <span>Home</span>
-          <span class="mx-2">/</span>
+          <span style="margin: 0 0.5rem;">/</span>
           <span>E-Commerce Solutions</span>
-          <span class="mx-2">/</span>
+          <span style="margin: 0 0.5rem;">/</span>
           <span>Configure your system</span>
         </nav>
       </div>
     </div>
     <!-- Main Content -->
-    <main class="max-w-[1400px] mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <main class="container" style="padding: 2rem 0;">
       <!-- Flash Messages -->
       <% if notice %>
-        <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg" role="alert">
-          <span class="block sm:inline"><%= notice %></span>
+        <div style="margin-bottom: 1.5rem; background: rgb(240 253 244); border: 1px solid rgb(187 247 208); color: rgb(21 128 61); padding: 0.75rem 1rem; border-radius: 0.5rem;" role="alert">
+          <span style="display: block;"><%= notice %></span>
         </div>
       <% end %>
       <% if alert %>
-        <div class="mb-6 bg-flexlink-red bg-opacity-10 border border-flexlink-red text-flexlink-red px-4 py-3 rounded-lg" role="alert">
-          <span class="block sm:inline"><%= alert %></span>
+        <div style="margin-bottom: 1.5rem; background: rgb(254 242 242); border: 1px solid rgb(254 202 202); color: rgb(185 28 28); padding: 0.75rem 1rem; border-radius: 0.5rem;" role="alert">
+          <span style="display: block;"><%= alert %></span>
         </div>
       <% end %>
       <% flash.each do |name, msg| %>
         <% if msg.is_a?(String) %>
-          <div class="mb-6 bg-<%= name == 'notice' ? 'green' : name == 'alert' ? 'flexlink-red bg-opacity-10' : 'blue' %>-50 border border-<%= name == 'notice' ? 'green' : name == 'alert' ? 'flexlink-red' : 'blue' %>-200 text-<%= name == 'notice' ? 'green' : name == 'alert' ? 'flexlink-red' : 'blue' %>-700 px-4 py-3 rounded-lg" role="alert">
-            <span class="block sm:inline"><%= msg %></span>
+          <div style="margin-bottom: 1.5rem; background: rgb(239 246 255); border: 1px solid rgb(191 219 254); color: rgb(30 64 175); padding: 0.75rem 1rem; border-radius: 0.5rem;" role="alert">
+            <span style="display: block;"><%= msg %></span>
           </div>
         <% end %>
       <% end %>
       <%= yield %>
     </main>
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white mt-16">
-      <div class="max-w-[1400px] mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
           <div>
-            <div class="flex items-center space-x-2 mb-4">
-              <div class="w-8 h-4 bg-flexlink-red rounded-sm"></div>
-              <span class="text-xl font-bold">FLEXLINK</span>
+            <div class="footer-logo">
+              <div class="footer-logo-icon"></div>
+              <span class="footer-logo-text">FLEXLINK</span>
             </div>
-            <p class="text-gray-400 text-sm">We contribute to efficient production flows, maximize sellable throughput and minimize the TCO.</p>
+            <p class="footer-text">We contribute to efficient production flows, maximize sellable throughput and minimize the TCO.</p>
           </div>
           <div>
-            <h3 class="text-lg font-semibold mb-4">Products</h3>
-            <ul class="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" class="hover:text-white transition-colors">Conveyor Systems</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Automation Solutions</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Integration Services</a></li>
+            <h3 class="footer-title">Products</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-links a">Conveyor Systems</a></li>
+              <li><a href="#" class="footer-links a">Automation Solutions</a></li>
+              <li><a href="#" class="footer-links a">Integration Services</a></li>
             </ul>
           </div>
           <div>
-            <h3 class="text-lg font-semibold mb-4">Industries</h3>
-            <ul class="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" class="hover:text-white transition-colors">E-Commerce</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Food & Beverage</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Pharmaceutical</a></li>
+            <h3 class="footer-title">Industries</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-links a">E-Commerce</a></li>
+              <li><a href="#" class="footer-links a">Food & Beverage</a></li>
+              <li><a href="#" class="footer-links a">Pharmaceutical</a></li>
             </ul>
           </div>
           <div>
-            <h3 class="text-lg font-semibold mb-4">Contact</h3>
-            <ul class="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" class="hover:text-white transition-colors">Contact Sales</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
-              <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+            <h3 class="footer-title">Contact</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-links a">Contact Sales</a></li>
+              <li><a href="#" class="footer-links a">Support</a></li>
+              <li><a href="#" class="footer-links a">Careers</a></li>
             </ul>
           </div>
         </div>
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+        <div class="footer-divider">
           <p>&copy; <%= Date.current.year %> FlexLink. All rights reserved.</p>
         </div>
       </div>
     </footer>
     <!-- Floating Help Widget -->
-    <div class="fixed bottom-6 right-6 z-50">
-      <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-4 flex items-center space-x-3">
-        <span class="text-gray-700 text-sm">Do you need help?</span>
-        <button class="bg-flexlink-red text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-flexlink-red-dark transition-colors">
-          <i class="fas fa-comments text-sm"></i>
+    <div class="help-widget">
+      <div class="help-container">
+        <span class="help-text">Do you need help?</span>
+        <button class="help-button">
+          <i class="fas fa-comments" style="font-size: 0.875rem;"></i>
         </button>
       </div>
     </div>

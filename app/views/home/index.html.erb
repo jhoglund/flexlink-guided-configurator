@@ -1,64 +1,59 @@
 <!-- Hero Section -->
-<div class="bg-gradient-to-br from-flexlink-red to-flexlink-red-dark text-white py-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center">
-      <h1 class="text-4xl md:text-6xl font-bold mb-6">Welcome to FlexLink Online Store</h1>
-      <p class="text-xl md:text-2xl mb-8 opacity-90">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-      <button class="btn-flexlink-primary text-lg px-8 py-4">
-        Start shopping
-      </button>
-    </div>
+<div class="hero">
+  <div class="container">
+    <h1>Welcome to FlexLink Online Store</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+    <button class="btn btn-primary">
+      Start shopping
+    </button>
   </div>
 </div>
 
 <!-- Category Selection Section -->
-<div class="py-16 bg-white">
-  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="section">
+  <div class="container">
     <div class="mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 mb-4">Start here and choose your industry</h2>
+      <h2 class="section-title">Start here and choose your industry</h2>
     </div>
     
     <!-- Industry Categories Grid -->
-    <div id="industry-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 mb-12">
+    <div id="industry-grid" class="industry-grid debug-grid">
       <% @categories.each do |category| %>
-        <%= render 'category_card', category: category %>
+        <div class="category-card debug-item">
+          <%= image_tag "icons/categories/#{category[:icon]}", alt: category[:name] %>
+        </div>
       <% end %>
       <!-- Build Your Own System Section -->
-      <div class="col-span-4 w-full h-32 flex flex-col bg-flexlink-red rounded-lg p-8 text-white">
-
-        <div class="flex flex-col lg:flex-row items-center justify-between">
-          <div class="mb-6 lg:mb-0 border-cyan-800 border-2">
-            <h3 class="text-2xl font-bold mb-2">Build your own system</h3>
-            <p class="text-lg opacity-90">We can guide to enhance production flows, maximize sellable throughput and minimize the TCO.</p>
-          </div>
-          <div class="flex items-center space-x-4">
-            <span class="text-sm">Do you need help?</span>
-            <button class="bg-white text-flexlink-red px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200">
-              System Building
-            </button>
-          </div>
+      <div class="build-section">
+        <div class="build-content">
+          <h3>Build your own system</h3>
+          <p>We can guide to enhance production flows, maximize sellable throughput and minimize the TCO.</p>
+        </div>
+        <div class="build-actions">
+          <span>Do you need help?</span>
+          <button class="btn btn-secondary">
+            System Building
+          </button>
         </div>
       </div>
     </div>
-    
-    
   </div>
 </div>
 
 <!-- Product Search Section -->
-<div class="py-16 bg-gray-50">
-  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="search-section">
+  <div class="container">
     <div class="mb-8">
-      <h2 class="text-3xl font-bold text-gray-900 mb-4">Search for a product</h2>
+      <h2 class="section-title">Search for a product</h2>
     </div>
     
-    <div class="bg-white rounded-lg p-8 shadow-sm border border-gray-200">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="md:col-span-2">
-          <input type="text" placeholder="What are you looking for?" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flexlink-red focus:border-transparent">
+    <div class="search-container">
+      <div class="search-form">
+        <div>
+          <input type="text" placeholder="What are you looking for?" class="form-input">
         </div>
         <div>
-          <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flexlink-red focus:border-transparent">
+          <select class="form-select">
             <option>Filter</option>
             <option>Automotive</option>
             <option>E-Commerce</option>
@@ -66,7 +61,7 @@
           </select>
         </div>
         <div>
-          <button class="w-full bg-flexlink-red text-white px-6 py-3 rounded-lg font-medium hover:bg-flexlink-red-dark transition-colors duration-200">
+          <button class="btn btn-primary">
             Search
           </button>
         </div>
@@ -76,49 +71,49 @@
 </div>
 
 <!-- Font Test Section (Remove after testing) -->
-<div class="py-8 bg-gray-100 border-b border-gray-200">
-  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="section" style="background: var(--gray-100); border-bottom: 1px solid var(--gray-200);">
+  <div class="container">
     <div class="mb-6">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">Font Test</h2>
-      <p class="text-sm text-gray-600 mb-4">This section tests the font implementation. Remove after confirming fonts work correctly.</p>
+      <h2 class="section-title">Font Test</h2>
+      <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 1rem;">This section tests the font implementation. Remove after confirming fonts work correctly.</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 class="text-lg font-bold mb-4">Default Font Stack</h3>
-        <div class="space-y-2">
-          <p class="font-normal">Regular (400): The quick brown fox jumps over the lazy dog</p>
-          <p class="font-medium">Medium (500): The quick brown fox jumps over the lazy dog</p>
-          <p class="font-bold">Bold (700): The quick brown fox jumps over the lazy dog</p>
+    <div class="grid grid-1 grid-md-3">
+      <div class="card">
+        <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 1rem;">Default Font Stack</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <p style="font-weight: 400;">Regular (400): The quick brown fox jumps over the lazy dog</p>
+          <p style="font-weight: 500;">Medium (500): The quick brown fox jumps over the lazy dog</p>
+          <p style="font-weight: 700;">Bold (700): The quick brown fox jumps over the lazy dog</p>
         </div>
       </div>
       
-      <div class="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 class="text-lg font-bold mb-4">Forced Inter Font</h3>
-        <div class="space-y-2 font-inter">
-          <p class="font-normal">Regular (400): The quick brown fox jumps over the lazy dog</p>
-          <p class="font-medium">Medium (500): The quick brown fox jumps over the lazy dog</p>
-          <p class="font-bold">Bold (700): The quick brown fox jumps over the lazy dog</p>
+      <div class="card">
+        <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 1rem;">Forced Inter Font</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: Inter, sans-serif;">
+          <p style="font-weight: 400;">Regular (400): The quick brown fox jumps over the lazy dog</p>
+          <p style="font-weight: 500;">Medium (500): The quick brown fox jumps over the lazy dog</p>
+          <p style="font-weight: 700;">Bold (700): The quick brown fox jumps over the lazy dog</p>
         </div>
-        <hr class="my-4">
-        <h4 class="font-bold mb-2">Direct Inter Test:</h4>
-        <p class="test-inter">This should be Inter Regular</p>
-        <p class="test-inter-medium">This should be Inter Medium</p>
-        <p class="test-inter-bold">This should be Inter Bold</p>
-        <hr class="my-4">
-        <h4 class="font-bold mb-2">Direct @font-face Test:</h4>
-        <p class="inter-direct">This should be Inter Regular (direct)</p>
-        <p class="inter-direct-medium">This should be Inter Medium (direct)</p>
-        <p class="inter-direct-bold">This should be Inter Bold (direct)</p>
+        <hr style="margin: 1rem 0;">
+        <h4 style="font-weight: bold; margin-bottom: 0.5rem;">Direct Inter Test:</h4>
+        <p style="font-family: Inter, sans-serif; font-size: 24px;">This should be Inter Regular</p>
+        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 500;">This should be Inter Medium</p>
+        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 700;">This should be Inter Bold</p>
+        <hr style="margin: 1rem 0;">
+        <h4 style="font-weight: bold; margin-bottom: 0.5rem;">Direct @font-face Test:</h4>
+        <p style="font-family: Inter, sans-serif; font-size: 24px;">This should be Inter Regular (direct)</p>
+        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 500;">This should be Inter Medium (direct)</p>
+        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 700;">This should be Inter Bold (direct)</p>
       </div>
       
-      <div class="bg-white p-6 rounded-lg border border-gray-200">
-        <h3 class="text-lg font-bold mb-4">Font Styles</h3>
-        <div class="space-y-2">
-          <p class="font-normal">Normal: The quick brown fox jumps over the lazy dog</p>
-          <p class="font-normal italic">Italic: The quick brown fox jumps over the lazy dog</p>
-          <p class="font-bold">Bold: The quick brown fox jumps over the lazy dog</p>
-          <p class="font-bold italic">Bold Italic: The quick brown fox jumps over the lazy dog</p>
+      <div class="card">
+        <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 1rem;">Font Styles</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <p style="font-weight: 400;">Normal: The quick brown fox jumps over the lazy dog</p>
+          <p style="font-weight: 400; font-style: italic;">Italic: The quick brown fox jumps over the lazy dog</p>
+          <p style="font-weight: 700;">Bold: The quick brown fox jumps over the lazy dog</p>
+          <p style="font-weight: 700; font-style: italic;">Bold Italic: The quick brown fox jumps over the lazy dog</p>
         </div>
       </div>
     </div>
@@ -126,32 +121,33 @@
 </div>
 
 <!-- Latest Updates Section -->
-<div class="py-16 bg-white">
-  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="section">
+  <div class="container">
     <div class="mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 mb-4">Latest updates from Flexlink</h2>
+      <h2 class="section-title">Latest updates from Flexlink</h2>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="card-flexlink">
-        <div class="h-48 bg-gray-200 rounded-lg mb-4"></div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">New Automation Solutions</h3>
-        <p class="text-gray-600 mb-4">Discover our latest innovations in automated conveyor systems designed for maximum efficiency.</p>
-        <a href="#" class="text-flexlink-red font-medium hover:text-flexlink-red-dark">Learn more →</a>
+    <div class="grid grid-1 grid-md-3">
+      <div class="card">
+        <div class="card-image"></div>
+        <h3 class="card-title">New Automation Solutions</h3>
+        <p class="card-text">Discover our latest innovations in automated conveyor systems designed for maximum efficiency.</p>
+        <a href="#" class="card-link">Learn more →</a>
       </div>
       
-      <div class="card-flexlink">
-        <div class="h-48 bg-gray-200 rounded-lg mb-4"></div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Industry Case Studies</h3>
-        <p class="text-gray-600 mb-4">See how leading companies have improved their production flows with FlexLink solutions.</p>
-        <a href="#" class="text-flexlink-red font-medium hover:text-flexlink-red-dark">Learn more →</a>
+      <div class="card">
+        <div class="card-image"></div>
+        <h3 class="card-title">Industry Case Studies</h3>
+        <p class="card-text">See how leading companies have improved their production flows with FlexLink solutions.</p>
+        <a href="#" class="card-link">Learn more →</a>
       </div>
       
-      <div class="card-flexlink">
-        <div class="h-48 bg-gray-200 rounded-lg mb-4"></div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Maintenance Tips</h3>
-        <p class="text-gray-600 mb-4">Expert advice on maintaining your FlexLink systems for optimal performance and longevity.</p>
-        <a href="#" class="text-flexlink-red font-medium hover:text-flexlink-red-dark">Learn more →</a>
+      <div class="card">
+        <div class="card-image"></div>
+        <h3 class="card-title">Maintenance Tips</h3>
+        <p class="card-text">Expert advice on maintaining your FlexLink systems for optimal performance and longevity.</p>
+        <a href="#" class="card-link">Learn more →</a>
       </div>
     </div>
   </div>
+</div>

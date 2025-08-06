@@ -1,0 +1,250 @@
+@import 'fonts';
+@import 'rotis-fonts';
+@import 'inter-test';
+@import 'inter-direct';
+
+/* Force Inter font loading */
+.font-inter {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Ensure Inter is loaded in the base font stack */
+html,
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Force Inter on all test elements */
+.test-inter,
+.test-inter-medium,
+.test-inter-bold,
+.inter-direct,
+.inter-direct-medium,
+.inter-direct-bold,
+.font-inter {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 24px !important;
+}
+
+/* Override any Tailwind font classes */
+.font-normal,
+.font-medium,
+.font-bold {
+    font-family: 'Inter', sans-serif !important;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FlexLink Background Colors */
+.bg-flexlink-red {
+    background-color: #d70a32 !important;
+}
+
+.bg-flexlink-red-dark {
+    background-color: #6b1e2a !important;
+}
+
+.bg-flexlink-medium-gray {
+    background-color: #808080 !important;
+}
+
+.bg-flexlink-dark-gray {
+    background-color: #4a4a4a !important;
+}
+
+/* FlexLink Text Colors */
+.text-flexlink-red {
+    color: #d70a32 !important;
+}
+
+.text-flexlink-red-dark {
+    color: #6b1e2a !important;
+}
+
+/* FlexLink Border Colors */
+.border-flexlink-red {
+    border-color: #d70a32 !important;
+}
+
+/* Missing Grid Columns */
+.grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-9 {
+    grid-template-columns: repeat(9, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-11 {
+    grid-template-columns: repeat(11, minmax(0, 1fr)) !important;
+}
+
+.grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+}
+
+/* Responsive Grid Classes */
+@media (min-width: 640px) {
+    .sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg\:grid-cols-8 {
+        grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    .xl\:grid-cols-8 {
+        grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Custom Gradients */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #d70a32 0%, #6b1e2a 100%) !important;
+}
+
+.bg-radial-gradient {
+    background: radial-gradient(circle, #d70a32 0%, #a10221 88%) !important;
+}
+
+/* Custom Shadows */
+.shadow-flexlink {
+    box-shadow: 0 4px 20px rgba(139, 38, 53, 0.2) !important;
+}
+
+.shadow-flexlink-lg {
+    box-shadow: 0 10px 30px rgba(139, 38, 53, 0.3) !important;
+}
+
+/* Hover States */
+.hover\:bg-flexlink-red-dark:hover {
+    background-color: #6b1e2a !important;
+}
+
+.hover\:bg-flexlink-dark-gray:hover {
+    background-color: #4a4a4a !important;
+}
+
+.hover\:text-flexlink-red:hover {
+    color: #d70a32 !important;
+}
+
+.hover\:shadow-flexlink-lg:hover {
+    box-shadow: 0 10px 30px rgba(139, 38, 53, 0.3) !important;
+}
+
+/* Custom component classes */
+.btn-flexlink-primary {
+    background-color: #d70a32 !important;
+    color: #ffffff !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    font-weight: 500 !important;
+    box-shadow: 0 4px 20px rgba(139, 38, 53, 0.2) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-flexlink-primary:hover {
+    background-color: #6b1e2a !important;
+    box-shadow: 0 10px 30px rgba(139, 38, 53, 0.3) !important;
+}
+
+.btn-flexlink-secondary {
+    background-color: #808080 !important;
+    color: #ffffff !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-flexlink-secondary:hover {
+    background-color: #4a4a4a !important;
+}
+
+.card-flexlink {
+    background-color: #ffffff !important;
+    border-radius: 0.5rem !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgb(229 231 235) !important;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card-flexlink:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.panel-flexlink {
+    background: linear-gradient(135deg, #d70a32 0%, #6b1e2a 100%) !important;
+    color: #ffffff !important;
+    border-radius: 0.75rem !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 4px 20px rgba(139, 38, 53, 0.2) !important;
+}
+
+.banner-flexlink {
+    background: radial-gradient(circle, #d70a32 0%, #a10221 88%) !important;
+    color: #ffffff !important;
+    padding: 2rem !important;
+    border-radius: 0.75rem !important;
+    text-align: center !important;
+    box-shadow: 0 10px 30px rgba(139, 38, 53, 0.3) !important;
+}
+
+.form-input-flexlink {
+    border: 1px solid rgb(229 231 235) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 1rem !important;
+    transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.form-input-flexlink:focus {
+    border-color: #d70a32 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(139, 38, 53, 0.2) !important;
+}
+
+.alert-flexlink-success {
+    background-color: rgb(240 253 244) !important;
+    border: 1px solid rgb(187 247 208) !important;
+    color: rgb(21 128 61) !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 0.5rem !important;
+}
+
+.alert-flexlink-error {
+    background-color: rgb(254 242 242) !important;
+    border: 1px solid rgb(254 202 202) !important;
+    color: rgb(185 28 28) !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 0.5rem !important;
+}
+
+.alert-flexlink-warning {
+    background-color: rgb(254 252 232) !important;
+    border: 1px solid rgb(254 240 138) !important;
+    color: rgb(161 98 7) !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 0.5rem !important;
+}
