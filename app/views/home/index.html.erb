@@ -17,9 +17,9 @@
     </div>
     
     <!-- Industry Categories Grid -->
-    <div id="industry-grid" class="industry-grid debug-grid">
+    <div id="industry-grid" class="industry-grid">
       <% @categories.each do |category| %>
-        <div class="category-card debug-item">
+        <div class="category-card">
           <%= image_tag "icons/categories/#{category[:icon]}", alt: category[:name] %>
         </div>
       <% end %>

@@ -617,13 +617,3 @@ body {
 .help-button:hover {
     background: var(--flexlink-red-dark);
 }
-
-/* Debug Styles (for development) */
-.debug-grid {
-    border: 2px solid red;
-}
-
-.debug-item {
-    border: 1px solid blue;
-    background-color: rgba(255, 0, 0, 0.1);
-}
