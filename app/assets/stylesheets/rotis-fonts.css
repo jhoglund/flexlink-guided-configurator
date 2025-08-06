@@ -1,0 +1,67 @@
+/* Rotis Font Family Declarations */
+
+/* Rotis Regular */
+@font-face {
+    font-family: 'Rotis';
+    src: url('../fonts/Rotis-Regular.woff2') format('woff2'),
+        url('../fonts/Rotis-Regular.woff') format('woff'),
+        url('../fonts/Rotis-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Rotis Medium */
+@font-face {
+    font-family: 'Rotis';
+    src: url('../fonts/Rotis-Medium.woff2') format('woff2'),
+        url('../fonts/Rotis-Medium.woff') format('woff'),
+        url('../fonts/Rotis-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Rotis Bold */
+@font-face {
+    font-family: 'Rotis';
+    src: url('../fonts/Rotis-Bold.woff2') format('woff2'),
+        url('../fonts/Rotis-Bold.woff') format('woff'),
+        url('../fonts/Rotis-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Rotis Italic */
+@font-face {
+    font-family: 'Rotis';
+    src: url('../fonts/Rotis-Italic.woff2') format('woff2'),
+        url('../fonts/Rotis-Italic.woff') format('woff'),
+        url('../fonts/Rotis-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Rotis Bold Italic */
+@font-face {
+    font-family: 'Rotis';
+    src: url('../fonts/Rotis-BoldItalic.woff2') format('woff2'),
+        url('../fonts/Rotis-BoldItalic.woff') format('woff'),
+        url('../fonts/Rotis-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Rotis Medium Italic */
+@font-face {
+    font-family: 'Rotis';
+    src: url('../fonts/Rotis-MediumItalic.woff2') format('woff2'),
+        url('../fonts/Rotis-MediumItalic.woff') format('woff'),
+        url('../fonts/Rotis-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}

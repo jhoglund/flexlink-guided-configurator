@@ -1,0 +1,20 @@
+/* Direct Inter font loading test */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+.test-inter {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.test-inter-medium {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.test-inter-bold {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 24px;
+    font-weight: 700;
+} 

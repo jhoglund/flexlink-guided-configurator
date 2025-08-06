@@ -1,16 +1,28 @@
 #!/usr/bin/env sh
 
-if ! gem list foreman -i --silent; then
-  echo "Installing foreman..."
-  gem install foreman
-fi
+# Exit on error
+set -e
 
-# Default to port 3000 if not specified
-export PORT="${PORT:-3000}"
+echo "🚀 Starting FlexLink Configurator Development Environment..."
 
-# Let the debug gem allow remote connections,
-# but avoid loading until `debugger` is called
-export RUBY_DEBUG_OPEN="true"
-export RUBY_DEBUG_LAZY="true"
+# Compile Tailwind CSS
+echo "📦 Compiling Tailwind CSS..."
+npx tailwindcss -c tailwind.config.js -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify
 
-exec foreman start -f Procfile.dev "$@"
+# Copy to public assets
+echo "📁 Copying CSS to public assets..."
+cp ./app/assets/builds/application.css ./public/assets/application.css
+
+# Start the development environment with Guard
+echo "🐳 Starting Docker containers with auto-reload..."
+echo "📱 Auto-reload will be available at http://localhost:3000"
+echo "🔄 LiveReload server running on port 35729"
+echo ""
+echo "💡 To use auto-reload:"
+echo "   1. Open http://localhost:3000 in your browser"
+echo "   2. Install the LiveReload browser extension (if not already installed)"
+echo "   3. Enable LiveReload for localhost:3000"
+echo "   4. Any changes to views, CSS, or JS will automatically reload the browser"
+echo ""
+
+docker-compose -f docker-compose.dev.yml up --build

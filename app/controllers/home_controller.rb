@@ -14,6 +14,22 @@ class HomeController < ApplicationController
     }
 
     @component_types = %w[belt roller motor sensor controller frame accessory chain drive_unit]
+
+    # Industry categories for the category selection section
+    @categories = [
+      { icon: 'automotive.svg', name: 'Automotive', label: 'Automotive' },
+      { icon: 'batteries.svg', name: 'Batteries', label: 'Batteries' },
+      { icon: 'dairy.svg', name: 'Dairy', label: 'Dairy' },
+      { icon: 'e-commerce.svg', name: 'E-Commerce', label: 'E-Commerce' },
+      { icon: 'electronics.svg', name: 'Electronics', label: 'Electronics' },
+      { icon: 'food.svg', name: 'Food', label: 'Food' },
+      { icon: 'lab-automation.svg', name: 'Lab Automation', label: 'Lab<br>Automation' },
+      { icon: 'optical.svg', name: 'Optical', label: 'Optical' },
+      { icon: 'personal-care.svg', name: 'Personal Care', label: 'Personal Care' },
+      { icon: 'pharma-healthcare.svg', name: 'Pharma Healthcare', label: 'Pharma Healthcare' },
+      { icon: 'tissue-hygiene.svg', name: 'Tissue Hygiene', label: 'Tissue & Hygiene' },
+      { icon: 'tobacco.svg', name: 'Tobacco', label: 'Tobacco' }
+    ]
   end
 
   def dashboard

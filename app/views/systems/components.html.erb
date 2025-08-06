@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Components</title>
+  </head>
+  <body>
+    <div class="max-w-7xl mx-auto">
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-gray-500 mb-6">
+        <a href="/systems" class="hover:text-flexlink-red transition-colors">Systems</a>
+        <span class="mx-2">/</span>
+        <a href="/systems/<%= @system.system_code %>" class="hover:text-flexlink-red transition-colors"><%= @system.system_name %></a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-900">Components</span>
+      </nav>
+      <!-- Page Header -->
+      <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 bg-flexlink-red bg-opacity-10 rounded-lg flex items-center justify-center">
+              <i class="fas fa-cogs text-2xl text-flexlink-red"></i>
+            </div>
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">Components for <%= @system.system_name %></h1>
+              <p class="text-lg text-gray-600 mb-4">Browse and select components compatible with the <%= @system.system_code %> system</p>
+              <div class="flex items-center space-x-4">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                  <%= @system.category %>
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                  <%= @system.load_capacity %>
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                  <%= @components.count %> Components
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <a href="/systems/<%= @system.system_code %>" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+              <i class="fas fa-arrow-left mr-2"></i>Back to System
+            </a>
+            <a href="/wizard/step/1" class="bg-flexlink-red text-white px-4 py-2 rounded-lg hover:bg-flexlink-red-dark transition-colors duration-300">
+              <i class="fas fa-magic mr-2"></i>Start Configuration
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Filters and Search -->
+      <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Filters & Search</h3>
+        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label for="component_type" class="block text-sm font-medium text-gray-700 mb-2">Component Type</label>
+            <select name="component_type" id="component_type" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flexlink-red focus:border-transparent">
+              <option value="">All Types</option>
+              <option value="chain" <%= 'selected' if params[:component_type] == 'chain' %>>Chain</option>
+              <option value="drive" <%= 'selected' if params[:component_type] == 'drive' %>>Drive</option>
+              <option value="motor" <%= 'selected' if params[:component_type] == 'motor' %>>Motor</option>
+              <option value="sensor" <%= 'selected' if params[:component_type] == 'sensor' %>>Sensor</option>
+              <option value="frame" <%= 'selected' if params[:component_type] == 'frame' %>>Frame</option>
+              <option value="accessory" <%= 'selected' if params[:component_type] == 'accessory' %>>Accessory</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="min_price" class="block text-sm font-medium text-gray-700 mb-2">Min Price</label>
+            <input type="number" name="min_price" id="min_price" value="<%= params[:min_price] %>" placeholder="0.00" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flexlink-red focus:border-transparent">
+              </div>
+              <div>
+                <label for="max_price" class="block text-sm font-medium text-gray-700 mb-2">Max Price</label>
+                <input type="number" name="max_price" id="max_price" value="<%= params[:max_price] %>" placeholder="1000.00" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flexlink-red focus:border-transparent">
+              </div>
+              <div class="flex items-end">
+                <button type="submit" class="w-full bg-flexlink-red text-white px-4 py-2 rounded-lg hover:bg-flexlink-red-dark transition-colors duration-300">
+                  <i class="fas fa-search mr-2"></i>Filter
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- Components Grid -->
+          <% if @components.any? %>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <% @components.each do |component| %>
+                <div class="bg-white border border-gray-200 rounded-lg p-6 hover:border-flexlink-red hover:shadow-lg transition-all duration-200">
+                  <!-- Component Header -->
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-10 h-10 bg-flexlink-red bg-opacity-10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-cog text-flexlink-red"></i>
+                      </div>
+                      <div>
+                        <h3 class="font-semibold text-gray-900"><%= component.name %></h3>
+                        <p class="text-sm text-gray-500"><%= component.component_type.humanize %></p>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <% if component.has_price? %>
+                        <span class="text-lg font-bold text-green-600"><%= component.price_formatted %></span>
+                      <% else %>
+                        <span class="text-sm text-gray-500">Price on request</span>
+                      <% end %>
+                    </div>
+                  </div>
+                  <!-- Component Details -->
+                  <div class="space-y-3 mb-4">
+                    <% if component.description.present? %>
+                      <p class="text-sm text-gray-600 leading-relaxed">
+                        <%= truncate(component.description, length: 120) %>
+                      </p>
+                    <% end %>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                      <% if component.manufacturer.present? %>
+                        <div>
+                          <span class="text-gray-500">Manufacturer:</span>
+                          <span class="font-medium text-gray-900"><%= component.manufacturer %></span>
+                        </div>
+                      <% end %>
+                      <% if component.part_number.present? %>
+                        <div>
+                          <span class="text-gray-500">Part #:</span>
+                          <span class="font-medium text-gray-900"><%= component.part_number %></span>
+                        </div>
+                      <% end %>
+                      <% if component.material.present? %>
+                        <div>
+                          <span class="text-gray-500">Material:</span>
+                          <span class="font-medium text-gray-900"><%= component.material %></span>
+                        </div>
+                      <% end %>
+                      <% if component.has_weight? %>
+                        <div>
+                          <span class="text-gray-500">Weight:</span>
+                          <span class="font-medium text-gray-900"><%= component.weight_formatted %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <!-- Component Actions -->
+                  <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div class="flex items-center space-x-2">
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        Compatible
+                      </span>
+                      <% if component.color.present? %>
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          <%= component.color %>
+                        </span>
+                      <% end %>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="text-flexlink-red hover:text-flexlink-red-dark transition-colors duration-200">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="text-flexlink-red hover:text-flexlink-red-dark transition-colors duration-200">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <!-- No Components Found -->
+            <div class="bg-white border border-gray-200 rounded-lg p-12 text-center">
+              <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-search text-gray-400 text-xl"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">No Components Found</h3>
+              <p class="text-gray-600 mb-6">No components match your current filters. Try adjusting your search criteria.</p>
+              <div class="flex justify-center space-x-4">
+                <a href="/systems/<%= @system.system_code %>/components" class="bg-flexlink-red text-white px-4 py-2 rounded-lg hover:bg-flexlink-red-dark transition-colors duration-300">
+                  <i class="fas fa-refresh mr-2"></i>Clear Filters
+                </a>
+                <a href="/systems/<%= @system.system_code %>" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                  <i class="fas fa-arrow-left mr-2"></i>Back to System
+                </a>
+              </div>
+            </div>
+          <% end %>
+          <!-- Component Categories Summary -->
+          <div class="mt-8 bg-white border border-gray-200 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Component Categories</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <i class="fas fa-link text-blue-600"></i>
+                </div>
+                <h4 class="font-medium text-gray-900">Chain</h4>
+                <p class="text-sm text-gray-600"><%= @components.select { |c| c.chain_component? }.count %> items</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <i class="fas fa-cogs text-green-600"></i>
+                </div>
+                <h4 class="font-medium text-gray-900">Drive</h4>
+                <p class="text-sm text-gray-600"><%= @components.select { |c| c.drive_component? }.count %> items</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <i class="fas fa-bolt text-purple-600"></i>
+                </div>
+                <h4 class="font-medium text-gray-900">Motor</h4>
+                <p class="text-sm text-gray-600"><%= @components.select { |c| c.motor_component? }.count %> items</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <i class="fas fa-eye text-orange-600"></i>
+                </div>
+                <h4 class="font-medium text-gray-900">Sensor</h4>
+                <p class="text-sm text-gray-600"><%= @components.select { |c| c.sensor_component? }.count %> items</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <i class="fas fa-cube text-red-600"></i>
+                </div>
+                <h4 class="font-medium text-gray-900">Frame</h4>
+                <p class="text-sm text-gray-600"><%= @components.select { |c| c.frame_component? }.count %> items</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <i class="fas fa-tools text-yellow-600"></i>
+                </div>
+                <h4 class="font-medium text-gray-900">Accessory</h4>
+                <p class="text-sm text-gray-600"><%= @components.select { |c| c.accessory_component? }.count %> items</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </body>
+    </html>

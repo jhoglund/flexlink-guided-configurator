@@ -1,10 +1,11 @@
-FROM ruby:3.2.9
+FROM ruby:3.3.1
 
 # Install system dependencies
 RUN apt-get update -qq && apt-get install -y \
     build-essential \
     libpq-dev \
     nodejs \
+    npm \
     yarn \
     libyaml-dev \
     libffi-dev \
@@ -14,9 +15,12 @@ RUN apt-get update -qq && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
+# Install the correct bundler version
+RUN gem install bundler -v 2.4.19
+
 # Copy Gemfile and install gems
-COPY Gemfile ./
-RUN bundle install
+COPY Gemfile Gemfile.lock ./
+RUN bundle _2.4.19_ install
 
 # Copy the rest of the application
 COPY . .

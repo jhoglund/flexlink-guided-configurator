@@ -12,9 +12,9 @@ The most common cause of deployment failure is missing environment variables.
 
 **Required Variables in Render:**
 ```
-RAILS_MASTER_KEY=1b145e7beedbf6ccaf05d938f0eafbaa
-SUPABASE_URL=https://vpgawhkvfibhzafkdcsa.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZ2F3aGt2ZmliaHphZmtkY3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3Nzk0NjAsImV4cCI6MjA2OTM1NTQ2MH0.QjGdS6_Y4Dkud1E2wGBI11UE1UXljvMW5v0FQm1tJmc
+RAILS_MASTER_KEY=your_rails_master_key_here
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_ANON_KEY=your_supabase_anon_key_here
 ```
 
 **Steps to fix:**

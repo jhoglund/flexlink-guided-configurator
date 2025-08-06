@@ -73,6 +73,10 @@ group :development do
   gem 'guard-minitest'
   gem 'guard-rails'
   gem 'guard-rspec'
+
+  # Auto-reload browser on file changes
+  gem 'guard-livereload'
+  gem 'rack-livereload'
 end
 
 group :test do

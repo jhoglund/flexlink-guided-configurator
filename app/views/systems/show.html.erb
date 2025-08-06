@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>System Details</title>
+  </head>
+  <body>
+    <div class="max-w-7xl mx-auto">
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-gray-500 mb-6">
+        <a href="/systems" class="hover:text-flexlink-red transition-colors">Systems</a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-900"><%= @system.system_name %></span>
+      </nav>
+      <!-- System Header -->
+      <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 bg-flexlink-red bg-opacity-10 rounded-lg flex items-center justify-center">
+              <i class="fas fa-cogs text-2xl text-flexlink-red"></i>
+            </div>
+            <div class="flex-1">
+              <h1 class="text-3xl font-bold text-gray-900 mb-2"><%= @system.system_name %></h1>
+              <p class="text-lg text-gray-600 mb-4"><%= @system.description %></p>
+              <div class="flex items-center space-x-4 flex-wrap">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                  <%= @system.category %>
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                  <%= @system.load_capacity %>
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                  <%= @system.system_code %>
+                </span>
+                <% if @system.precision_level.present? %>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+                    <%= @system.precision_level %> Precision
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <a href="/systems/<%= @system.system_code %>/components" class="bg-flexlink-red text-white px-4 py-2 rounded-lg hover:bg-flexlink-red-dark transition-colors duration-300">
+              <i class="fas fa-cogs mr-2"></i>View Components
+            </a>
+            <a href="/systems/<%= @system.system_code %>/images" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+              <i class="fas fa-images mr-2"></i>View Images
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <!-- Key Features -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-star text-yellow-500 mr-2"></i>Key Features
+          </h3>
+          <ul class="space-y-2">
+            <% if @system.key_features.is_a?(Array) && @system.key_features.any? %>
+              <% @system.key_features.each do |feature| %>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                  <span class="text-gray-700"><%= feature %></span>
+                </li>
+              <% end %>
+            <% else %>
+              <li class="text-gray-500 italic">No features listed</li>
+            <% end %>
+          </ul>
+        </div>
+        <!-- Technical Specifications -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-cog text-blue-500 mr-2"></i>Technical Specifications
+          </h3>
+          <div class="space-y-3">
+            <% if @system.speed_range.present? %>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Speed Range:</span>
+                <span class="font-medium"><%= @system.speed_range %></span>
+              </div>
+            <% end %>
+            <% if @system.load_capacity.present? %>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Load Capacity:</span>
+                <span class="font-medium"><%= @system.load_capacity %></span>
+              </div>
+            <% end %>
+            <% if @system.max_load.present? %>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Max Load:</span>
+                <span class="font-medium"><%= @system.max_load %></span>
+              </div>
+            <% end %>
+            <% if @system.chain_pitch.present? %>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Chain Pitch:</span>
+                <span class="font-medium"><%= @system.chain_pitch %></span>
+              </div>
+            <% end %>
+            <% if @system.chain_width.present? %>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Chain Width:</span>
+                <span class="font-medium"><%= @system.chain_width %></span>
+              </div>
+            <% end %>
+            <% if @system.temperature_range.present? %>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Temperature Range:</span>
+                <span class="font-medium"><%= @system.temperature_range %></span>
+              </div>
+            <% end %>
+            <% if @system.technical_specifications.is_a?(Hash) && @system.technical_specifications.any? %>
+              <% @system.technical_specifications.each do |key, value| %>
+                <div class="flex justify-between">
+                  <span class="text-gray-600"><%= key.humanize %>:</span>
+                  <span class="font-medium"><%= value %></span>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <!-- Applications -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-industry text-purple-500 mr-2"></i>Applications
+          </h3>
+          <div class="space-y-2">
+            <% if @system.applications.is_a?(Array) && @system.applications.any? %>
+              <% @system.applications.each do |app| %>
+                <span class="inline-block bg-gray-100 text-gray-800 px-3 py-1 rounded-md text-sm mr-2 mb-2">
+                  <%= app %>
+                </span>
+              <% end %>
+            <% else %>
+              <p class="text-gray-500 italic">No applications listed</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- Advantages and Materials -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Advantages -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-trophy text-yellow-500 mr-2"></i>Advantages
+          </h3>
+          <ul class="space-y-2">
+            <% if @system.advantages.is_a?(Array) && @system.advantages.any? %>
+              <% @system.advantages.each do |advantage| %>
+                <li class="flex items-start">
+                  <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                  <span class="text-gray-700"><%= advantage %></span>
+                </li>
+              <% end %>
+            <% else %>
+              <li class="text-gray-500 italic">No advantages listed</li>
+            <% end %>
+          </ul>
+        </div>
+        <!-- Materials -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-cube text-blue-500 mr-2"></i>Available Materials
+          </h3>
+          <div class="space-y-2">
+            <% if @system.materials.is_a?(Array) && @system.materials.any? %>
+              <% @system.materials.each do |material| %>
+                <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-md text-sm mr-2 mb-2">
+                  <%= material %>
+                </span>
+              <% end %>
+            <% else %>
+              <p class="text-gray-500 italic">No materials listed</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- System Capabilities -->
+      <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <i class="fas fa-chart-line text-green-500 mr-2"></i>System Capabilities
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="text-center p-4 bg-gray-50 rounded-lg">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-weight text-blue-600"></i>
+            </div>
+            <h4 class="font-medium text-gray-900">Load Capacity</h4>
+            <p class="text-sm text-gray-600"><%= @system.load_capacity || 'N/A' %></p>
+          </div>
+          <div class="text-center p-4 bg-gray-50 rounded-lg">
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-tachometer-alt text-green-600"></i>
+            </div>
+            <h4 class="font-medium text-gray-900">Speed Range</h4>
+            <p class="text-sm text-gray-600"><%= @system.speed_range || 'N/A' %></p>
+          </div>
+          <div class="text-center p-4 bg-gray-50 rounded-lg">
+            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-bullseye text-purple-600"></i>
+            </div>
+            <h4 class="font-medium text-gray-900">Precision</h4>
+            <p class="text-sm text-gray-600"><%= @system.precision_level || 'N/A' %></p>
+          </div>
+          <div class="text-center p-4 bg-gray-50 rounded-lg">
+            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <i class="fas fa-thermometer-half text-orange-600"></i>
+            </div>
+            <h4 class="font-medium text-gray-900">Temperature</h4>
+            <p class="text-sm text-gray-600"><%= @system.temperature_range || 'N/A' %></p>
+          </div>
+        </div>
+      </div>
+      <!-- Action Buttons -->
+      <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Get Started</h3>
+        <div class="flex flex-wrap gap-4">
+          <a href="/wizard/step/1" class="bg-flexlink-red text-white px-6 py-3 rounded-lg hover:bg-flexlink-red-dark transition-colors duration-300 flex items-center">
+            <i class="fas fa-magic mr-2"></i>Start Configuration
+          </a>
+          <a href="/systems/<%= @system.system_code %>/components" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex items-center">
+            <i class="fas fa-cogs mr-2"></i>Browse Components
+          </a>
+          <a href="/systems/<%= @system.system_code %>/images" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center">
+            <i class="fas fa-images mr-2"></i>View Images
+          </a>
+          <a href="#" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-300 flex items-center">
+            <i class="fas fa-download mr-2"></i>Download Specs
+          </a>
+        </div>
+      </div>
+      <!-- Related Systems -->
+      <% if @related_systems.any? %>
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-link text-gray-500 mr-2"></i>Related Systems
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <% @related_systems.each do |related_system| %>
+              <div class="border border-gray-200 rounded-lg p-4 hover:border-flexlink-red transition-colors duration-200">
+                <div class="flex items-center space-x-3 mb-3">
+                  <div class="w-8 h-8 bg-flexlink-red bg-opacity-10 rounded flex items-center justify-center">
+                    <i class="fas fa-cogs text-flexlink-red"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium text-gray-900"><%= related_system.system_name %></h4>
+                    <p class="text-sm text-gray-500"><%= related_system.system_code %></p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    <%= related_system.category %>
+                  </span>
+                  <a href="/systems/<%= related_system.system_code %>" class="text-flexlink-red hover:text-flexlink-red-dark transition-colors duration-200">
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </body>
+</html>

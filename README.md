@@ -20,6 +20,21 @@ A modern Rails 8.0.2 web application for guided step-by-step configuration of Fl
 - Git
 - Ruby 3.3.1 (for local development)
 
+### Environment Setup
+
+1. **Copy environment template**:
+   ```bash
+   cp env.example .env
+   ```
+
+2. **Configure Supabase credentials** in `.env`:
+   ```bash
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+**⚠️ Security Note**: Never commit your `.env` file to version control. It's already in `.gitignore`.
+
 ### Setup
 
 1. **Clone the repository**
@@ -36,6 +51,10 @@ A modern Rails 8.0.2 web application for guided step-by-step configuration of Fl
 
 3. **Start the application**
    ```bash
+   # Option 1: Use the development script (recommended)
+   ./bin/dev
+   
+   # Option 2: Manual Docker startup
    docker-compose up --build
    ```
 
@@ -98,6 +117,36 @@ A modern Rails 8.0.2 web application for guided step-by-step configuration of Fl
 ### Running Locally
 
 ```bash
+
+### CSS Troubleshooting
+
+If you encounter styling issues (missing colors, fonts, or layout), follow these steps:
+
+1. **Recompile CSS manually**:
+   ```bash
+   npx tailwindcss -c tailwind.config.js -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify
+   ```
+
+2. **Copy CSS to public assets**:
+   ```bash
+   cp ./app/assets/builds/application.css ./public/assets/application.css
+   ```
+
+3. **Restart the web service**:
+   ```bash
+   docker-compose -f docker-compose.dev.yml restart web
+   ```
+
+4. **Clear browser cache** and refresh the page
+
+### CSS Development
+
+For active CSS development, run the watch script in a separate terminal:
+```bash
+./bin/watch-css
+```
+
+This will automatically recompile CSS when you make changes to `app/assets/stylesheets/application.css`.
 # Start all services
 docker-compose up
 
@@ -240,6 +289,11 @@ REDIS_URL=your_redis_url
 - **CSRF protection** enabled
 - **Secure headers** configured
 - **Environment variable** management
+- **Master key protection** - `config/master.key` is in `.gitignore`
+- **Credential management** - All sensitive data stored in environment variables
+- **HTTPS enforcement** in production
+
+📖 **See [SECURITY.md](SECURITY.md) for detailed security guidelines**
 
 ## 📊 Monitoring
 
@@ -293,4 +347,5 @@ For support and questions:
 **Version**: 2.0.0  
 **Status**: 🚀 Production Ready  
 **Rails Version**: 8.0.2  
-**Ruby Version**: 3.3.1 
+**Ruby Version**: 3.3.1  
+**Security**: ✅ All security measures implemented 

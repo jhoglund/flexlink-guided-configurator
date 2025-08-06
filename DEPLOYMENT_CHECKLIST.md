@@ -25,7 +25,7 @@
 You'll need to add these in Render dashboard:
 
 **Required:**
-- [ ] `RAILS_MASTER_KEY` = `1b145e7beedbf6ccaf05d938f0eafbaa`
+- [ ] `RAILS_MASTER_KEY` = `your_rails_master_key_here`
 - [ ] `SUPABASE_URL` = Your Supabase project URL
 - [ ] `SUPABASE_ANON_KEY` = Your Supabase anonymous key
 
@@ -51,8 +51,8 @@ Once deployed, test these URLs:
 
 You'll need these from your Supabase project:
 
-**Supabase URL:** `https://vpgawhkvfibhzafkdcsa.supabase.co`
-**Supabase Anon Key:** `eyJhbGciOiJIUzI1NiIs...` (from your .env file)
+**Supabase URL:** `https://your-project-id.supabase.co`
+**Supabase Anon Key:** `your_supabase_anon_key_here` (from your .env file)
 
 ## 🆘 If Something Goes Wrong
 
@@ -77,7 +77,7 @@ You'll need these from your Supabase project:
 
 ---
 
-**Your Rails Master Key:** `1b145e7beedbf6ccaf05d938f0eafbaa`
+**Your Rails Master Key:** `your_rails_master_key_here`
 **Repository:** `https://github.com/jhoglund/flexlink-guided-configurator`
 
 Good luck with your deployment! 🚀 

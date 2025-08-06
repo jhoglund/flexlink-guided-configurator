@@ -1,0 +1,84 @@
+services:
+  # PostgreSQL for Rails app logic
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: flexlink_config
+      POSTGRES_USER: flexlink_user
+      POSTGRES_PASSWORD: flexlink_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U flexlink_user -d flexlink_config" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching and background jobs
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Rails application with auto-reload
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/tmp
+      - /app/log
+    working_dir: /app
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_URL=postgresql://flexlink_user:flexlink_password@postgres:5432/flexlink_config
+      - REDIS_URL=redis://redis:6379/0
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "
+        bundle install &&
+        bundle exec rails db:create db:migrate &&
+        bundle exec rails server -b 0.0.0.0 -p 3000
+      "
+
+  # Guard for auto-reload (separate service)
+  guard:
+    build: .
+    ports:
+      - "35729:35729" # LiveReload port
+    volumes:
+      - .:/app
+      - /app/tmp
+      - /app/log
+    working_dir: /app
+    environment:
+      - RAILS_ENV=development
+    depends_on:
+      - web
+    command: >
+      sh -c "
+        bundle install &&
+        bundle exec guard --no-interactions
+      "
+    tty: true
+    stdin_open: true
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -2,6 +2,7 @@
 module.exports = {
     content: [
         './app/views/**/*.erb',
+        './app/views/*.erb',
         './app/helpers/**/*.rb',
         './app/javascript/**/*.js',
         './app/assets/stylesheets/**/*.css',
@@ -13,7 +14,7 @@ module.exports = {
         extend: {
             colors: {
                 'flexlink': {
-                    'red': '#8B2635',      // Primary FlexLink red
+                    'red': '#D70A32',      // Primary FlexLink red
                     'red-dark': '#6B1E2A',  // Darker red for hover states
                     'red-light': '#D70A32', // Bright red from gradient start
                     'red-deep': '#A10221',  // Deep red from gradient end
@@ -33,6 +34,9 @@ module.exports = {
             },
             fontFamily: {
                 'sans': [
+                    'DIN',
+                    'Rotis',
+                    'Inter',
                     '-apple-system',
                     'BlinkMacSystemFont',
                     '"Segoe UI"',
@@ -40,12 +44,15 @@ module.exports = {
                     '"Helvetica Neue"',
                     'Arial',
                     'sans-serif'
-                ]
+                ],
+                'din': ['DIN', 'Rotis', 'Inter', 'sans-serif']
             },
             spacing: {
                 '18': '4.5rem',
                 '88': '22rem',
-                '128': '32rem'
+                '128': '32rem',
+                '200': '50rem', // 200px margin from Figma specs
+                '24': '6rem'    // 24px gutter from Figma specs
             },
             borderRadius: {
                 'xl': '0.75rem',
@@ -71,9 +78,14 @@ module.exports = {
                     '0%': { transform: 'translateY(10px)', opacity: '0' },
                     '100%': { transform: 'translateY(0)', opacity: '1' }
                 }
-            }
+            },
+
         }
     },
+    safelist: [
+        'col-span-4',
+        'md:col-span-2'
+    ],
     plugins: [
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),

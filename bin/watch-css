@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+# Exit on error
+set -e
+
+echo "👀 Watching for CSS changes..."
+
+# Watch for changes in CSS files and recompile
+npx tailwindcss -c tailwind.config.js -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --watch 

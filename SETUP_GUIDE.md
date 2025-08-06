@@ -41,6 +41,7 @@ cd flexlink-guided-configuration-tool
 ```bash
 cp env.example .env
 # Edit .env with your Supabase credentials
+# ⚠️ Never commit .env file to version control
 ```
 
 3. **Start the development environment**
@@ -213,9 +214,11 @@ docker-compose exec web rails db:drop db:create db:migrate db:seed
 ## 🔐 Security Considerations
 
 ### Environment Variables
-- Never commit `.env` files
+- Never commit `.env` files (already in `.gitignore`)
 - Use different credentials for dev/staging/prod
 - Rotate Supabase keys regularly
+- Store Rails master key securely (`config/master.key`)
+- Use environment variables for all sensitive data
 
 ### Database Security
 - Local PostgreSQL: Development only

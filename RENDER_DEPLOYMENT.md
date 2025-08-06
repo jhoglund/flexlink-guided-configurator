@@ -93,14 +93,18 @@ cat config/master.key
 
 Copy the output and use it as the `RAILS_MASTER_KEY` environment variable in Render.
 
+**⚠️ Security Note:** Never commit your master key to version control. The `config/master.key` file should already be in your `.gitignore`.
+
 ## Step 5: Configure Environment Variables
 
 In your Render dashboard, go to your web service and add these environment variables:
 
 ### Required Variables:
-- `RAILS_MASTER_KEY` - Your Rails master key
+- `RAILS_MASTER_KEY` - Your Rails master key (get from `config/master.key`)
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_ANON_KEY` - Your Supabase anonymous key
+
+**⚠️ Security Note:** Never share these credentials publicly. Use environment variables in production.
 
 ### Automatically Set (if using render.yaml):
 - `DATABASE_URL` - Automatically set from PostgreSQL service
