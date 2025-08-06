@@ -62,6 +62,12 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # Asset configuration for development
+  config.assets.debug = true
+  config.assets.compile = true
+  config.assets.digest = false
+  config.assets.check_precompiled_asset = false
+
   # Fix timezone deprecation warning
   config.active_support.to_time_preserves_timezone = :zone
 

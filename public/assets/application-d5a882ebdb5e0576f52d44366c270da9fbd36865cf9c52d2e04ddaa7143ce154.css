@@ -224,10 +224,8 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 0.5rem;
     transition: transform 0.2s, box-shadow 0.2s;
     background: white;
-    border: 1px solid var(--gray-200);
 }
 
 .category-card:hover {
@@ -616,14 +614,4 @@ body {
 
 .help-button:hover {
     background: var(--flexlink-red-dark);
-}
-
-/* Debug Styles (for development) */
-.debug-grid {
-    border: 2px solid red;
-}
-
-.debug-item {
-    border: 1px solid blue;
-    background-color: rgba(255, 0, 0, 0.1);
 }

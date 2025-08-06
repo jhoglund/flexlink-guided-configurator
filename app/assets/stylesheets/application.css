@@ -1,4 +1,5 @@
 /* FlexLink Guided Configurator - Vanilla CSS */
+/* ✅ CSS auto-reload test - changes should be visible immediately */
 
 /* Reset and Base Styles */
 * {
@@ -224,10 +225,8 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 0.5rem;
     transition: transform 0.2s, box-shadow 0.2s;
     background: white;
-    border: 1px solid var(--gray-200);
 }
 
 .category-card:hover {

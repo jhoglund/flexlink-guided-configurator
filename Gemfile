@@ -37,7 +37,7 @@ gem 'sidekiq'
 gem 'redis'
 
 # UI Framework - Tailwind CSS
-gem 'tailwindcss-rails'
+# gem 'tailwindcss-rails'  # Removed - using vanilla CSS
 
 # Modern JavaScript
 gem 'importmap-rails'

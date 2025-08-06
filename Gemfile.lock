@@ -447,13 +447,6 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.7)
     supabase (0.1.0)
-    tailwindcss-rails (4.3.0)
-      railties (>= 7.0.0)
-      tailwindcss-ruby (~> 4.0)
-    tailwindcss-ruby (4.1.11-aarch64-linux-gnu)
-    tailwindcss-ruby (4.1.11-aarch64-linux-musl)
-    tailwindcss-ruby (4.1.11-arm64-darwin)
-    tailwindcss-ruby (4.1.11-x86_64-linux-gnu)
     thor (1.4.0)
     tilt (2.6.1)
     timeout (0.4.3)
@@ -534,7 +527,6 @@ DEPENDENCIES
   sqlite3 (~> 2.1)
   stimulus-rails
   supabase
-  tailwindcss-rails
   turbo-rails
   web-console
   webdrivers (~> 5.0)
