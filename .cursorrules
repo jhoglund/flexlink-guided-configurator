@@ -7,7 +7,7 @@ This is a Rails 8.0.2 web application for guided step-by-step configuration of F
 - **Backend**: Rails 8.0.2 with Ruby 3.3.1
 - **Database**: PostgreSQL (local) + Supabase (remote product data)
 - **Caching**: Redis for session storage and caching
-- **Frontend**: Tailwind CSS with custom FlexLink branding
+- **Frontend**: Vanilla CSS with custom FlexLink branding (no Tailwind CSS)
 - **Containerization**: Docker with docker-compose.dev.yml
 - **Development**: Guard for auto-reload functionality
 
@@ -29,7 +29,7 @@ This is a Rails 8.0.2 web application for guided step-by-step configuration of F
 - Use `./start_dev.sh` or `docker-compose -f docker-compose.dev.yml up --build`
 - Environment variables in `.env` file (never commit this)
 - Auto-reload with Guard on port 35729
-- CSS compilation with Tailwind CSS
+- Vanilla CSS with Rails Asset Pipeline (no build tools required)
 
 ## Security Considerations
 - All sensitive data in environment variables
@@ -45,8 +45,9 @@ This is a Rails 8.0.2 web application for guided step-by-step configuration of F
 ## File Structure
 - `app/controllers/` - Rails controllers
 - `app/models/` - System and Component models (ActiveModel)
-- `app/views/` - ERB templates with Tailwind CSS
+- `app/views/` - ERB templates with vanilla CSS
 - `app/services/` - SupabaseService for API integration
+- `app/assets/stylesheets/` - Vanilla CSS files
 - `config/` - Rails configuration
 - `db/` - Database migrations and schema
 - `docker-compose.dev.yml` - Development environment
@@ -64,10 +65,20 @@ This is a Rails 8.0.2 web application for guided step-by-step configuration of F
 - Background job processing with Sidekiq
 
 ## Styling
-- Tailwind CSS with custom FlexLink color palette
-- Custom component classes (btn-flexlink-primary, card-flexlink, etc.)
-- Responsive design with mobile-first approach
-- DIN and Rotis fonts (licensed, not included in repo)
+- **Vanilla CSS** with custom FlexLink color palette
+- **No Tailwind CSS** - all dependencies removed
+- **Rails Asset Pipeline** for automatic compilation
+- **CSS Variables** for consistent theming
+- **Responsive design** with mobile-first approach
+- **DIN and Rotis fonts** (licensed, not included in repo)
+
+## CSS Development
+- **No build tools required** - pure vanilla CSS
+- **Auto-compilation** via Rails Asset Pipeline
+- **Immediate changes** - edit CSS and refresh browser
+- **CSS Variables** for FlexLink brand colors
+- **Mobile-first responsive design**
+- **Modular CSS organization**
 
 ## Testing
 - Comprehensive test suite with Guard automation
@@ -81,12 +92,42 @@ This is a Rails 8.0.2 web application for guided step-by-step configuration of F
 
 ## Common Tasks
 - Use `gacp "message"` for quick git commits
-- CSS compilation: `npm run build:css:once` (one-time) or `npm run build:css` (watch mode)
+- CSS changes: Edit `app/assets/stylesheets/application.css` and refresh browser
 - Database reset: `./reset_db.sh`
 - Start development: `./start.sh` (Docker-first, with fallback)
+- Clear CSS cache: `./dev_css.sh`
 
 ## Important Notes
-- Keep debug elements as requested
-- All credentials in environment variables
-- Comprehensive documentation in markdown files
-- Security-first approach with proper credential management 
+- **Keep all debug elements as requested**
+- **All credentials in environment variables**
+- **No Tailwind CSS** - use vanilla CSS only
+- **Security-first approach** with proper credential management
+- **Docker development environment** with auto-reload
+- **Vanilla CSS** with Rails Asset Pipeline
+- **Comprehensive documentation** in markdown files
+
+## CSS Variables
+```css
+:root {
+    --flexlink-red: #d70a32;
+    --flexlink-red-dark: #6b1e2a;
+    --flexlink-medium-gray: #808080;
+    --flexlink-dark-gray: #4a4a4a;
+    /* ... more variables */
+}
+```
+
+## Development Commands
+```bash
+./start.sh                    # Docker-first with fallback
+./start_dev.sh               # Docker only
+./start_local.sh             # Local only
+./dev_css.sh                 # Clear assets and restart
+```
+
+## Key Constraints
+- **Never commit credentials** to version control
+- **Keep debug elements** for development
+- **Use vanilla CSS** only (no Tailwind)
+- **Security-first** approach with environment variables
+- **Follow existing code patterns** in the codebase 

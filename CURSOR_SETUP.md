@@ -26,11 +26,12 @@ I'm working on the FlexLink Guided Configurator - a Rails 8.0.2 app for configur
 
 Key context:
 - Uses Supabase for product data, PostgreSQL for app data, Redis for caching
-- Tailwind CSS with custom FlexLink branding
+- Vanilla CSS with custom FlexLink branding (no Tailwind CSS)
 - Docker development environment with auto-reload
 - 8-step guided configuration wizard
 - Keep all debug elements as requested
 - Security-first: all credentials in environment variables
+- Rails Asset Pipeline for CSS compilation
 
 Please read the .cursorrules file for full project context.
 ```
@@ -51,14 +52,18 @@ Configure workspace-specific settings in `.vscode/settings.json`:
       "app/models/component.rb",
       "app/controllers/home_controller.rb",
       "config/routes.rb",
-      "tailwind.config.js"
+      "app/assets/stylesheets/application.css",
+      "CSS_DEVELOPMENT_GUIDE.md",
+      "app/views/home/index.html.erb"
     ],
     "importantNotes": [
       "Keep all debug elements as requested",
       "Security-first: all credentials in environment variables",
       "Uses Supabase for product data, PostgreSQL for app data",
-      "Tailwind CSS with custom FlexLink branding",
-      "Docker development environment with auto-reload"
+      "Vanilla CSS with custom FlexLink branding (no Tailwind CSS)",
+      "Docker development environment with auto-reload",
+      "Rails Asset Pipeline for CSS compilation",
+      "No build tools required for CSS development"
     ]
   }
 }
@@ -70,6 +75,7 @@ The `.vscode/settings.json` file provides:
 - **Key Files**: Important files for context
 - **Important Notes**: Critical reminders and constraints
 - **File Associations**: Proper language support
+- **CSS Validation**: Proper CSS linting and validation
 
 ## 📋 **Recommended Usage Patterns**
 
@@ -90,6 +96,7 @@ I'm debugging [specific issue]. Please consider:
 - The project uses Rails 8.0.2 with Docker
 - Keep all debug elements as requested
 - Security-first approach with environment variables
+- Vanilla CSS with Rails Asset Pipeline
 - Read .cursorrules for full context
 ```
 
@@ -98,8 +105,19 @@ I'm debugging [specific issue]. Please consider:
 I'm adding a new feature to the FlexLink configurator. Please consider:
 - Follow existing patterns in the codebase
 - Maintain security practices (no hardcoded credentials)
-- Use Tailwind CSS with FlexLink branding
+- Use vanilla CSS with FlexLink branding (no Tailwind)
 - Keep debug elements as requested
+- Use Rails Asset Pipeline for CSS compilation
+```
+
+### **For CSS Development:**
+```
+I'm working on CSS styling. Please consider:
+- Use vanilla CSS only (no Tailwind CSS)
+- Follow existing CSS patterns in application.css
+- Use CSS variables for FlexLink brand colors
+- Mobile-first responsive design
+- Rails Asset Pipeline handles compilation
 ```
 
 ## 🔧 **Setup Instructions**
@@ -112,6 +130,7 @@ Ensure the `.cursorrules` file exists in your project root and contains:
 - Security considerations
 - Debug element requirements
 - File structure and key models
+- CSS development workflow
 - Common tasks and important notes
 
 ### **2. Check Workspace Settings**
@@ -119,6 +138,8 @@ Verify `.vscode/settings.json` contains:
 - `cursor.projectContext` configuration
 - Proper file associations for ERB files
 - Emmet support for HTML in ERB files
+- CSS validation settings
+- File exclusion patterns
 
 ### **3. Test in New Chat**
 Start a new Cursor chat and verify:
@@ -126,6 +147,7 @@ Start a new Cursor chat and verify:
 - No need to explain basic project details
 - Security considerations are understood
 - Debug elements are preserved
+- CSS development workflow is clear
 
 ## 🎯 **Key Benefits**
 
@@ -138,11 +160,13 @@ Start a new Cursor chat and verify:
 - Tailored to FlexLink project requirements
 - Aware of security constraints
 - Understands debug element requirements
+- Knows CSS development workflow
 
 ### **Efficient Development**
 - Faster responses with proper context
 - Better code suggestions
 - Reduced back-and-forth clarification
+- Proper CSS development guidance
 
 ## 📚 **File Structure**
 
@@ -153,7 +177,10 @@ flexlink-guided-configurator/
 │   └── settings.json              # Workspace configuration
 ├── README.md                      # Project documentation
 ├── SECURITY.md                    # Security guidelines
-└── SETUP_GUIDE.md                # Development setup
+├── SETUP_GUIDE.md                # Development setup
+├── CSS_DEVELOPMENT_GUIDE.md      # CSS development guide
+└── app/assets/stylesheets/
+    └── application.css            # Main CSS file
 ```
 
 ## 🚨 **Important Reminders**
@@ -162,13 +189,16 @@ flexlink-guided-configurator/
 - Keep all debug elements as requested
 - Security-first approach with environment variables
 - Docker development environment
-- Tailwind CSS with FlexLink branding
+- Vanilla CSS with FlexLink branding (no Tailwind)
+- Rails Asset Pipeline for CSS compilation
 
 ### **Key Constraints:**
 - Never commit credentials to version control
 - All sensitive data in environment variables
 - Maintain debug elements for development
 - Follow existing code patterns
+- Use vanilla CSS only (no Tailwind CSS)
+- No build tools required for CSS development
 
 ## 🔄 **Updating Context**
 
@@ -177,7 +207,27 @@ When the project evolves:
 2. **Modify `.vscode/settings.json`** if needed
 3. **Test in new chat** to verify context is current
 
+## 🎨 **CSS Development Context**
+
+### **Key Points for CSS Work:**
+- **Vanilla CSS only** - no Tailwind CSS
+- **Rails Asset Pipeline** handles compilation
+- **CSS Variables** for FlexLink brand colors
+- **Mobile-first responsive design**
+- **Immediate changes** - edit CSS and refresh browser
+- **No build tools required**
+
+### **CSS File Structure:**
+```
+app/assets/stylesheets/
+├── application.css          # Main stylesheet
+├── fonts.css               # Font definitions
+├── inter-direct.css        # Inter font styles
+├── inter-test.css          # Font testing
+└── rotis-fonts.css         # Rotis font styles
+```
+
 ---
 
 **Last Updated**: December 2024  
-**Status**: ✅ Configured and tested 
+**Status**: ✅ Configured and tested with vanilla CSS workflow 
