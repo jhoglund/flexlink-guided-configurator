@@ -3,14 +3,15 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  url: <%= ENV['DATABASE_URL'] %>
 
 development:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] || 'postgresql://flexlink_user:flexlink_password@localhost:5432/flexlink_config' %>
 
 test:
   <<: *default
-  database: flexlink_config_test
+  url: <%= ENV['DATABASE_URL'] || 'postgresql://flexlink_user:flexlink_password@localhost:5432/flexlink_config_test' %>
 
 production:
-  <<: *default 
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %> 

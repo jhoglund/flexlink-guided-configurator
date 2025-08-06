@@ -69,6 +69,10 @@ body {
 }
 
 /* Missing Grid Columns */
+.grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
 .grid-cols-8 {
     grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
 }
