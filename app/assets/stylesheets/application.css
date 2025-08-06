@@ -35,7 +35,7 @@ body {
 
 /* Layout Components */
 .container {
-    max-width: 1400px;
+    max-width: 1520px;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -49,6 +49,37 @@ body {
 @media (min-width: 1024px) {
     .container {
         padding: 0 2rem;
+    }
+}
+
+/* Full-width section with FlexLink light gray background */
+.section-full-width {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 3rem 0;
+}
+
+/* FlexLink light gray background for sections */
+.bg-light-gray {
+    background: var(--gray-50);
+}
+
+/* Container within full-width sections */
+.section-full-width>.container {
+    max-width: 1520px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+@media (min-width: 640px) {
+    .section-full-width>.container {
+        padding: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .section-full-width>.container {
+        padding: 0;
     }
 }
 
@@ -219,14 +250,20 @@ body {
 
 /* Category Card */
 .category-card {
-    height: 8rem;
+    max-width: 10.625rem;
+    /* 170px */
+    min-width: 8.5rem;
+    /* 136px */
+    height: 13.25rem;
+    /* 212px */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     background: white;
+
 }
 
 .category-card:hover {
@@ -235,9 +272,7 @@ body {
 }
 
 .category-card img {
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0.5rem;
+    background: transparent;
 }
 
 /* Build Your Own System Section */

@@ -1,4 +1,5 @@
 /* FlexLink Guided Configurator - Vanilla CSS */
+/* ✅ CSS auto-reload test - changes should be visible immediately */
 
 /* Reset and Base Styles */
 * {
@@ -34,7 +35,7 @@ body {
 
 /* Layout Components */
 .container {
-    max-width: 1400px;
+    max-width: 1520px;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -47,6 +48,38 @@ body {
 
 @media (min-width: 1024px) {
     .container {
+        padding: 0 2rem;
+    }
+}
+
+/* Full-width section with FlexLink light gray background */
+.section-full-width {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* FlexLink light gray background for sections */
+.bg-light-gray {
+    background: var(--gray-50);
+}
+
+/* Container within full-width sections */
+.section-full-width>.container {
+    max-width: 1520px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+    .section-full-width>.container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .section-full-width>.container {
         padding: 0 2rem;
     }
 }
