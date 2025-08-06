@@ -1,8 +1,8 @@
-<div class="wizard-container">
+<section class="wizard-container">
   <%= render 'wizard/steps/wizard_header' %>
   <div class="wizard-content">
     <%= form_with url: wizard_update_step_path(8), method: :patch, local: true, class: "wizard-form" do |form| %>
-      <div class="review-section">
+      <section class="review-section">
         <h2>Review Your Configuration</h2>
         <p class="step-description">Please review your configuration details and provide a name for your project.</p>
         <div class="configuration-summary">
@@ -59,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="configuration-name-section">
+        <section class="configuration-name-section">
           <h3>Name Your Configuration</h3>
           <p class="name-description">Give your configuration a memorable name for easy reference.</p>
           <div class="name-input-group">
@@ -81,7 +81,7 @@
               <button type="button" class="suggestion-btn" data-name="Custom Configuration">Custom Configuration</button>
             </div>
           </div>
-        </div>
+        </section>
         <div class="final-actions">
           <div class="action-buttons">
             <%= link_to "Back to Step 7", wizard_step_path(7), class: "btn btn-secondary" %>
@@ -89,10 +89,10 @@
             <%= form.submit "Complete Configuration", class: "btn btn-success" %>
           </div>
         </div>
-      </div>
+      </section>
     <% end %>
   </div>
-</div>
+</section>
 <style>
   .wizard-container {
     max-width: 1200px;

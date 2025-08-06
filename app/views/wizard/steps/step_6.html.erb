@@ -1,9 +1,9 @@
-<div class="wizard-container">
+<section class="wizard-container">
   <%= render 'wizard/steps/wizard_header' %>
 
   <div class="wizard-content">
     <%= form_with url: wizard_update_step_path(6), method: :patch, local: true, class: "wizard-form" do |form| %>
-      <div class="component-selection-section">
+      <section class="component-selection-section">
         <h2>Select <%= @component_type&.humanize %> Components</h2>
         <p class="step-description">Choose the specific components you need for your conveyor system.</p>
         
@@ -98,7 +98,7 @@
             <span class="summary-value" id="total-value">$0</span>
           </div>
         </div>
-      </div>
+      </section>
 
       <div class="wizard-actions">
         <div class="action-buttons">
@@ -108,7 +108,7 @@
       </div>
     <% end %>
   </div>
-</div>
+</section>
 
 <style>
 .wizard-container {

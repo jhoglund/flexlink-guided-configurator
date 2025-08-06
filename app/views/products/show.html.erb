@@ -1,15 +1,15 @@
-<div class="product-detail-container">
+<section class="product-detail-container">
   <!-- Breadcrumb Navigation -->
-  <div class="breadcrumb-nav">
+  <nav class="breadcrumb-nav">
     <%= link_to "Products", products_path, class: "breadcrumb-link" %>
     <span class="breadcrumb-separator">/</span>
     <span class="breadcrumb-current"><%= @product[:name] %></span>
-  </div>
+  </nav>
 
   <!-- Product Header -->
-  <div class="product-header">
+  <header class="product-header">
     <div class="product-basic-info">
-      <div class="product-image-section">
+      <section class="product-image-section">
         <% if @product[:image_url].present? %>
           <%= image_tag @product[:image_url], alt: @product[:name], class: "product-main-image" %>
         <% else %>
@@ -20,7 +20,7 @@
         <div class="product-badge <%= @product[:source] %>">
           <%= @product[:source].titleize %>
         </div>
-      </div>
+      </section>
       
       <div class="product-info">
         <div class="product-category-badges">
@@ -45,24 +45,24 @@
           </div>
         </div>
         
-        <div class="product-price-section">
+        <section class="product-price-section">
           <div class="price-display">
             <span class="price-currency">$</span>
             <span class="price-amount"><%= number_with_precision(@product[:price], precision: 2) %></span>
           </div>
           <div class="price-note">*Prices may vary based on configuration</div>
-        </div>
+        </section>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- Product Details Tabs -->
   <div class="product-tabs">
-    <div class="tab-navigation">
+    <nav class="tab-navigation">
       <button class="tab-button active" data-tab="specifications">Specifications</button>
       <button class="tab-button" data-tab="details">Details</button>
       <button class="tab-button" data-tab="related">Related Products</button>
-    </div>
+    </nav>
     
     <div class="tab-content">
       <!-- Specifications Tab -->
@@ -89,7 +89,7 @@
       <!-- Details Tab -->
       <div class="tab-panel" id="details">
         <div class="details-grid">
-          <div class="detail-section">
+          <section class="detail-section">
             <h3>Product Information</h3>
             <div class="detail-list">
               <div class="detail-item">
@@ -109,9 +109,9 @@
                 <span class="detail-value"><%= @product[:brand] %></span>
               </div>
             </div>
-          </div>
+          </section>
           
-          <div class="detail-section">
+          <section class="detail-section">
             <h3>Pricing Information</h3>
             <div class="detail-list">
               <div class="detail-item">
@@ -123,7 +123,7 @@
                 <span class="detail-value">USD</span>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
       
@@ -178,7 +178,7 @@
       <%= link_to "Request Quote", "#", class: "btn btn-outline" %>
     </div>
   </div>
-</div>
+</section>
 
 <style>
 .product-detail-container {
