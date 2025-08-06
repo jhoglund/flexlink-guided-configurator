@@ -20,7 +20,8 @@
     <div id="industry-grid" class="industry-grid">
       <% @categories.each do |category| %>
         <div class="category-card">
-          <%= image_tag "icons/categories/#{category[:icon]}", alt: category[:name] %>
+          <%= category_card_icon(category[:name].downcase, alt: "#{category[:name]} icon") %>
+          <%= category_card_label(category[:name].downcase, alt: category[:name]) %>
         </div>
       <% end %>
       <!-- Build Your Own System Section -->

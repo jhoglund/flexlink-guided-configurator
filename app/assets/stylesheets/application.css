@@ -261,18 +261,29 @@ body {
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
     background: white;
-
+    position: relative;
+    z-index: 1;
 }
 
 .category-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    z-index: 2;
 }
 
 .category-card img {
     background: transparent;
+}
+
+/* Category Card Label Hover Effect */
+.category-label {
+    transition: filter 0.3s ease-in-out;
+}
+
+.category-card:hover .category-label {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
 }
 
 /* Build Your Own System Section */
