@@ -51,11 +51,14 @@ A modern Rails 8.0.2 web application for guided step-by-step configuration of Fl
 
 3. **Start the application**
    ```bash
-   # Option 1: Use the development script (recommended)
-   ./bin/dev
+   # Option 1: Use the default start script (recommended)
+   ./start.sh
    
-   # Option 2: Manual Docker startup
-   docker-compose up --build
+   # Option 2: Use Docker development environment
+   ./start_dev.sh
+   
+   # Option 3: Use local development (no Docker)
+   ./start_local.sh
    ```
 
 4. **Access the application**

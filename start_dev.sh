@@ -2,6 +2,14 @@
 
 echo "🚀 Starting FlexLink Configurator in development mode with auto-reload..."
 
+# Check if Docker is running
+if ! docker info > /dev/null 2>&1; then
+    echo "❌ Docker is not running. Starting Docker..."
+    open -a Docker
+    echo "⏳ Waiting for Docker to start..."
+    sleep 10
+fi
+
 # Stop any existing containers
 docker-compose down
 

@@ -1,0 +1,92 @@
+# FlexLink Guided Configurator - Project Context
+
+## Project Overview
+This is a Rails 8.0.2 web application for guided step-by-step configuration of FlexLink conveyor systems. It integrates with Supabase for product data and provides a comprehensive interface for system configuration.
+
+## Architecture
+- **Backend**: Rails 8.0.2 with Ruby 3.3.1
+- **Database**: PostgreSQL (local) + Supabase (remote product data)
+- **Caching**: Redis for session storage and caching
+- **Frontend**: Tailwind CSS with custom FlexLink branding
+- **Containerization**: Docker with docker-compose.dev.yml
+- **Development**: Guard for auto-reload functionality
+
+## Key Features
+1. **Guided Configuration Wizard**: 8-step process for system configuration
+2. **System Management**: Complete FlexLink system catalog (17 systems)
+3. **Component Integration**: Dynamic component selection based on system type
+4. **Real-time Pricing**: Automatic pricing calculations
+5. **Industry Categories**: 12 industry-specific categories with icons
+6. **User Management**: Authentication and profile management
+7. **Export Functionality**: JSON, PDF, CSV export capabilities
+
+## Database Structure
+- **Local PostgreSQL**: User data, configurations, wizard sessions, component selections
+- **Supabase**: Product data (systems, components, images)
+- **Redis**: Caching and background job processing
+
+## Development Setup
+- Use `./start_dev.sh` or `docker-compose -f docker-compose.dev.yml up --build`
+- Environment variables in `.env` file (never commit this)
+- Auto-reload with Guard on port 35729
+- CSS compilation with Tailwind CSS
+
+## Security Considerations
+- All sensitive data in environment variables
+- Rails master key in `config/master.key` (in .gitignore)
+- Supabase credentials in `.env` file
+- Never commit credentials to version control
+
+## Debug Elements
+- Debug border on line 30 of `app/views/home/index.html.erb` (intentional)
+- Font test section in home page (for development)
+- Keep all debug elements as requested
+
+## File Structure
+- `app/controllers/` - Rails controllers
+- `app/models/` - System and Component models (ActiveModel)
+- `app/views/` - ERB templates with Tailwind CSS
+- `app/services/` - SupabaseService for API integration
+- `config/` - Rails configuration
+- `db/` - Database migrations and schema
+- `docker-compose.dev.yml` - Development environment
+
+## Key Models
+- `System` - FlexLink system specifications (ActiveModel)
+- `Component` - Component catalog (ActiveModel)
+- `Configuration` - User configurations
+- `User` - User accounts and profiles
+- `WizardSession` - Guided configuration progress
+
+## API Integration
+- Supabase for product data (read-only)
+- RESTful API endpoints for external access
+- Background job processing with Sidekiq
+
+## Styling
+- Tailwind CSS with custom FlexLink color palette
+- Custom component classes (btn-flexlink-primary, card-flexlink, etc.)
+- Responsive design with mobile-first approach
+- DIN and Rotis fonts (licensed, not included in repo)
+
+## Testing
+- Comprehensive test suite with Guard automation
+- Model tests for System and Component
+- Clean test output with no deprecation warnings
+
+## Deployment
+- Ready for Render/Railway deployment
+- Environment variables configured
+- Production-ready with security measures
+
+## Common Tasks
+- Use `gacp "message"` for quick git commits
+- CSS compilation: `npm run build:css`
+- Database reset: `./reset_db.sh`
+- Start development: `./start.sh` (Docker-first, with fallback)
+
+## Important Notes
+- Keep debug elements as requested
+- All credentials in environment variables
+- Comprehensive documentation in markdown files
+- Security-first approach with proper credential management 
