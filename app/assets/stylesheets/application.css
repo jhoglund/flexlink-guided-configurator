@@ -68,16 +68,6 @@ body {
     border-color: #d70a32 !important;
 }
 
-/* Debug Grid Styles */
-#industry-grid {
-    border: 2px solid red !important;
-}
-
-#industry-grid > div {
-    border: 1px solid blue !important;
-    background-color: rgba(255, 0, 0, 0.1) !important;
-}
-
 /* Missing Grid Columns */
 .grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
