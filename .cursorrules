@@ -81,7 +81,7 @@ This is a Rails 8.0.2 web application for guided step-by-step configuration of F
 
 ## Common Tasks
 - Use `gacp "message"` for quick git commits
-- CSS compilation: `npm run build:css`
+- CSS compilation: `npm run build:css:once` (one-time) or `npm run build:css` (watch mode)
 - Database reset: `./reset_db.sh`
 - Start development: `./start.sh` (Docker-first, with fallback)
 
