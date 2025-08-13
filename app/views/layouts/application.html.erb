@@ -20,13 +20,13 @@
     <!-- Header/Navigation -->
     <header class="header">
       <div class="container">
-        <div class="header-content">
+        <div class="grid-12 header-content">
           <!-- Logo and Company Info -->
-          <div class="logo">
+          <div class="logo col-span-6 col-span-md-3 col-span-lg-2">
             <%= image_tag "flexlink-logo.svg", class: "logo-icon", alt: "FlexLink" %>
           </div>
           <!-- Main Navigation -->
-          <nav class="nav">
+          <nav class="nav col-span-12 col-span-md-6 col-span-lg-8">
             <%= link_to "Home", root_path, class: "nav-link" %>
             <div style="position: relative;">
               <a href="#" class="nav-link" style="display: flex; align-items: center;">
@@ -40,7 +40,7 @@
             <a href="#" class="nav-link">Contact us</a>
           </nav>
           <!-- Right Side Actions -->
-          <div style="display: flex; align-items: center; gap: 1rem;">
+          <div class="col-span-6 col-span-md-3 col-span-lg-2" style="display: flex; align-items: center; gap: 1rem;">
             <!-- Language Selector -->
             <div style="display: flex; align-items: center; gap: 0.25rem; color: var(--gray-700);">
               <i class="fas fa-globe" style="font-size: 0.875rem;"></i>

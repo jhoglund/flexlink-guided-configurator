@@ -1,19 +1,21 @@
 <!-- Hero Section -->
 <section class="section-full-width hero">
   <div class="container">
-    <div class="hero-swosh-graphic">
-      <picture>
-        <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
-        <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
-      </picture>
+    <div class="grid-12 hero-grid">
+      <div class="hero-copy col-span-12 col-span-md-7 col-span-lg-5">
+        <h1>Welcome to FlexLink Online Store</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+        <button class="btn btn-primary">Start shopping</button>
+      </div>
+      <div class="hero-media col-span-12 col-span-md-5 col-span-lg-7">
+        <picture>
+          <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
+          <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
+        </picture>
+        <div class="hero-swosh-graphic"></div>
+        <div class="hero-swosh-white"></div>
+      </div>
     </div>
-    <div class="hero-swosh-white">
-    </div>
-    <h1>Welcome to FlexLink Online Store</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-    <button class="btn btn-primary">
-      Start shopping
-    </button>
   </div>
 </section>
 <!-- Category Selection Section -->
