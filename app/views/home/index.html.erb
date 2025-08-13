@@ -8,11 +8,12 @@
         <button class="btn btn-primary">Start shopping</button>
       </div>
       <div class="hero-media col-span-12 col-span-md-5 col-span-lg-7">
-        <picture>
-          <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
-          <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
-        </picture>
-        <div class="hero-swosh-graphic"></div>
+        <div class="hero-mask">
+          <picture>
+            <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
+            <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
+          </picture>
+        </div>
         <div class="hero-swosh-white"></div>
       </div>
     </div>

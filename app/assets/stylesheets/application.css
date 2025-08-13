@@ -140,6 +140,15 @@ h6 {
     min-height: 420px;
 }
 
+/* Mask container that applies the red swosh shape to the photo */
+.hero-mask {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    clip-path: path("M1082 797H0V794.812C253.035 586.778 450.131 313.182 565.312 0H1082V797Z");
+    z-index: 0;
+}
+
 .hero-swosh-graphic {
     position: absolute;
     inset: 0;
@@ -181,9 +190,7 @@ h6 {
         width: 500px;
     }
 
-    .hero-swosh-graphic {
-        display: block;
-    }
+    .hero-swosh-graphic { display: block; }
 
     .hero-swosh-white {
         top: 0;
@@ -193,10 +200,11 @@ h6 {
         clip-path: path("M565.312 0C450.131 313.182 253.035 586.778 0 794.812V745.09C242.581 582.911 405.431 310.799 417.304 0H565.312Z");
     }
 
-    .hero-robot-photo {
-        display: block;
+    .hero-robot-photo { display: block; }
+
+    .hero-media {
+        min-height: 560px;
     }
-    .hero-media { min-height: 560px; }
 }
 
 @media (min-width: 1416px) {
@@ -225,7 +233,7 @@ h6 {
 
 }
 
-/* XL container margins to match Figma side margins */
+/* XL container margins to match Figma side margins — ensure header and hero share same container */
 @media (min-width: 1416px) {
     .container {
         padding-left: var(--grid-margin-xl);
