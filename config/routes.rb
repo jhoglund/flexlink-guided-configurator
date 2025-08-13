@@ -85,4 +85,9 @@ Rails.application.routes.draw do
 
   # Health check
   get 'health', to: 'health#index'
+
+  # Dev-only routes
+  if Rails.env.development?
+    get 'grid_test', to: 'dev#grid'
+  end
 end

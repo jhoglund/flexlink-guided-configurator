@@ -1,0 +1,24 @@
+/* Development-only 24-column grid test helpers */
+.grid-24 {
+  display: grid;
+  grid-template-columns: repeat(24, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+}
+
+.span-24-1  { grid-column: span 1 / span 1; }
+.span-24-3  { grid-column: span 3 / span 3; }
+.span-24-6  { grid-column: span 6 / span 6; }
+.span-24-12 { grid-column: span 12 / span 12; }
+
+.demo-grid { margin-bottom: 2rem; }
+.demo-box {
+  background: rgba(59,130,246,.12);
+  border: 1px dashed rgba(59,130,246,.35);
+  color: var(--gray-700);
+  padding: .75rem;
+  text-align: center;
+  font-family: monospace;
+  font-size: .875rem;
+  border-radius: .25rem;
+}
+
