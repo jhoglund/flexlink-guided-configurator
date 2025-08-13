@@ -120,6 +120,8 @@ bin/rails test
 - [API_GUIDE.md](API_GUIDE.md) - Public API endpoints
 - [OPERATIONS.md](OPERATIONS.md) - Common ops and maintenance
 - [STYLE_GUIDE.md](STYLE_GUIDE.md) - ERB/CSS conventions and branding
+- [ENV_VARS.md](ENV_VARS.md) - Required environment variables
+- [CONTRIBUTING.md](CONTRIBUTING.md), [CHANGELOG.md](CHANGELOG.md)
 
 ## 🎯 Status
 

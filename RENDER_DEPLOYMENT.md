@@ -119,6 +119,26 @@ In your Render dashboard, go to your web service and add these environment varia
 2. **Check Runtime Logs**: View application logs for any errors
 3. **Health Check**: Your app should respond at the provided URL
 
+## Background Jobs (Sidekiq) and Redis on Render
+
+### What Render provisions (via render.yaml)
+- PostgreSQL database (DATABASE_URL)
+- Redis instance (REDIS_URL)
+- Web service environment (RAILS_*)
+
+### Sidekiq
+- Adapter set in `config/application.rb` and `config/environments/production.rb`
+- Run Sidekiq as a separate service or use a worker on Render (recommended)
+- Start command: `bundle exec sidekiq`
+
+### Logs
+- Web logs: Render Web service > Logs
+- Sidekiq logs: Render Worker service > Logs (if configured)
+
+### Health checks
+- Verify Redis connectivity in app logs
+- Ensure background jobs are processed (enqueue a test job)
+
 ## Step 7: Verify Deployment
 
 Once deployed, your app will be available at:
