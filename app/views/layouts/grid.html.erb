@@ -6,12 +6,25 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "grid", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
     <% if Rails.env.development? %>
       <%= stylesheet_link_tag "debug", "data-turbo-track": "reload" %>
       <%= javascript_import_module_tag "debug" %>
     <% end %>
   </head>
   <body>
+    <% if Rails.env.development? %>
+      <button id="debug-grid-toggle" class="debug-toggle">HIDE</button>
+      <div id="debug-grid-info" class="debug-info">
+        <h4>Grid Debug Info</h4>
+        <p>Grid: 24 columns</p>
+        <p>Column: 40px (2.5rem)</p>
+        <p>Gutter: 24px (1.5rem)</p>
+        <p>Layout: Centered</p>
+        <p>Press G to toggle</p>
+      </div>
+      <div id="debug-grid-numbers"></div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
