@@ -23,9 +23,7 @@
         <div class="header-content">
           <!-- Logo and Company Info -->
           <div class="logo">
-            <div class="logo-icon"></div>
-            <span class="logo-text">FLEXLINK</span>
-            <span class="logo-subtitle">a coesia company</span>
+            <%= image_tag "flexlink-logo.svg", class: "logo-icon" %>
           </div>
           <!-- Main Navigation -->
           <nav class="nav">
@@ -66,18 +64,8 @@
         </div>
       </div>
     </header>
-    <!-- Breadcrumbs -->
-    <div style="background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
-      <div class="container" style="padding: 0.5rem 0;">
-        <nav style="font-size: 0.875rem; color: var(--gray-500);">
-          <span>Home</span>
-          <span style="margin: 0 0.5rem;">/</span>
-          <span>E-Commerce Solutions</span>
-          <span style="margin: 0 0.5rem;">/</span>
-          <span>Configure your system</span>
-        </nav>
-      </div>
-    </div>
+    <!-- Dynamic Breadcrumbs -->
+    <%= breadcrumbs %>
     <!-- Main Content -->
     <main class="container" style="padding: 2rem 0;">
       <!-- Flash Messages -->

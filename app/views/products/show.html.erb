@@ -1,10 +1,12 @@
+<% content_for :breadcrumbs do %>
+  [
+    { text: "Home", url: root_path },
+    { text: "Products", url: products_path },
+    { text: @product[:name] }
+  ]
+<% end %>
+
 <section class="product-detail-container">
-  <!-- Breadcrumb Navigation -->
-  <nav class="breadcrumb-nav">
-    <%= link_to "Products", products_path, class: "breadcrumb-link" %>
-    <span class="breadcrumb-separator">/</span>
-    <span class="breadcrumb-current"><%= @product[:name] %></span>
-  </nav>
 
   <!-- Product Header -->
   <header class="product-header">

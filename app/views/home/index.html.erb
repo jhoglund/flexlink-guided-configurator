@@ -1,6 +1,11 @@
 <!-- Hero Section -->
-<section class="hero">
+<section class="section-full-width hero">
   <div class="container">
+    <div class="hero-swosh-graphic">
+      <%= image_tag "hero-robot-photo.jpg", alt: "Flexlink robot photo", class: "hero-robot-photo" %>
+    </div>
+    <div class="hero-swosh-white">
+    </div>
     <h1>Welcome to FlexLink Online Store</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
     <button class="btn btn-primary">
@@ -12,7 +17,7 @@
 <section class="section-full-width bg-light-gray">
   <div class="container">
     <div class="mb-12">
-      <h2 class="section-title">Start here and choose your industry</h2>
+      <h2 class="section-title"><strong>Start here and</strong> choose your industry</h2>
     </div>
     <!-- Industry Categories Grid -->
     <div id="industry-grid" class="industry-grid">
@@ -35,7 +40,7 @@
           </svg>
         </div>
         <div class="build-content">
-          <h3>Build your own system</h3>
+          <h3>Build your own <strong>system</strong></h3>
           <p>We can guide to enhance production flows, maximize sellable throughput and minimize the TCO.</p>
         </div>
         <div class="build-actions">
@@ -51,7 +56,8 @@
     <!-- Product Search Section -->
     <div class="search-container">
       <div class="search-form">
-        <div>
+        <div class="search-input-wrapper">
+          <img src="/assets/icons/search.svg" alt="Search" class="search-icon">
           <input type="text" placeholder="What are you looking for?" class="form-input">
         </div>
         <div>
@@ -63,55 +69,12 @@
           </select>
         </div>
         <div>
+          <input type="text" placeholder="Product no" class="form-input product-no-input">
+        </div>
+        <div>
           <button class="btn btn-primary">
             Search
           </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Font Test Section (Remove after testing) -->
-<section class="section-full-width bg-light-gray">
-  <div class="container">
-    <div class="mb-6">
-      <h2 class="section-title">Font Test</h2>
-      <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 1rem;">This section tests the font implementation. Remove after confirming fonts work correctly.</p>
-    </div>
-    <div class="grid grid-1 grid-md-3">
-      <div class="card">
-        <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 1rem;">Default Font Stack</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <p style="font-weight: 400;">Regular (400): The quick brown fox jumps over the lazy dog</p>
-          <p style="font-weight: 500;">Medium (500): The quick brown fox jumps over the lazy dog</p>
-          <p style="font-weight: 700;">Bold (700): The quick brown fox jumps over the lazy dog</p>
-        </div>
-      </div>
-      <div class="card">
-        <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 1rem;">Forced Inter Font</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: Inter, sans-serif;">
-          <p style="font-weight: 400;">Regular (400): The quick brown fox jumps over the lazy dog</p>
-          <p style="font-weight: 500;">Medium (500): The quick brown fox jumps over the lazy dog</p>
-          <p style="font-weight: 700;">Bold (700): The quick brown fox jumps over the lazy dog</p>
-        </div>
-        <hr style="margin: 1rem 0;">
-        <h4 style="font-weight: bold; margin-bottom: 0.5rem;">Direct Inter Test:</h4>
-        <p style="font-family: Inter, sans-serif; font-size: 24px;">This should be Inter Regular</p>
-        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 500;">This should be Inter Medium</p>
-        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 700;">This should be Inter Bold</p>
-        <hr style="margin: 1rem 0;">
-        <h4 style="font-weight: bold; margin-bottom: 0.5rem;">Direct @font-face Test:</h4>
-        <p style="font-family: Inter, sans-serif; font-size: 24px;">This should be Inter Regular (direct)</p>
-        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 500;">This should be Inter Medium (direct)</p>
-        <p style="font-family: Inter, sans-serif; font-size: 24px; font-weight: 700;">This should be Inter Bold (direct)</p>
-      </div>
-      <div class="card">
-        <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 1rem;">Font Styles</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <p style="font-weight: 400;">Normal: The quick brown fox jumps over the lazy dog</p>
-          <p style="font-weight: 400; font-style: italic;">Italic: The quick brown fox jumps over the lazy dog</p>
-          <p style="font-weight: 700;">Bold: The quick brown fox jumps over the lazy dog</p>
-          <p style="font-weight: 700; font-style: italic;">Bold Italic: The quick brown fox jumps over the lazy dog</p>
         </div>
       </div>
     </div>
