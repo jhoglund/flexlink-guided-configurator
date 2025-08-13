@@ -1,5 +1,8 @@
 /* FlexLink Guided Configurator - Vanilla CSS */
 /* ✅ CSS auto-reload test - changes should be visible immediately */
+/*
+ *= require variables
+ */
 
 /* Reset and Base Styles */
 * {
@@ -25,25 +28,7 @@ h6 {
 }
 
 
-/* FlexLink Brand Colors */
-:root {
-    --flexlink-red: #d70a32;
-    --flexlink-red-dark: #6b1e2a;
-    --flexlink-medium-gray: #808080;
-    --flexlink-dark-gray: #4a4a4a;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-600: #4b5563;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --gray-900: #111827;
-
-
-}
+/* FlexLink Brand Colors moved to variables.css */
 
 /* Layout Components */
 .container {
@@ -108,7 +93,6 @@ h6 {
     height: 61px;
 }
 
-;
 
 .logo-subtitle {
     font-size: 0.875rem;
@@ -396,7 +380,7 @@ h6 {
     z-index: 0;
 }
 
-.build-3d-icon {}
+.build-3d-icon { /* removed empty block */ }
 
 .build-3d-icon svg {
     position: absolute;
@@ -491,7 +475,7 @@ h6 {
         background: var(--flexlink-red);
         /* Circular clip path for the icon area */
         clip-path: path("M1021.79 0C1022.09 15.5093 1019.97 29.2854 1019.61 31.4219C1014.54 62.6982 1010.5 78.5197 1004.11 97.7891C987.699 148.006 964.006 187.731 936 212H0V0H1021.79Z");
-        -webkitclip-path: path("M1021.79 0C1022.09 15.5093 1019.97 29.2854 1019.61 31.4219C1014.54 62.6982 1010.5 78.5197 1004.11 97.7891C987.699 148.006 964.006 187.731 936 212H0V0H1021.79Z");
+        -webkit-clip-path: path("M1021.79 0C1022.09 15.5093 1019.97 29.2854 1019.61 31.4219C1014.54 62.6982 1010.5 78.5197 1004.11 97.7891C987.699 148.006 964.006 187.731 936 212H0V0H1021.79Z");
         z-index: -1;
     }
 }
@@ -633,6 +617,16 @@ h6 {
 
 .card-link:hover {
     color: var(--flexlink-red-dark);
+}
+
+/* Accessibility: focus styles */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.form-input:focus-visible,
+.form-select:focus-visible,
+.card-link:focus-visible {
+    outline: 3px solid rgba(215, 10, 50, 0.4);
+    outline-offset: 2px;
 }
 
 /* Grid Layouts */
