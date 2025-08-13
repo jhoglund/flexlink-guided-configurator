@@ -6,6 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <% if Rails.env.development? %>
+      <%= stylesheet_link_tag "debug", "data-turbo-track": "reload" %>
+    <% end %>
     <%= javascript_importmap_tags %>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Inter font from Google Fonts -->
@@ -17,6 +20,20 @@
     </style>
   </head>
   <body>
+    <% if Rails.env.development? %>
+      <!-- Debug controls and overlay containers -->
+      <button id="debug-grid-toggle" class="debug-toggle">HIDE</button>
+      <div id="debug-grid-info" class="debug-info">
+        <h4>Grid Debug Info</h4>
+        <p>Grid: 24 columns</p>
+        <p>Column: 40px (2.5rem)</p>
+        <p>Gutter: 24px (1.5rem)</p>
+        <p>Layout: Centered</p>
+        <p>Press G to toggle</p>
+      </div>
+      <div id="debug-grid-numbers"></div>
+      <%= javascript_import_module_tag "debug" %>
+    <% end %>
     <!-- Header/Navigation -->
     <header class="header">
       <div class="container">

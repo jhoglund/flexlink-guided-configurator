@@ -1,0 +1,100 @@
+/* Debug Grid (development only) */
+body.debug-grid {
+    --dbg-col: 2.5rem;
+    /* 40px */
+    --dbg-gutter: 1.5rem;
+    /* 24px */
+    --dbg-cycle: calc(var(--dbg-col) + var(--dbg-gutter));
+    --dbg-cols: 24;
+    --dbg-width: calc(var(--dbg-cols) * var(--dbg-col) + (var(--dbg-cols) - 1) * var(--dbg-gutter));
+}
+
+body.debug-grid::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--dbg-width);
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9998;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    background-image: repeating-linear-gradient(to right,
+            rgba(59, 130, 246, 0.2) 0 var(--dbg-col),
+            rgba(156, 163, 175, 0.2) var(--dbg-col) var(--dbg-cycle));
+}
+
+#debug-grid-numbers {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 14px;
+    pointer-events: none;
+    z-index: 9999;
+    font-family: monospace;
+    font-size: 10px;
+    color: rgba(59, 130, 246, 0.85);
+    display: none;
+    width: var(--dbg-width);
+}
+
+body.debug-grid #debug-grid-numbers {
+    display: block;
+}
+
+#debug-grid-numbers .num {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+/* Toggle button styles */
+.debug-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    background: #d70a32;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    min-width: 80px;
+    height: 44px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.debug-toggle.active {
+    background: #4a4a4a;
+}
+
+/* Panel */
+.debug-info {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    z-index: 99999;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 11px;
+    font-family: monospace;
+    color: #4b5563;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+    max-width: 200px;
+    display: none;
+}
+
+.debug-grid .debug-info {
+    display: block;
+}
