@@ -7,6 +7,32 @@
 - Redis for caching and Sidekiq jobs
 - Docker for dev environment
 
+## Diagram
+
+```mermaid
+flowchart LR
+  B["Browser"] --> C["Rails Controllers (MVC)"]
+  C -->|"ActiveRecord"| DB[("PostgreSQL")]
+  C -->|"Service: SupabaseService"| SB[("Supabase API (read-only)")]
+  C <-->|"Cache / Sessions"| R[("Redis")]
+  C -->|"Enqueue"| J["ActiveJob"]
+  J --> Q["Sidekiq Workers"]
+  Q --> R
+
+  subgraph "Docker Dev"
+    C
+    DB
+    R
+  end
+
+  subgraph "External"
+    SB
+  end
+
+  classDef ext stroke-dasharray: 3 3
+  class SB ext
+```
+
 ## High-Level Flow
 1. Browser requests hit Rails controllers
 2. App data persists to PostgreSQL
