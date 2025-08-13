@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Grid Test</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "grid", "data-turbo-track": "reload" %>
+    <% if Rails.env.development? %>
+      <%= stylesheet_link_tag "debug", "data-turbo-track": "reload" %>
+      <%= javascript_import_module_tag "debug" %>
+    <% end %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>
