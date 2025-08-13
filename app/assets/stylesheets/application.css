@@ -131,42 +131,13 @@ h6 {
     z-index: 0;
 }
 
-.hero-grid {
-    position: relative;
-}
-
-.hero-media {
-    position: relative;
-    min-height: 420px;
-}
-
-/* Mask container that applies the red swosh shape to the photo */
-.hero-svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    display: block;
-}
-
-/* white swosh overlay: keep original thin top ribbon */
-.hero-swosh-white {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 45px;
-    background: white;
-    clip-path: path("M402 0C316.707 17.2892 178.578 32.6621 0 44.6709V0H402Z");
-    z-index: 1;
-    pointer-events: none;
-}
-
 .hero-swosh-graphic {
     position: absolute;
-    inset: 0;
     display: none;
+    top: 0;
+    right: 208px;
+    width: 1022px;
+    height: 100%;
     background-color: var(--flexlink-red);
     clip-path: path("M1082 797H0V794.812C253.035 586.778 450.131 313.182 565.312 0H1082V797Z");
     z-index: -1;
@@ -206,13 +177,18 @@ h6 {
 
     .hero-swosh-graphic {
         display: block;
+        <<<<<<< HEAD=======right: -300px;
+        >>>>>>>parent of ff6deb3 (layout(hero+nav): align header to grid-12; refactor hero to grid columns; anchor swosh graphics to media column)
     }
 
     .hero-swosh-white {
         top: 0;
-        left: 0;
+        <<<<<<< HEAD left: 0;
         width: 100%;
-        height: 100%;
+        =======left: auto;
+        right: -300px;
+        width: 1022px;
+        >>>>>>>parent of ff6deb3 (layout(hero+nav): align header to grid-12; refactor hero to grid columns; anchor swosh graphics to media column) height: 100%;
         clip-path: path("M565.312 0C450.131 313.182 253.035 586.778 0 794.812V745.09C242.581 582.911 405.431 310.799 417.304 0H565.312Z");
     }
 
