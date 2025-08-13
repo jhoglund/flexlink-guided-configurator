@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def icon_tag(name, options = {})
+    file = "icons/#{name}.svg"
+    image_tag(file, options)
+  end
   def industry_card_icon(category_name, options = {})
     file_name = convert_to_filename(category_name)
     icon_path = "icons/categories/#{file_name}-icon.svg"

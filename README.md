@@ -122,6 +122,7 @@ bin/rails test
 - [STYLE_GUIDE.md](STYLE_GUIDE.md) - ERB/CSS conventions and branding
 - [ENV_VARS.md](ENV_VARS.md) - Required environment variables
 - [CONTRIBUTING.md](CONTRIBUTING.md), [CHANGELOG.md](CHANGELOG.md)
+- Rake: `rake assets:optimize_svgs` (requires `svgo`)
 
 ## 🎯 Status
 
