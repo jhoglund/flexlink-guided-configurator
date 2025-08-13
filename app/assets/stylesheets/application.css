@@ -380,7 +380,9 @@ h6 {
     z-index: 0;
 }
 
-.build-3d-icon { /* removed empty block */ }
+.build-3d-icon {
+    /* removed empty block */
+}
 
 .build-3d-icon svg {
     position: absolute;
@@ -475,7 +477,6 @@ h6 {
         background: var(--flexlink-red);
         /* Circular clip path for the icon area */
         clip-path: path("M1021.79 0C1022.09 15.5093 1019.97 29.2854 1019.61 31.4219C1014.54 62.6982 1010.5 78.5197 1004.11 97.7891C987.699 148.006 964.006 187.731 936 212H0V0H1021.79Z");
-        -webkit-clip-path: path("M1021.79 0C1022.09 15.5093 1019.97 29.2854 1019.61 31.4219C1014.54 62.6982 1010.5 78.5197 1004.11 97.7891C987.699 148.006 964.006 187.731 936 212H0V0H1021.79Z");
         z-index: -1;
     }
 }
