@@ -2,20 +2,7 @@
 
 ## 🏗️ Architecture Overview
 
-This project uses a **dual-repository approach** with Docker containerization:
-
-### Repository Structure
-```
-flexlink-pdf-extraction-tool/     # Python PDF extraction tools
-├── extractors/                   # PDF processing scripts
-├── data/                         # Extracted component data
-└── database/                     # Supabase schemas
-
-flexlink-guided-configuration-tool/  # Rails configuration app
-├── app/                          # Rails application
-├── docker/                       # Docker configuration
-└── config/                       # Database configs
-```
+Single-repo Rails application with Docker containerization. Supabase provides product/catalog data (read-only). Local PostgreSQL stores application/user data. Redis supports caching and background jobs.
 
 ### Database Strategy
 - **Supabase (Remote)**: Component specifications and catalog data
@@ -72,9 +59,6 @@ docker-compose exec postgres psql -U flexlink_user -d flexlink_config
 ```bash
 # Access Rails console
 docker-compose exec web rails console
-
-# Run background jobs
-docker-compose exec sidekiq bundle exec sidekiq
 ```
 
 ### Logs and Debugging
@@ -92,9 +76,7 @@ docker-compose logs -f sidekiq
 
 ### Supabase (Remote)
 - **Purpose**: Component specifications and catalog data
-- **Tables**: `conveyor_systems`, `component_specifications`
-- **Access**: Read-only for Rails app
-- **Sync**: Periodic data updates from PDF extraction
+- **Access**: Read-only from Rails app via `SupabaseService`
 
 ### Local PostgreSQL
 - **Purpose**: Application logic and user data
@@ -148,20 +130,10 @@ docker-compose logs -f sidekiq
 - **Backup**: Automated database backups
 
 ## 🔄 Data Flow
-
-### PDF Extraction → Rails App
-1. **Extract**: Python scripts process PDFs
-2. **Upload**: Data pushed to Supabase
-3. **Sync**: Rails app reads from Supabase API
-4. **Cache**: Component data cached in Redis
-5. **Serve**: Rails app serves configuration interface
-
-### User Configuration Flow
-1. **Start**: User begins guided configuration
-2. **Progress**: Session stored in local PostgreSQL
-3. **Selection**: Component choices saved locally
-4. **Optimization**: Rails processes optimization logic
-5. **Export**: Final configuration exported/emailed
+1. Rails reads product data from Supabase (read-only)
+2. App/user data persists to local PostgreSQL
+3. Caching and background jobs use Redis/Sidekiq
+4. 8-step wizard progress stored in `wizard_sessions`
 
 ## 🛠️ Development Commands
 
@@ -251,13 +223,10 @@ docker-compose exec web rails db:drop db:create db:migrate db:seed
 
 ## 🎯 Next Steps
 
-1. **Set up Rails application** with Docker
-2. **Create database schemas** for local PostgreSQL
-3. **Implement Supabase integration** for component data
-4. **Build guided configuration wizard**
-5. **Add team collaboration features**
-6. **Deploy to free hosting platform**
-7. **Set up monitoring and backups**
+1. Start dev: `./start.sh`
+2. Add `.env` with Supabase credentials
+3. Explore API at `/api/v1/...` endpoints
+4. Review `CSS_DEVELOPMENT_GUIDE.md` for styling workflow
 
 ---
 

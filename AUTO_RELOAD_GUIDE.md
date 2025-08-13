@@ -12,7 +12,7 @@ The FlexLink Configurator includes auto-reload functionality using Guard and Liv
 
 ### 1. Start the Development Environment
 ```bash
-./bin/dev
+./start.sh
 ```
 
 This will start all services including:
@@ -75,7 +75,7 @@ Guard watches for changes in:
 If auto-reload isn't working, you can always manually refresh your browser to see changes. The Rails server will automatically reload Ruby code changes, but you'll need to refresh for view/asset changes.
 
 ## Development Workflow
-1. Start the development environment: `./bin/dev`
+1. Start the development environment: `./start.sh`
 2. Open http://localhost:3000 in your browser
 3. Enable LiveReload extension
 4. Make changes to your files

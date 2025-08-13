@@ -2,7 +2,7 @@
 
 ## ✅ Pre-Deployment (Completed)
 - [x] Repository prepared with deployment files
-- [x] Rails master key generated: `1b145e7beedbf6ccaf05d938f0eafbaa`
+- [x] Rails master key generated (stored locally, not committed)
 - [x] All files committed and pushed to GitHub
 - [x] Production configuration updated
 - [x] Build script created and made executable
@@ -77,7 +77,7 @@ You'll need these from your Supabase project:
 
 ---
 
-**Your Rails Master Key:** `your_rails_master_key_here`
+**Your Rails Master Key:** `RAILS_MASTER_KEY=<set_in_Render_environment>`
 **Repository:** `https://github.com/jhoglund/flexlink-guided-configurator`
 
 Good luck with your deployment! 🚀 

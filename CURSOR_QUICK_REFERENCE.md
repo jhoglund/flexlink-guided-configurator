@@ -57,7 +57,7 @@ Please read the .cursorrules file for full project context.
 
 ### **Git Commands**
 ```bash
-gacp "message"               # Quick git commit
+git-all "message"            # Quick git add/commit/push
 ```
 
 ## 🔧 **Key Constraints**

@@ -50,13 +50,12 @@ A Rails 8.0.2 web application for guided step-by-step configuration of FlexLink 
 ## 🛠️ Development
 
 ### CSS Styling
-- **Vanilla CSS**: Custom CSS with FlexLink brand colors and responsive design
+- **Vanilla CSS only**: Custom CSS with FlexLink brand colors and responsive design
 - **CSS Variables**: Consistent color scheme and spacing
 - **Responsive Grid**: Mobile-first approach with CSS Grid
 - **No Build Process**: Direct CSS compilation by Rails asset pipeline
 
-### Quick Commands
-- `gacp "message"` - Quick git add/commit/push
+- `git-all "message"` - Quick git add/commit/push
 - `cursor-new` - New Cursor chat with project context
 - `cursor-help` - Show all available Cursor templates
 
@@ -113,6 +112,14 @@ bin/rails test
 - [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md) - Deployment checklist
 - [DOCKER_SETUP.md](DOCKER_SETUP.md) - Docker development guide
 - [CURSOR_SETUP.md](CURSOR_SETUP.md) - Cursor AI integration guide
+- [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md) - Render deployment guide
+- [TROUBLESHOOTING_DEPLOYMENT.md](TROUBLESHOOTING_DEPLOYMENT.md) - Deployment troubleshooting
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture and data flow
+- [DATA_MODEL.md](DATA_MODEL.md) - Database entities and relationships
+- [WIZARD_GUIDE.md](WIZARD_GUIDE.md) - 8-step wizard overview
+- [API_GUIDE.md](API_GUIDE.md) - Public API endpoints
+- [OPERATIONS.md](OPERATIONS.md) - Common ops and maintenance
+- [STYLE_GUIDE.md](STYLE_GUIDE.md) - ERB/CSS conventions and branding
 
 ## 🎯 Status
 
