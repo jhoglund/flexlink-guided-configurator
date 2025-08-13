@@ -2,7 +2,10 @@
 <section class="section-full-width hero">
   <div class="container">
     <div class="hero-swosh-graphic">
-      <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
+      <picture>
+        <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
+        <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
+      </picture>
     </div>
     <div class="hero-swosh-white">
     </div>
