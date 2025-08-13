@@ -1,21 +1,31 @@
 /* Development-only 24-column grid test helpers */
-.grid-test .container { max-width: var(--dbg-width); }
+.grid-test .container {
+    max-width: var(--dbg-width);
+}
 
 .grid-24 {
     display: grid;
-  grid-template-columns: repeat(24, 40px);
-  /* gutters must match overlay (24px) */
-  column-gap: 24px;
-  row-gap: 16px;
+    grid-template-columns: repeat(24, 40px);
+    /* gutters must match overlay (24px) */
+    column-gap: 24px;
+    row-gap: 16px;
 }
 
-.span-24-1 { grid-column: auto / span 1; }
+.span-24-1 {
+    grid-column: auto / span 1;
+}
 
-.span-24-3 { grid-column: auto / span 3; }
+.span-24-3 {
+    grid-column: auto / span 3;
+}
 
-.span-24-6 { grid-column: auto / span 6; }
+.span-24-6 {
+    grid-column: auto / span 6;
+}
 
-.span-24-12 { grid-column: auto / span 12; }
+.span-24-12 {
+    grid-column: auto / span 12;
+}
 
 .demo-grid {
     margin-bottom: 2rem;
