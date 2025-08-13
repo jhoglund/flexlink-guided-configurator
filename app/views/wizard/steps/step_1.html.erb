@@ -7,9 +7,9 @@
         <% @system_types.each do |category, types| %>
           <section class="system-category">
             <h3 class="text-xl font-semibold text-gray-900 mb-5 pb-3 border-b-2 border-gray-200"><%= category.humanize %></h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid-12">
               <% types.each do |system_type| %>
-                <div class="system-type-card relative">
+                <div class="system-type-card relative col-span-12 col-span-md-6 col-span-lg-4">
                   <input type="radio" 
                          name="wizard_step[system_type]" 
                          id="system_type_<%= system_type.parameterize %>"

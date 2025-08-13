@@ -49,7 +49,7 @@
       <!-- Filters and Search -->
       <div class="bg-white border border-gray-200 rounded-lg p-6 mb-8">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Filters & Search</h3>
-        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <form method="get" class="grid-12">
           <div>
             <label for="component_type" class="block text-sm font-medium text-gray-700 mb-2">Component Type</label>
             <select name="component_type" id="component_type" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flexlink-red focus:border-transparent">
@@ -80,7 +80,7 @@
           </div>
           <!-- Components Grid -->
           <% if @components.any? %>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid-12 gap-6">
               <% @components.each do |component| %>
                 <div class="bg-white border border-gray-200 rounded-lg p-6 hover:border-flexlink-red hover:shadow-lg transition-all duration-200">
                   <!-- Component Header -->
@@ -109,27 +109,28 @@
                         <%= truncate(component.description, length: 120) %>
                       </p>
                     <% end %>
-                    <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="grid-12 text-sm">
+              <div class="col-span-6">
                       <% if component.manufacturer.present? %>
                         <div>
                           <span class="text-gray-500">Manufacturer:</span>
                           <span class="font-medium text-gray-900"><%= component.manufacturer %></span>
                         </div>
                       <% end %>
-                      <% if component.part_number.present? %>
-                        <div>
+                <% if component.part_number.present? %>
+                  <div class="col-span-6">
                           <span class="text-gray-500">Part #:</span>
                           <span class="font-medium text-gray-900"><%= component.part_number %></span>
                         </div>
                       <% end %>
-                      <% if component.material.present? %>
-                        <div>
+                <% if component.material.present? %>
+                  <div class="col-span-6">
                           <span class="text-gray-500">Material:</span>
                           <span class="font-medium text-gray-900"><%= component.material %></span>
                         </div>
                       <% end %>
-                      <% if component.has_weight? %>
-                        <div>
+                <% if component.has_weight? %>
+                  <div class="col-span-6">
                           <span class="text-gray-500">Weight:</span>
                           <span class="font-medium text-gray-900"><%= component.weight_formatted %></span>
                         </div>
@@ -181,7 +182,7 @@
           <!-- Component Categories Summary -->
           <div class="mt-8 bg-white border border-gray-200 rounded-lg p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">Component Categories</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div class="grid-12 gap-4">
               <div class="text-center p-4 bg-gray-50 rounded-lg">
                 <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <i class="fas fa-link text-blue-600"></i>

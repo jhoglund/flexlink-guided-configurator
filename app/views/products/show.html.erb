@@ -69,7 +69,7 @@
     <div class="tab-content">
       <!-- Specifications Tab -->
       <div class="tab-panel active" id="specifications">
-        <div class="specifications-grid">
+        <div class="grid-12">
           <% if @product[:specifications].present? %>
             <% @product[:specifications].each do |spec| %>
               <div class="spec-item">
@@ -90,7 +90,7 @@
       
       <!-- Details Tab -->
       <div class="tab-panel" id="details">
-        <div class="details-grid">
+        <div class="grid-12">
           <section class="detail-section">
             <h3>Product Information</h3>
             <div class="detail-list">
@@ -132,7 +132,7 @@
       <!-- Related Products Tab -->
       <div class="tab-panel" id="related">
         <% if @related_products.any? %>
-          <div class="related-products-grid">
+          <div class="grid-12">
             <% @related_products.each do |related_product| %>
               <div class="related-product-card">
                 <div class="related-product-image">

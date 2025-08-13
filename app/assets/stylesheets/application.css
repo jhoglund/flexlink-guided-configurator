@@ -238,30 +238,81 @@ h6 {
 }
 
 /* Column spans (common) */
-.col-span-12 { grid-column: span 12 / span 12; }
-.col-span-8  { grid-column: span 8 / span 8; }
-.col-span-6  { grid-column: span 6 / span 6; }
-.col-span-4  { grid-column: span 4 / span 4; }
-.col-span-3  { grid-column: span 3 / span 3; }
-.col-span-2  { grid-column: span 2 / span 2; }
+.col-span-12 {
+    grid-column: span 12 / span 12;
+}
+
+.col-span-8 {
+    grid-column: span 8 / span 8;
+}
+
+.col-span-6 {
+    grid-column: span 6 / span 6;
+}
+
+.col-span-4 {
+    grid-column: span 4 / span 4;
+}
+
+.col-span-3 {
+    grid-column: span 3 / span 3;
+}
+
+.col-span-2 {
+    grid-column: span 2 / span 2;
+}
 
 /* Responsive spans */
-@media (min-width: 640px) { /* sm */
-    .col-span-sm-6 { grid-column: span 6 / span 6; }
+@media (min-width: 640px) {
+
+    /* sm */
+    .col-span-sm-6 {
+        grid-column: span 6 / span 6;
+    }
 }
-@media (min-width: 768px) { /* md */
-    .col-span-md-6 { grid-column: span 6 / span 6; }
-    .col-span-md-4 { grid-column: span 4 / span 4; }
-    .col-span-md-3 { grid-column: span 3 / span 3; }
+
+@media (min-width: 768px) {
+
+    /* md */
+    .col-span-md-6 {
+        grid-column: span 6 / span 6;
+    }
+
+    .col-span-md-4 {
+        grid-column: span 4 / span 4;
+    }
+
+    .col-span-md-3 {
+        grid-column: span 3 / span 3;
+    }
 }
-@media (min-width: 1024px) { /* lg */
-    .col-span-lg-4 { grid-column: span 4 / span 4; }
-    .col-span-lg-3 { grid-column: span 3 / span 3; }
-    .col-span-lg-2 { grid-column: span 2 / span 2; }
+
+@media (min-width: 1024px) {
+
+    /* lg */
+    .col-span-lg-4 {
+        grid-column: span 4 / span 4;
+    }
+
+    .col-span-lg-3 {
+        grid-column: span 3 / span 3;
+    }
+
+    .col-span-lg-2 {
+        grid-column: span 2 / span 2;
+    }
 }
-@media (min-width: 1416px) { /* xl */
-    .col-span-xl-3 { grid-column: span 3 / span 3; }
-    .col-span-xl-2 { grid-column: span 2 / span 2; }
+
+@media (min-width: 1416px) {
+
+    /* xl */
+    .col-span-xl-3 {
+        grid-column: span 3 / span 3;
+    }
+
+    .col-span-xl-2 {
+        grid-column: span 2 / span 2;
+    }
 }
 
 .hero h1 {
@@ -342,13 +393,30 @@ h6 {
 }
 
 /* Industry Grid - aligned to Figma */
-.industry-grid { display: grid; gap: var(--grid-gutter); margin-bottom: var(--space-12); }
+.industry-grid {
+    display: grid;
+    gap: var(--grid-gutter);
+    margin-bottom: var(--space-12);
+}
+
 /* Mobile default: 2 columns */
-.industry-grid { grid-template-columns: repeat(2, 1fr); }
+.industry-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
 /* Tablet: 4 columns (keep 782 breakpoint) */
-@media (min-width: 782px) { .industry-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 782px) {
+    .industry-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 /* XL: exactly 8 per row */
-@media (min-width: 1416px) { .industry-grid { grid-template-columns: repeat(8, 1fr); } }
+@media (min-width: 1416px) {
+    .industry-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
 
 /* Industry Card */
 .industry-card {

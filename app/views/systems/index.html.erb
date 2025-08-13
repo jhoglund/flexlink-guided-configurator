@@ -22,9 +22,9 @@
         </div>
         <!-- Systems List -->
         <div class="bg-white border border-gray-200 border-t-0 rounded-b-lg p-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="grid-12">
             <% systems.each do |system| %>
-              <a href="<%= system_path(system) %>" class="block border border-gray-200 rounded-lg p-4 hover:border-flexlink-red hover:shadow-md transition-all duration-200 cursor-pointer">
+              <a href="<%= system_path(system) %>" class="block border border-gray-200 rounded-lg p-4 hover:border-flexlink-red hover:shadow-md transition-all duration-200 cursor-pointer col-span-12 col-span-md-6 col-span-lg-4">
                 <div class="flex items-center space-x-3 mb-3">
                   <div class="w-8 h-8 bg-flexlink-red bg-opacity-10 rounded flex items-center justify-center">
                     <i class="fas fa-cogs text-flexlink-red"></i>

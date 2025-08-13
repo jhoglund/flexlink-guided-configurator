@@ -24,7 +24,7 @@
   <!-- Search and Filter Section -->
   <div class="bg-white rounded-lg shadow-md p-6 mb-8">
     <%= form_with url: search_products_path, method: :get, local: true, class: "space-y-4" do |form| %>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
+      <div class="grid-12">
         <div class="lg:col-span-2">
           <%= form.text_field :q, 
               value: params[:q], 
@@ -101,7 +101,7 @@
   </div>
 
   <!-- Products Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  <div class="grid-12">
     <% if @products.any? %>
       <% @products.each do |product| %>
         <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
