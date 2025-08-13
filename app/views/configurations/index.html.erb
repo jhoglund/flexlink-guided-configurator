@@ -4,7 +4,7 @@
     <i class="fas fa-plus mr-2"></i> New Configuration
   <% end %>
 </div>
-<div class="grid-12 gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
   <div class="lg:col-span-3">
     <% if @configurations.any? %>
       <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -89,7 +89,7 @@
         <h5 class="text-lg font-semibold text-gray-900">Quick Stats</h5>
       </div>
       <div class="p-6">
-        <div class="grid-12 gap-4 text-center">
+        <div class="grid grid-cols-2 gap-4 text-center">
           <div>
             <h4 class="text-2xl font-bold text-red-600"><%= @active_configurations.count %></h4>
             <p class="text-sm text-gray-500">Active</p>

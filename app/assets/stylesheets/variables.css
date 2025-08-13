@@ -37,10 +37,8 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 
-    /* Grid */
-    --grid-columns: 12;
-    --grid-gutter: 24px;
-    /* matches Figma */
-    --grid-margin-xl: 200px;
-    /* side margins at xl */
+	/* Grid */
+	--grid-columns: 12;
+	--grid-gutter: 24px; /* matches Figma */
+	--grid-margin-xl: 200px; /* side margins at xl */
 }
