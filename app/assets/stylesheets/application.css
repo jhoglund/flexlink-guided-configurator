@@ -177,18 +177,15 @@ h6 {
 
     .hero-swosh-graphic {
         display: block;
-        <<<<<<< HEAD=======right: -300px;
-        >>>>>>>parent of ff6deb3 (layout(hero+nav): align header to grid-12; refactor hero to grid columns; anchor swosh graphics to media column)
+        right: -300px;
     }
 
     .hero-swosh-white {
         top: 0;
-        <<<<<<< HEAD left: 0;
-        width: 100%;
-        =======left: auto;
+        left: auto;
         right: -300px;
         width: 1022px;
-        >>>>>>>parent of ff6deb3 (layout(hero+nav): align header to grid-12; refactor hero to grid columns; anchor swosh graphics to media column) height: 100%;
+        height: 100%;
         clip-path: path("M565.312 0C450.131 313.182 253.035 586.778 0 794.812V745.09C242.581 582.911 405.431 310.799 417.304 0H565.312Z");
     }
 
