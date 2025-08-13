@@ -8,13 +8,14 @@
         <button class="btn btn-primary">Start shopping</button>
       </div>
       <div class="hero-media col-span-12 col-span-md-5 col-span-lg-7">
-        <div class="hero-mask">
-          <picture>
-            <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
-            <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
-          </picture>
-        </div>
-        <div class="hero-swosh-white"></div>
+        <svg class="hero-svg" viewBox="0 0 1082 797" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="heroClip" clipPathUnits="userSpaceOnUse">
+              <path d="M1082 797H0V794.812C253.035 586.778 450.131 313.182 565.312 0H1082V797Z" />
+            </clipPath>
+          </defs>
+          <image width="1082" height="797" href="<%= image_path('hero-robot-photo.webp') %>" clip-path="url(#heroClip)" preserveAspectRatio="xMidYMid slice"/>
+        </svg>
       </div>
     </div>
   </div>
