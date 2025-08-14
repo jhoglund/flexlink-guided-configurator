@@ -27,11 +27,12 @@ function measureGrid() {
     let gridWidth = readVarPx('--grid-width');
     if (!gridWidth) {
         const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
-        const rectW = containerEl.getBoundingClientRect().width;
+        const rect = containerEl.getBoundingClientRect();
         const cs = getComputedStyle(containerEl);
         const padL = parseFloat(cs.paddingLeft) || 0;
         const padR = parseFloat(cs.paddingRight) || 0;
-        gridWidth = Math.max(0, Math.round(rectW - padL - padR));
+        gridWidth = Math.max(0, Math.round(rect.width - padL - padR));
+        var gridLeft = Math.round(rect.left + padL);
     }
     // Try CSS --cols, else derive from thresholds on content width
     let cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || 0;
@@ -51,11 +52,12 @@ function measureGrid() {
 function buildNumbers() {
     const nums = document.getElementById('debug-grid-numbers');
     if (!nums) return;
-    const { gridWidth: width, cols, gutter, col } = measureGrid();
+    const { gridWidth: width, gridLeft, cols, gutter, col } = measureGrid();
     const cycle = col + gutter;
     // Align number strip to overlay start (left) to avoid margin centering drift
     nums.style.width = width + 'px';
-    nums.style.left = ((window.innerWidth - width) / 2) + 'px';
+    const left = (typeof gridLeft === 'number') ? gridLeft : Math.round((window.innerWidth - width) / 2);
+    nums.style.left = left + 'px';
     nums.style.transform = 'none';
     // Use CSS grid cells that line up with overlay columns
     nums.style.display = 'grid';
