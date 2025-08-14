@@ -5,7 +5,7 @@
   <h3>24 boxes</h3>
   <div class="grid-24 demo-grid">
     <% 24.times do |i| %>
-      <div class="demo-box span-24-1"><%= i + 1 %></div>
+      <div class="demo-box grid-span-1"><%= i + 1 %></div>
     <% end %>
   </div>
 </div>
@@ -16,9 +16,9 @@
     <h3>12 boxes</h3>
     <div class="grid-24 demo-grid">
       <% 12.times do |i| %>
-        <div class="demo-box span-3"><%= i + 1 %></div>
+        <div class="demo-box grid-span-3"><%= i + 1 %></div>
       <% end %>
-      <div class="demo-box  span-3 span-l-12 span-m-12 span-s-6">rest</div>
+      <div class="demo-box grid-span-3 grid-span-l-12 grid-span-m-12 grid-span-s-6">rest</div>
     </div>
   </div>
 </section>

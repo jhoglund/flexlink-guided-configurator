@@ -401,31 +401,9 @@ h6 {
     margin-bottom: var(--space-12);
 }
 
-/* Mobile default: 2 columns */
-.industry-grid {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-/* Tablet: 4 columns (keep 782 breakpoint) */
-@media (min-width: 782px) {
-    .industry-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* XL: exactly 8 per row */
-@media (min-width: 1416px) {
-    .industry-grid {
-        grid-template-columns: repeat(8, 1fr);
-    }
-}
 
 /* Industry Card */
 .industry-card {
-    max-width: 100%;
-    /* 170px */
-    min-width: 8.5rem;
-    /* 136px */
     height: 13.25rem;
     /* 212px */
     display: flex;

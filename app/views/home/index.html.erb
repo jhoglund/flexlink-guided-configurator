@@ -1,6 +1,6 @@
 <!-- Hero Section -->
 <section class="section-full-width hero">
-  <div class="container">
+  <div class="grid-container">
     <div class="hero-swosh-graphic">
       <picture>
         <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
@@ -15,20 +15,20 @@
 </section>
 <!-- Category Selection Section -->
 <section class="section-full-width bg-light-gray">
-  <div class="container">
+  <div class="grid-container">
     <div class="mb-12">
       <h2 class="section-title"><strong>Start here and</strong> choose your industry</h2>
     </div>
     <!-- Industry Categories Grid -->
-    <div id="industry-grid" class="industry-grid">
+    <div>
       <% @categories.each do |category| %>
-        <div class="industry-card">
+        <div class="industry-card grid-span-3">
           <%= industry_card_icon(category[:name].downcase, alt: "#{category[:name]} icon") %>
           <%= industry_card_label(category[:name].downcase, alt: category[:name]) %>
         </div>
       <% end %>
       <!-- Build Your Own System Section -->
-      <section class="build-section">
+      <div class="build-section grid-span-3 grid-span-l-12 grid-span-m-12 grid-span-s-6">
         <div class="build-3d-icon">
           <svg width="211" height="209" viewBox="0 0 211 209" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M105.397 35.9991L28.5444 74.4255L105.397 112.852L182.294 74.4255L105.397 35.9991Z" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -48,8 +48,10 @@
             System Building
           </button>
         </div>
-      </section>
+      </div>
     </div>
+  </section>
+  <section>
     <div class="mb-8">
       <h2 class="section-title">Search for a product</h2>
     </div>
