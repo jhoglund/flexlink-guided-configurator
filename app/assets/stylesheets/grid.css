@@ -54,7 +54,7 @@
 }
 
 /* Responsive grid layout */
-.grid-24 {
+.grid-item {
     display: grid;
     grid-template-columns: repeat(var(--cols), var(--col));
     column-gap: var(--gutter);
