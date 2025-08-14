@@ -46,19 +46,16 @@ function buildNumbers() {
     const { gridWidth: width, cols, gutter, col } = measureGrid();
     const cycle = col + gutter;
     nums.style.width = width + 'px';
-    // Use absolutely positioned labels relative to centered container
-    nums.style.display = 'block';
+    // Use CSS grid cells that line up with overlay columns
+    nums.style.display = 'grid';
+    nums.style.gridTemplateColumns = `repeat(${cols}, ${col}px)`;
+    nums.style.columnGap = `${gutter}px`;
     nums.innerHTML = '';
     for (let i = 0; i < cols; i++) {
         const span = document.createElement('span');
         span.className = 'num';
         span.textContent = String(i + 1);
         span.style.width = col + 'px';
-        span.style.position = 'absolute';
-        // center origin at container midpoint, then offset by half-width leftwards
-        const leftFromCenter = (i * (col + gutter) + col / 2) - width / 2;
-        span.style.left = `calc(50% + ${leftFromCenter}px)`;
-        span.style.transform = 'translateX(-50%)';
         nums.appendChild(span);
     }
 }

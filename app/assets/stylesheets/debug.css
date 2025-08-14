@@ -51,12 +51,7 @@ body.debug-grid #debug-grid-numbers {
     display: block;
 }
 
-#debug-grid-numbers .num {
-    position: absolute;
-    top: 0;
-    transform: translateX(-50%);
-    text-align: center;
-}
+#debug-grid-numbers .num { position: static; text-align: center; }
 
 /* Toggle button styles */
 .debug-toggle {
