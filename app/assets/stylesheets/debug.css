@@ -21,6 +21,10 @@ body.debug-grid::before {
     z-index: 9998;
     background-repeat: repeat-x;
     background-position: 0 0;
+    /* Honor grid.css vars when present */
+    --dbg-col: var(--col, var(--dbg-col));
+    --dbg-gutter: var(--gutter, var(--dbg-gutter));
+    --dbg-cycle: calc(var(--dbg-col) + var(--dbg-gutter));
     background-image: repeating-linear-gradient(to right,
             rgba(59, 130, 246, 0.2) 0 var(--dbg-col),
             rgba(156, 163, 175, 0.2) var(--dbg-col) var(--dbg-cycle));

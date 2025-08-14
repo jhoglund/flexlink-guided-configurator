@@ -35,31 +35,31 @@ function buildNumbers() {
 }
 
 function ensureInfoLine(id, label) {
-  const info = document.getElementById('debug-grid-info');
-  if (!info) return null;
-  let el = document.getElementById(id);
-  if (!el) {
-    el = document.createElement('p');
-    el.id = id;
-    info.appendChild(el);
-  }
-  if (label) el.dataset.label = label;
-  return el;
+    const info = document.getElementById('debug-grid-info');
+    if (!info) return null;
+    let el = document.getElementById(id);
+    if (!el) {
+        el = document.createElement('p');
+        el.id = id;
+        info.appendChild(el);
+    }
+    if (label) el.dataset.label = label;
+    return el;
 }
 
 function updateInfo() {
-  const info = document.getElementById('debug-grid-info');
-  if (!info) return;
-  const canvas = Math.round(window.innerWidth);
-  const overlayWidth = Math.round(readVarPx('--dbg-width') || 0);
-  const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
-  const container = Math.round(containerEl.getBoundingClientRect().width);
-  const lineCanvas = ensureInfoLine('dbg-canvas-size');
-  const lineContainer = ensureInfoLine('dbg-container-size');
-  const lineOverlay = ensureInfoLine('dbg-overlay-size');
-  if (lineCanvas) lineCanvas.textContent = `Canvas: ${canvas}px`;
-  if (lineContainer) lineContainer.textContent = `Container: ${container}px`;
-  if (overlayWidth && lineOverlay) lineOverlay.textContent = `Overlay: ${overlayWidth}px`;
+    const info = document.getElementById('debug-grid-info');
+    if (!info) return;
+    const canvas = Math.round(window.innerWidth);
+    const overlayWidth = Math.round(readVarPx('--dbg-width') || 0);
+    const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
+    const container = Math.round(containerEl.getBoundingClientRect().width);
+    const lineCanvas = ensureInfoLine('dbg-canvas-size');
+    const lineContainer = ensureInfoLine('dbg-container-size');
+    const lineOverlay = ensureInfoLine('dbg-overlay-size');
+    if (lineCanvas) lineCanvas.textContent = `Canvas: ${canvas}px`;
+    if (lineContainer) lineContainer.textContent = `Container: ${container}px`;
+    if (overlayWidth && lineOverlay) lineOverlay.textContent = `Overlay: ${overlayWidth}px`;
 }
 
 export function enableDebugGrid() {
@@ -92,14 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('debug-grid-numbers')) {
         enableDebugGrid();
     }
-  updateInfo();
+    updateInfo();
     document.addEventListener('keydown', (e) => {
         if (e.key === 'g' || e.key === 'G') {
             e.preventDefault();
             toggleDebugGrid();
         }
     });
-  window.addEventListener('resize', updateInfo);
+    window.addEventListener('resize', updateInfo);
 });
 
 

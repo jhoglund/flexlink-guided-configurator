@@ -1,6 +1,32 @@
 /* Standalone responsive grid for /grid_test */
+/* Responsive grid variables and breakpoints */
 :root {
-    --grid-gutter: 24px;
+  /* defaults (XS) */
+  --cols: 3;
+  --gutter: 12px;
+  --grid-max: 99999px; /* capped in L only */
+  --grid-width: calc(min(100vw - 48px, var(--grid-max)));
+  --col: calc((var(--grid-width) - (var(--cols) - 1) * var(--gutter)) / var(--cols));
+}
+
+/* S ≥ 284 content → viewport ≥ 332 */
+@media (min-width: 332px) {
+  :root { --cols: 6; --gutter: 12px; }
+}
+
+/* M ≥ 580 content → viewport ≥ 628; dynamic gutters */
+@media (min-width: 628px) {
+  :root { --cols: 12; --gutter: clamp(12px, 2vw, 24px); }
+}
+
+/* L ≥ 1172 content → viewport ≥ 1220; cap width */
+@media (min-width: 1220px) {
+  :root { --cols: 24; --gutter: clamp(12px, 2vw, 24px); --grid-max: 1512px; }
+}
+
+/* refresh derived vars when any breakpoint applies */
+@media (min-width: 0px) {
+  :root { --grid-width: calc(min(100vw - 48px, var(--grid-max))); --col: calc((var(--grid-width) - (var(--cols) - 1) * var(--gutter)) / var(--cols)); }
 }
 
 /* page scaffolding */
@@ -9,11 +35,7 @@ body {
     color: #111827;
 }
 
-.grid-container {
-    max-width: 1512px;
-    margin: 0 auto;
-    padding: 24px;
-}
+.grid-container { width: var(--grid-width); margin: 0 auto; padding: 24px; }
 
 h2 {
     font-weight: 600;
@@ -28,13 +50,8 @@ h3 {
     color: #374151;
 }
 
-/* 24-col grid that matches overlay (40px columns, 24px gutters) */
-.grid-24 {
-    display: grid;
-    grid-template-columns: repeat(24, 40px);
-    column-gap: 24px;
-    row-gap: 16px;
-}
+/* Responsive grid driven by variables */
+.grid-24 { display: grid; grid-template-columns: repeat(var(--cols), var(--col)); column-gap: var(--gutter); row-gap: 16px; }
 
 .span-24-1 {
     grid-column: auto / span 1;
