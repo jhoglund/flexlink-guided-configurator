@@ -53,7 +53,10 @@ function buildNumbers() {
     if (!nums) return;
     const { gridWidth: width, cols, gutter, col } = measureGrid();
     const cycle = col + gutter;
+    // Align number strip to overlay start (left) to avoid margin centering drift
     nums.style.width = width + 'px';
+    nums.style.left = ((window.innerWidth - width) / 2) + 'px';
+    nums.style.transform = 'none';
     // Use CSS grid cells that line up with overlay columns
     nums.style.display = 'grid';
     nums.style.gridTemplateColumns = `repeat(${cols}, ${col}px)`;
