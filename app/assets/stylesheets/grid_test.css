@@ -4,10 +4,11 @@
 }
 
 .grid-24 {
-  display: grid;
-  grid-template-columns: repeat(var(--cols), var(--col));
-  column-gap: var(--gutter);
-  row-gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(24, 40px);
+    /* gutters must match overlay (24px) */
+    column-gap: 24px;
+    row-gap: 16px;
 }
 
 .span-24-1 {
