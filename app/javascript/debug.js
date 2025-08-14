@@ -20,15 +20,31 @@ function readVarPx(name) {
     return parseFloat(val) || 0;
 }
 
+function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
+
+function measureGrid() {
+    // Prefer measuring the container to get actual content width
+    const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
+    const gridWidth = Math.round(containerEl.getBoundingClientRect().width);
+    // Try CSS --cols, else derive from thresholds on content width
+    let cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || 0;
+    if (!cols) {
+        if (gridWidth >= 1172) cols = 24; else if (gridWidth >= 580) cols = 12; else if (gridWidth >= 284) cols = 6; else cols = 3;
+    }
+    // Gutter rules: M/L dynamic, S/XS fixed 12px
+    let gutter = 12;
+    if (cols >= 12) {
+        gutter = clamp((gridWidth - 62 * cols) / (cols - 1), 12, 24);
+    }
+    const col = (gridWidth - (cols - 1) * gutter) / cols;
+    return { gridWidth, cols, gutter, col };
+}
+
 function buildNumbers() {
     const nums = document.getElementById('debug-grid-numbers');
     if (!nums) return;
-    // Prefer responsive vars from :root, fallback to debug-specific
-    const col = (readVarPx('--col') || readVarPx('--dbg-col') || 40);
-    const gutter = (readVarPx('--gutter') || readVarPx('--dbg-gutter') || 24);
+    const { gridWidth: width, cols, gutter, col } = measureGrid();
     const cycle = col + gutter;
-    const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
-    const width = (readVarPx('--grid-width') || readVarPx('--dbg-width') || (col * cols + gutter * (cols - 1)));
     nums.style.width = width + 'px';
     // Use absolutely positioned labels relative to centered container
     nums.style.display = 'block';
@@ -64,10 +80,8 @@ function updateInfo() {
     const info = document.getElementById('debug-grid-info');
     if (!info) return;
     const canvas = Math.round(window.innerWidth);
-    const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
-    const overlayWidth = Math.round((readVarPx('--grid-width') || readVarPx('--dbg-width') || 0));
-    const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
-    const container = Math.round(containerEl.getBoundingClientRect().width);
+    const { gridWidth: container, cols } = measureGrid();
+    const overlayWidth = container;
     const lineCanvas = ensureInfoLine('dbg-canvas-size');
     const lineContainer = ensureInfoLine('dbg-container-size');
     const lineOverlay = ensureInfoLine('dbg-overlay-size');
