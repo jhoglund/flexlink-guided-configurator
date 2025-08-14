@@ -30,16 +30,17 @@ function buildNumbers() {
     const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
     const width = (readVarPx('--grid-width') || readVarPx('--dbg-width') || (col * cols + gutter * (cols - 1)));
     nums.style.width = width + 'px';
-    // Use CSS grid so items map 1:1 to columns with gutter as column-gap
-    nums.style.display = 'grid';
-    nums.style.gridTemplateColumns = `repeat(${cols}, ${col}px)`;
-    nums.style.columnGap = `${gutter}px`;
+    // Use absolutely positioned labels for pixel-perfect alignment
+    nums.style.display = 'block';
     nums.innerHTML = '';
     for (let i = 0; i < cols; i++) {
         const span = document.createElement('span');
         span.className = 'num';
         span.textContent = String(i + 1);
         span.style.width = col + 'px';
+        span.style.position = 'absolute';
+        span.style.left = (i * (col + gutter) + col / 2) + 'px';
+        span.style.transform = 'translateX(-50%)';
         nums.appendChild(span);
     }
 }
