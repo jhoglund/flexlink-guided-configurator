@@ -103,10 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleDebugGrid();
         }
     });
-  window.addEventListener('resize', () => {
-    updateInfo();
-    if (document.body.classList.contains('debug-grid')) buildNumbers();
-  });
+    window.addEventListener('resize', () => {
+        updateInfo();
+        if (document.body.classList.contains('debug-grid')) buildNumbers();
+    });
 });
 
 

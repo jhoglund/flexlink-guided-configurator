@@ -21,12 +21,9 @@ body.debug-grid::before {
     z-index: 9998;
     background-repeat: repeat-x;
     background-position: 0 0;
-    /* Honor grid.css vars when present */
-    /* Adopt grid variables if available */
-    --dbg-col: var(--col); /* if undefined, stays empty and falls back next line */
-    --dbg-col: var(--dbg-col, 40px);
-    --dbg-gutter: var(--gutter);
-    --dbg-gutter: var(--dbg-gutter, 24px);
+    /* Honor grid.css vars when present (with fallbacks) */
+    --dbg-col: var(--col, 40px);
+    --dbg-gutter: var(--gutter, 24px);
     --dbg-cycle: calc(var(--dbg-col) + var(--dbg-gutter));
     background-image: repeating-linear-gradient(to right,
             rgba(59, 130, 246, 0.2) 0 var(--dbg-col),
