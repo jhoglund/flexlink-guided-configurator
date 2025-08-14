@@ -24,10 +24,10 @@ function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
 
 function getCurrentBreakpoint() {
     const width = window.innerWidth;
-    if (width >= 1220) return 'L';
-    if (width >= 628) return 'M';
-    if (width >= 332) return 'S';
-    return 'XS';
+    if (width >= 1220) return 'Large';
+    if (width >= 628) return 'Medium';
+    if (width >= 332) return 'Small';
+    return 'Extra Small';
 }
 
 function measureGrid() {
