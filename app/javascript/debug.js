@@ -52,13 +52,29 @@ function measureGrid() {
 function buildNumbers() {
     const nums = document.getElementById('debug-grid-numbers');
     if (!nums) return;
-    const { gridWidth: width, gridLeft, cols, gutter, col } = measureGrid();
+    const { gridWidth: width, cols, gutter, col } = measureGrid();
     const cycle = col + gutter;
     // Align number strip to overlay start (left) to avoid margin centering drift
-    nums.style.width = width + 'px';
-    const left = (typeof gridLeft === 'number') ? gridLeft : Math.round((window.innerWidth - width) / 2);
-    nums.style.left = left + 'px';
-    nums.style.transform = 'none';
+    // Prefer attaching to the grid container to inherit the exact content box and margins
+    const host = document.querySelector('.grid-container') || document.querySelector('.container');
+    if (host && nums.parentElement !== host) {
+        host.style.position = host.style.position || 'relative';
+        host.appendChild(nums);
+    }
+    // Position and size
+    if (host) {
+        nums.style.position = 'absolute';
+        nums.style.left = '0px';
+        nums.style.top = '8px';
+        nums.style.width = '100%';
+        nums.style.transform = 'none';
+    } else {
+        nums.style.position = 'fixed';
+        nums.style.left = Math.round((window.innerWidth - width) / 2) + 'px';
+        nums.style.top = '8px';
+        nums.style.width = width + 'px';
+        nums.style.transform = 'none';
+    }
     // Use CSS grid cells that line up with overlay columns
     nums.style.display = 'grid';
     nums.style.gridTemplateColumns = `repeat(${cols}, ${col}px)`;
