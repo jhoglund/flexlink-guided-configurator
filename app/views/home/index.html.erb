@@ -20,7 +20,7 @@
       <h2 class="section-title"><strong>Start here and</strong> choose your industry</h2>
     </div>
     <!-- Industry Categories Grid -->
-    <div>
+    <div class="grid-item">
       <% @categories.each do |category| %>
         <div class="industry-card grid-span-3">
           <%= industry_card_icon(category[:name].downcase, alt: "#{category[:name]} icon") %>
