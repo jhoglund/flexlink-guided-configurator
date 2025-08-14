@@ -23,17 +23,19 @@ function readVarPx(name) {
 function buildNumbers() {
     const nums = document.getElementById('debug-grid-numbers');
     if (!nums) return;
-    const col = readVarPx('--dbg-col') || 40;      // e.g. 2.5rem -> 40px
-    const gutter = readVarPx('--dbg-gutter') || 24; // e.g. 1.5rem -> 24px
+    // Prefer responsive vars from :root, fallback to debug-specific
+    const col = (readVarPx('--col') || readVarPx('--dbg-col') || 40);
+    const gutter = (readVarPx('--gutter') || readVarPx('--dbg-gutter') || 24);
     const cycle = col + gutter;
     const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
-    const width = col * cols + gutter * (cols - 1);
+    const width = (readVarPx('--grid-width') || readVarPx('--dbg-width') || (col * cols + gutter * (cols - 1)));
     nums.style.width = width + 'px';
     nums.innerHTML = '';
     for (let i = 0; i < cols; i++) {
         const span = document.createElement('span');
         span.className = 'num';
         span.textContent = String(i + 1);
+        // center label over each column
         span.style.left = (i * cycle + col / 2) + 'px';
         nums.appendChild(span);
     }

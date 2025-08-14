@@ -36,6 +36,8 @@ body.debug-grid::before {
     left: 50%;
     transform: translateX(-50%);
     height: 14px;
+    box-sizing: content-box;
+    padding: 0;
     pointer-events: none;
     z-index: 9999;
     font-family: monospace;
