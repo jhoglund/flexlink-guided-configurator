@@ -2,25 +2,25 @@
 const TOTAL_COLS = 24;
 
 function readVarPx(name) {
-  const cs = getComputedStyle(document.body);
-  const val = (cs.getPropertyValue(name) || '').trim();
-  if (!val) return 0;
-  if (val.endsWith('rem')) {
-    const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-    return parseFloat(val) * rootPx;
-  }
-  if (val.endsWith('px')) {
-    return parseFloat(val);
-  }
-  // Fallback for unitless values
-  return parseFloat(val) || 0;
+    const cs = getComputedStyle(document.body);
+    const val = (cs.getPropertyValue(name) || '').trim();
+    if (!val) return 0;
+    if (val.endsWith('rem')) {
+        const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        return parseFloat(val) * rootPx;
+    }
+    if (val.endsWith('px')) {
+        return parseFloat(val);
+    }
+    // Fallback for unitless values
+    return parseFloat(val) || 0;
 }
 
 function buildNumbers() {
     const nums = document.getElementById('debug-grid-numbers');
     if (!nums) return;
-  const col = readVarPx('--dbg-col') || 40;      // e.g. 2.5rem -> 40px
-  const gutter = readVarPx('--dbg-gutter') || 24; // e.g. 1.5rem -> 24px
+    const col = readVarPx('--dbg-col') || 40;      // e.g. 2.5rem -> 40px
+    const gutter = readVarPx('--dbg-gutter') || 24; // e.g. 1.5rem -> 24px
     const cycle = col + gutter;
     const width = col * TOTAL_COLS + gutter * (TOTAL_COLS - 1);
     nums.style.width = width + 'px';
@@ -32,6 +32,34 @@ function buildNumbers() {
         span.style.left = (i * cycle + col / 2) + 'px';
         nums.appendChild(span);
     }
+}
+
+function ensureInfoLine(id, label) {
+  const info = document.getElementById('debug-grid-info');
+  if (!info) return null;
+  let el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement('p');
+    el.id = id;
+    info.appendChild(el);
+  }
+  if (label) el.dataset.label = label;
+  return el;
+}
+
+function updateInfo() {
+  const info = document.getElementById('debug-grid-info');
+  if (!info) return;
+  const canvas = Math.round(window.innerWidth);
+  const overlayWidth = Math.round(readVarPx('--dbg-width') || 0);
+  const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
+  const container = Math.round(containerEl.getBoundingClientRect().width);
+  const lineCanvas = ensureInfoLine('dbg-canvas-size');
+  const lineContainer = ensureInfoLine('dbg-container-size');
+  const lineOverlay = ensureInfoLine('dbg-overlay-size');
+  if (lineCanvas) lineCanvas.textContent = `Canvas: ${canvas}px`;
+  if (lineContainer) lineContainer.textContent = `Container: ${container}px`;
+  if (overlayWidth && lineOverlay) lineOverlay.textContent = `Overlay: ${overlayWidth}px`;
 }
 
 export function enableDebugGrid() {
@@ -64,12 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('debug-grid-numbers')) {
         enableDebugGrid();
     }
+  updateInfo();
     document.addEventListener('keydown', (e) => {
         if (e.key === 'g' || e.key === 'G') {
             e.preventDefault();
             toggleDebugGrid();
         }
     });
+  window.addEventListener('resize', updateInfo);
 });
 
 
