@@ -146,10 +146,8 @@ export function toggleDebugGrid() {
 document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('debug-grid-toggle');
     if (btn) btn.addEventListener('click', toggleDebugGrid);
-    // Only auto-enable when containers exist; otherwise leave off
-    if (document.getElementById('debug-grid-numbers')) {
-        enableDebugGrid();
-    }
+    // Always enable overlay by default on pages that include debug assets
+    enableDebugGrid();
     updateInfo();
     document.addEventListener('keydown', (e) => {
         if (e.key === 'g' || e.key === 'G') {

@@ -47,7 +47,9 @@ body.debug-grid::before {
     width: var(--grid-width, var(--dbg-width));
 }
 
-body.debug-grid #debug-grid-numbers { display: none; }
+body.debug-grid #debug-grid-numbers {
+    display: none;
+}
 
 #debug-grid-numbers .num {
     position: static;
