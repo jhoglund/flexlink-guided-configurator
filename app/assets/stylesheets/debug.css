@@ -15,7 +15,7 @@ body.debug-grid::before {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: var(--dbg-width);
+    width: var(--grid-width, var(--dbg-width));
     height: 100vh;
     pointer-events: none;
     z-index: 9998;

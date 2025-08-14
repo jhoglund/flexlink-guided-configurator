@@ -22,10 +22,11 @@ function buildNumbers() {
     const col = readVarPx('--dbg-col') || 40;      // e.g. 2.5rem -> 40px
     const gutter = readVarPx('--dbg-gutter') || 24; // e.g. 1.5rem -> 24px
     const cycle = col + gutter;
-    const width = col * TOTAL_COLS + gutter * (TOTAL_COLS - 1);
-    nums.style.width = width + 'px';
+  const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
+  const width = col * cols + gutter * (cols - 1);
+  nums.style.width = width + 'px';
     nums.innerHTML = '';
-    for (let i = 0; i < TOTAL_COLS; i++) {
+  for (let i = 0; i < cols; i++) {
         const span = document.createElement('span');
         span.className = 'num';
         span.textContent = String(i + 1);
@@ -51,15 +52,18 @@ function updateInfo() {
     const info = document.getElementById('debug-grid-info');
     if (!info) return;
     const canvas = Math.round(window.innerWidth);
-    const overlayWidth = Math.round(readVarPx('--dbg-width') || 0);
+  const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
+  const overlayWidth = Math.round((readVarPx('--grid-width') || readVarPx('--dbg-width') || 0));
     const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
     const container = Math.round(containerEl.getBoundingClientRect().width);
-    const lineCanvas = ensureInfoLine('dbg-canvas-size');
-    const lineContainer = ensureInfoLine('dbg-container-size');
-    const lineOverlay = ensureInfoLine('dbg-overlay-size');
+  const lineCanvas = ensureInfoLine('dbg-canvas-size');
+  const lineContainer = ensureInfoLine('dbg-container-size');
+  const lineOverlay = ensureInfoLine('dbg-overlay-size');
+  const lineCols = ensureInfoLine('dbg-cols');
     if (lineCanvas) lineCanvas.textContent = `Canvas: ${canvas}px`;
     if (lineContainer) lineContainer.textContent = `Container: ${container}px`;
-    if (overlayWidth && lineOverlay) lineOverlay.textContent = `Overlay: ${overlayWidth}px`;
+  if (overlayWidth && lineOverlay) lineOverlay.textContent = `Overlay: ${overlayWidth}px`;
+  if (lineCols) lineCols.textContent = `Columns: ${cols}`;
 }
 
 export function enableDebugGrid() {
