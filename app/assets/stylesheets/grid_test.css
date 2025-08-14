@@ -4,10 +4,10 @@
 }
 
 .grid-24 {
-  display: grid;
-  grid-template-columns: repeat(var(--cols), var(--col));
-  column-gap: var(--gutter);
-  row-gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), var(--col));
+    column-gap: var(--gutter);
+    row-gap: 16px;
 }
 
 .span-24-1 {
