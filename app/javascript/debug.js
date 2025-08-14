@@ -1,12 +1,26 @@
 // Debug grid bootstrap (development only)
 const TOTAL_COLS = 24;
 
+function readVarPx(name) {
+  const cs = getComputedStyle(document.body);
+  const val = (cs.getPropertyValue(name) || '').trim();
+  if (!val) return 0;
+  if (val.endsWith('rem')) {
+    const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    return parseFloat(val) * rootPx;
+  }
+  if (val.endsWith('px')) {
+    return parseFloat(val);
+  }
+  // Fallback for unitless values
+  return parseFloat(val) || 0;
+}
+
 function buildNumbers() {
     const nums = document.getElementById('debug-grid-numbers');
     if (!nums) return;
-    const cs = getComputedStyle(document.body);
-    const col = parseFloat(cs.getPropertyValue('--dbg-col')) || 40;
-    const gutter = parseFloat(cs.getPropertyValue('--dbg-gutter')) || 24;
+  const col = readVarPx('--dbg-col') || 40;      // e.g. 2.5rem -> 40px
+  const gutter = readVarPx('--dbg-gutter') || 24; // e.g. 1.5rem -> 24px
     const cycle = col + gutter;
     const width = col * TOTAL_COLS + gutter * (TOTAL_COLS - 1);
     nums.style.width = width + 'px';
