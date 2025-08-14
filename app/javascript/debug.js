@@ -22,6 +22,14 @@ function readVarPx(name) {
 
 function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
 
+function getCurrentBreakpoint() {
+    const width = window.innerWidth;
+    if (width >= 1220) return 'L';
+    if (width >= 628) return 'M';
+    if (width >= 332) return 'S';
+    return 'XS';
+}
+
 function measureGrid() {
     // Resolve grid content width from CSS var when available
     let gridWidth = readVarPx('--grid-width');
@@ -46,7 +54,8 @@ function measureGrid() {
     }
     let col = readVarPx('--col');
     if (!col) col = (gridWidth - (cols - 1) * gutter) / cols;
-    return { gridWidth, cols, gutter, col };
+    const breakpoint = getCurrentBreakpoint();
+    return { gridWidth, cols, gutter, col, breakpoint };
 }
 
 function buildNumbers() {
@@ -106,13 +115,15 @@ function updateInfo() {
     const info = document.getElementById('debug-grid-info');
     if (!info) return;
     const canvas = Math.round(window.innerWidth);
-    const { gridWidth: container, cols } = measureGrid();
+    const { gridWidth: container, cols, breakpoint } = measureGrid();
     const overlayWidth = container;
+    const lineBreakpoint = ensureInfoLine('dbg-breakpoint');
     const lineCanvas = ensureInfoLine('dbg-canvas-size');
     const lineContainer = ensureInfoLine('dbg-container-size');
     const lineOverlay = ensureInfoLine('dbg-overlay-size');
     const lineCols = ensureInfoLine('dbg-cols');
     const gridCountEl = document.getElementById('dbg-grid-count');
+    if (lineBreakpoint) lineBreakpoint.textContent = `Breakpoint: ${breakpoint}`;
     if (lineCanvas) lineCanvas.textContent = `Canvas: ${canvas}px`;
     if (lineContainer) lineContainer.textContent = `Container: ${container}px`;
     if (overlayWidth && lineOverlay) lineOverlay.textContent = `Overlay: ${overlayWidth}px`;
