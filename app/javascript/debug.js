@@ -23,20 +23,28 @@ function readVarPx(name) {
 function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
 
 function measureGrid() {
-    // Prefer measuring the container to get actual content width
-    const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
-    const gridWidth = Math.round(containerEl.getBoundingClientRect().width);
+    // Resolve grid content width from CSS var when available
+    let gridWidth = readVarPx('--grid-width');
+    if (!gridWidth) {
+        const containerEl = document.querySelector('.grid-container') || document.querySelector('.container') || document.body;
+        const rectW = containerEl.getBoundingClientRect().width;
+        const cs = getComputedStyle(containerEl);
+        const padL = parseFloat(cs.paddingLeft) || 0;
+        const padR = parseFloat(cs.paddingRight) || 0;
+        gridWidth = Math.max(0, Math.round(rectW - padL - padR));
+    }
     // Try CSS --cols, else derive from thresholds on content width
     let cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || 0;
     if (!cols) {
         if (gridWidth >= 1172) cols = 24; else if (gridWidth >= 580) cols = 12; else if (gridWidth >= 284) cols = 6; else cols = 3;
     }
-    // Gutter rules: M/L dynamic, S/XS fixed 12px
-    let gutter = 12;
-    if (cols >= 12) {
-        gutter = clamp((gridWidth - 62 * cols) / (cols - 1), 12, 24);
+    // Prefer CSS variables for gutter/col so we mirror exact overlay values
+    let gutter = readVarPx('--gutter');
+    if (!gutter) {
+        gutter = cols >= 12 ? clamp((gridWidth - 62 * cols) / (cols - 1), 12, 24) : 12;
     }
-    const col = (gridWidth - (cols - 1) * gutter) / cols;
+    let col = readVarPx('--col');
+    if (!col) col = (gridWidth - (cols - 1) * gutter) / cols;
     return { gridWidth, cols, gutter, col };
 }
 
