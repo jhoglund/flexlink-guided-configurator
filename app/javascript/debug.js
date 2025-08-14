@@ -30,13 +30,14 @@ function buildNumbers() {
     const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
     const width = (readVarPx('--grid-width') || readVarPx('--dbg-width') || (col * cols + gutter * (cols - 1)));
     nums.style.width = width + 'px';
+    nums.style.display = 'flex';
+    nums.style.gap = gutter + 'px';
     nums.innerHTML = '';
     for (let i = 0; i < cols; i++) {
         const span = document.createElement('span');
         span.className = 'num';
         span.textContent = String(i + 1);
-        // center label over each column
-        span.style.left = (i * cycle + col / 2) + 'px';
+        span.style.width = col + 'px';
         nums.appendChild(span);
     }
 }

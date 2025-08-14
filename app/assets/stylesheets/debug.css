@@ -44,7 +44,7 @@ body.debug-grid::before {
     font-size: 10px;
     color: rgba(59, 130, 246, 0.85);
     display: none;
-    width: var(--dbg-width);
+    width: var(--grid-width, var(--dbg-width));
 }
 
 body.debug-grid #debug-grid-numbers {
@@ -52,9 +52,10 @@ body.debug-grid #debug-grid-numbers {
 }
 
 #debug-grid-numbers .num {
-    position: absolute;
-    top: 0;
-    transform: translateX(-50%);
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Toggle button styles */
