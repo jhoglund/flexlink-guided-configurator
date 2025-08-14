@@ -64,10 +64,12 @@ function updateInfo() {
     const lineContainer = ensureInfoLine('dbg-container-size');
     const lineOverlay = ensureInfoLine('dbg-overlay-size');
     const lineCols = ensureInfoLine('dbg-cols');
+    const gridCountEl = document.getElementById('dbg-grid-count');
     if (lineCanvas) lineCanvas.textContent = `Canvas: ${canvas}px`;
     if (lineContainer) lineContainer.textContent = `Container: ${container}px`;
     if (overlayWidth && lineOverlay) lineOverlay.textContent = `Overlay: ${overlayWidth}px`;
     if (lineCols) lineCols.textContent = `Columns: ${cols}`;
+    if (gridCountEl) gridCountEl.textContent = `Grid: ${cols} columns`;
 }
 
 export function enableDebugGrid() {
