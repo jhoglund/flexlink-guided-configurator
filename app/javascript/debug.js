@@ -2,8 +2,12 @@
 const TOTAL_COLS = 24;
 
 function readVarPx(name) {
-    const cs = getComputedStyle(document.body);
-    const val = (cs.getPropertyValue(name) || '').trim();
+    const root = getComputedStyle(document.documentElement);
+    let val = (root.getPropertyValue(name) || '').trim();
+    if (!val) {
+        const cs = getComputedStyle(document.body);
+        val = (cs.getPropertyValue(name) || '').trim();
+    }
     if (!val) return 0;
     if (val.endsWith('rem')) {
         const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
