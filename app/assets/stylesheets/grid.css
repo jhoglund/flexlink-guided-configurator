@@ -85,35 +85,20 @@ h3 {
     row-gap: 16px;
 }
 
-/* Responsive span helpers: map 24-col fractions to current --cols */
-/* XS (3 cols) base */
-.span-24-1 { grid-column: auto / span 1; }
-.span-24-3 { grid-column: auto / span 1; }
-.span-24-6 { grid-column: auto / span 1; }
-.span-24-12 { grid-column: auto / span 2; }
-
-/* S (6 cols) */
-@media (min-width: 332px) {
-    .span-24-1 { grid-column: auto / span 1; }
-    .span-24-3 { grid-column: auto / span 1; }
-    .span-24-6 { grid-column: auto / span 2; }
-    .span-24-12 { grid-column: auto / span 3; }
+.span-24-1 {
+    grid-column: auto / span 1;
 }
 
-/* M (12 cols) */
-@media (min-width: 628px) {
-    .span-24-1 { grid-column: auto / span 1; }
-    .span-24-3 { grid-column: auto / span 2; }
-    .span-24-6 { grid-column: auto / span 3; }
-    .span-24-12 { grid-column: auto / span 6; }
+.span-24-3 {
+    grid-column: auto / span 3;
 }
 
-/* L (24 cols) */
-@media (min-width: 1220px) {
-    .span-24-1 { grid-column: auto / span 1; }
-    .span-24-3 { grid-column: auto / span 3; }
-    .span-24-6 { grid-column: auto / span 6; }
-    .span-24-12 { grid-column: auto / span 12; }
+.span-24-6 {
+    grid-column: auto / span 6;
+}
+
+.span-24-12 {
+    grid-column: auto / span 12;
 }
 
 .demo-grid {
@@ -125,7 +110,6 @@ h3 {
     border: 1px dashed rgba(59, 130, 246, .35);
     color: #374151;
     padding: .75rem;
-    box-sizing: border-box;
     text-align: center;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: .875rem;
