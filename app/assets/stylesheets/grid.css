@@ -1,4 +1,6 @@
-/* Standalone responsive grid for /grid_test */
+/* FlexLink Responsive Grid System */
+/* Production-ready grid utilities for main application */
+
 /* Responsive grid variables and breakpoints */
 :root {
     /* defaults (XS) */
@@ -45,47 +47,19 @@
     }
 }
 
-/* page scaffolding */
-html,
-body {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: #111827;
-}
-
+/* Grid container */
 .grid-container {
     width: var(--grid-width);
     margin: 0 auto;
-    padding: 24px;
 }
 
-h2 {
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #111827;
-}
-
-h3 {
-    font-weight: 600;
-    margin: 1.25rem 0 .5rem;
-    font-size: 1rem;
-    color: #374151;
-}
-
-/* Responsive grid driven by variables */
+/* Responsive grid layout */
 .grid-24 {
     display: grid;
     grid-template-columns: repeat(var(--cols), var(--col));
     column-gap: var(--gutter);
     row-gap: 16px;
 }
-
-
-
 
 /* Grid span utility classes for all breakpoints */
 /* Base/XS spans */
@@ -480,20 +454,4 @@ h3 {
     .span-l-24 {
         grid-column: auto / span 24;
     }
-}
-
-
-.demo-grid {
-    margin-bottom: 24px;
-}
-
-.demo-box {
-    background: rgba(59, 130, 246, .12);
-    border: 1px dashed rgba(59, 130, 246, .35);
-    color: #374151;
-    padding: .75rem;
-    text-align: center;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: .875rem;
-    border-radius: .25rem;
 }
