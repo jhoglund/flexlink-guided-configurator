@@ -33,8 +33,8 @@ body.debug-grid::before {
 #debug-grid-numbers {
     position: fixed;
     top: 8px;
-    left: 0;
-    transform: none;
+    left: 50%;
+    transform: translateX(-50%);
     height: 14px;
     box-sizing: content-box;
     padding: 0;

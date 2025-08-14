@@ -30,7 +30,7 @@ function buildNumbers() {
     const cols = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols')) || TOTAL_COLS;
     const width = (readVarPx('--grid-width') || readVarPx('--dbg-width') || (col * cols + gutter * (cols - 1)));
     nums.style.width = width + 'px';
-    // Use absolutely positioned labels for pixel-perfect alignment
+    // Use absolutely positioned labels relative to centered container
     nums.style.display = 'block';
     nums.innerHTML = '';
     for (let i = 0; i < cols; i++) {
@@ -39,7 +39,9 @@ function buildNumbers() {
         span.textContent = String(i + 1);
         span.style.width = col + 'px';
         span.style.position = 'absolute';
-        span.style.left = (i * (col + gutter) + col / 2) + 'px';
+        // center origin at container midpoint, then offset by half-width leftwards
+        const leftFromCenter = (i * (col + gutter) + col / 2) - width / 2;
+        span.style.left = `calc(50% + ${leftFromCenter}px)`;
         span.style.transform = 'translateX(-50%)';
         nums.appendChild(span);
     }

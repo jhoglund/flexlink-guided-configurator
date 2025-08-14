@@ -22,8 +22,8 @@
 @media (min-width: 628px) {
     :root {
         --cols: 12;
-    /* dynamic gutter based on available width: leftover per gap between 12px and 24px */
-    --gutter: clamp(12px, calc((var(--grid-width) - 62px * var(--cols)) / (var(--cols) - 1)), 24px);
+        /* dynamic gutter based on available width: leftover per gap between 12px and 24px */
+        --gutter: clamp(12px, calc((var(--grid-width) - 62px * var(--cols)) / (var(--cols) - 1)), 24px);
     }
 }
 
@@ -31,8 +31,8 @@
 @media (min-width: 1220px) {
     :root {
         --cols: 24;
-    /* dynamic gutter based on available width: leftover per gap between 12px and 24px */
-    --gutter: clamp(12px, calc((var(--grid-width) - 62px * var(--cols)) / (var(--cols) - 1)), 24px);
+        /* dynamic gutter based on available width: leftover per gap between 12px and 24px */
+        --gutter: clamp(12px, calc((var(--grid-width) - 62px * var(--cols)) / (var(--cols) - 1)), 24px);
         --grid-max: 1512px;
     }
 }
