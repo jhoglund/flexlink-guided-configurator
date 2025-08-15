@@ -1,3 +1,33 @@
+/*
+ * FlexLink Responsive Grid System
+ * ===============================
+ * 
+ * A sophisticated responsive grid system with dynamic gutters and adaptive columns.
+ * 
+ * 📚 DOCUMENTATION: See GRID_SPECIFICATIONS.md for complete usage guide
+ * 
+ * 🎯 KEY FEATURES:
+ * - Dynamic gutters: 12px-24px scaling based on available space
+ * - Responsive columns: 3→6→12→24 across breakpoints
+ * - CSS variables for optimal performance
+ * - No circular dependencies
+ * 
+ * 📱 BREAKPOINTS:
+ * - XS: < 332px  → 3 columns  (gutter: 12px fixed, margin: 24px)
+ * - S:  ≥ 332px  → 6 columns  (gutter: 12px fixed, margin: 24px)  
+ * - M:  ≥ 628px  → 12 columns (gutter: 12px-24px dynamic, margin: 48px)
+ * - L:  ≥ 1220px → 24 columns (gutter: 12px-24px dynamic, margin: 48px, max: 1512px)
+ * 
+ * 🚀 USAGE:
+ * <div class="grid-container">
+ *   <div class="grid">
+ *     <div class="col-span-3 md:col-span-6 lg:col-span-12">Content</div>
+ *   </div>
+ * </div>
+ * 
+ * 📖 For complete examples and best practices, see: GRID_SPECIFICATIONS.md
+ */
+
 /* FlexLink Responsive Grid System */
 /* Production-ready grid utilities for main application */
 
@@ -7,7 +37,7 @@
     --cols: 3;
     --gutter: 12px;
     --grid-max: 99999px;
-    /* capped in L only */
+    /* 24px margins for small screens */
     --grid-width: calc(min(100vw - 48px, var(--grid-max)));
     --col: calc((var(--grid-width) - (var(--cols) - 1) * var(--gutter)) / var(--cols));
 }
@@ -17,6 +47,7 @@
     :root {
         --cols: 6;
         --gutter: 12px;
+        /* 24px margins for small breakpoint */
         --grid-width: calc(min(100vw - 48px, var(--grid-max)));
         --col: calc((var(--grid-width) - (var(--cols) - 1) * var(--gutter)) / var(--cols));
     }
@@ -26,7 +57,8 @@
 @media (min-width: 628px) {
     :root {
         --cols: 12;
-        --grid-width: calc(min(100vw - 48px, var(--grid-max)));
+        /* 48px margins for medium breakpoint */
+        --grid-width: calc(min(100vw - 96px, var(--grid-max)));
         /* dynamic gutter based on available width: leftover per gap between 12px and 24px */
         --gutter: clamp(12px, calc((var(--grid-width) - 62px * var(--cols)) / (var(--cols) - 1)), 24px);
         --col: calc((var(--grid-width) - (var(--cols) - 1) * var(--gutter)) / var(--cols));
@@ -38,9 +70,10 @@
     :root {
         --cols: 24;
         --grid-max: 1512px;
+        /* 48px margins for large breakpoint */
+        --grid-width: calc(min(100vw - 96px, var(--grid-max)));
         /* Use viewport-relative calculation to avoid circular dependency */
-        --gutter: clamp(12px, calc((min(100vw - 48px, 1512px) - 24 * 40px) / 23), 24px);
-        --grid-width: calc(min(100vw - 48px, var(--grid-max)));
+        --gutter: clamp(12px, calc((min(100vw - 96px, 1512px) - 24 * 40px) / 23), 24px);
         --col: calc((var(--grid-width) - (var(--cols) - 1) * var(--gutter)) / var(--cols));
     }
 }

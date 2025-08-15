@@ -11,8 +11,11 @@
   </div>
 </section>
 <!-- Category Selection Section -->
-<section class="section-full-width bg-light-gray">
+<section class="section-full-width bg-light-gray py-12">
   <div class="grid-container">
+    <div class="mb-8">
+      <h2 class="section-title"><strong>Start here and</strong> choose your industry</h2>
+    </div>
     <div class="grid">
       <!-- Industry Categories Grid -->
       <% @categories.each do |category| %>
@@ -41,6 +44,38 @@
           <button class="btn btn-primary">
             System Building
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="search-container mt-12">
+    <div class="grid-container">
+      <div class="mb-8">
+        <h2 class="section-title">Search for a product</h2>
+      </div>
+      <div class="grid">
+        <!-- Product Search Section -->
+        <div class="search-form">
+          <div class="search-input-wrapper">
+            <%= icon_tag "search", alt: "Search", class: "search-icon" %>
+            <input type="text" placeholder="What are you looking for?" class="form-input">
+          </div>
+          <div>
+            <select class="form-select">
+              <option>Filter</option>
+              <option>Automotive</option>
+              <option>E-Commerce</option>
+              <option>Food & Beverage</option>
+            </select>
+          </div>
+          <div>
+            <input type="text" placeholder="Product no" class="form-input product-no-input">
+          </div>
+          <div>
+            <button class="btn btn-primary">
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </div>
