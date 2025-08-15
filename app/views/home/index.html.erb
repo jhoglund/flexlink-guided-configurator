@@ -2,20 +2,25 @@
 <section class="section-full-width hero">
   <div class="grid-container">
     <div class="grid">
-      <div class="hero-content col-span-full">
+      <div class="col-span-3 sm:col-span-6 md:col-span-6 lg:col-span-12">
         <h1>Welcome to FlexLink Online Store</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
         <button class="btn btn-primary">Start shopping</button>
+      </div>
+      <div class="col-span-3 sm:col-span-6 md:col-span-6 lg:col-span-12 bg-gray-300">
+        <!--<div class="hero-swosh-graphic">
+          <%= image_tag "hero-robot-photo.jpg", alt: "Flexlink robot photo", class: "hero-robot-photo" %>
+        </div>
+        <div class="hero-swosh-white">
+        </div>-->
       </div>
     </div>
   </div>
 </section>
 <!-- Category Selection Section -->
-<section class="section-full-width bg-light-gray py-12">
+<section class="section-full-width bg-light-gray">
   <div class="grid-container">
-    <div class="mb-8">
-      <h2 class="section-title"><strong>Start here and</strong> choose your industry</h2>
-    </div>
+    <h2>Start here and <span class="text-flexlink-medium-gray">choose your industry</span></h2>
     <div class="grid">
       <!-- Industry Categories Grid -->
       <% @categories.each do |category| %>
@@ -48,13 +53,11 @@
       </div>
     </div>
   </div>
-  <div class="search-container mt-12">
-    <div class="grid-container">
-      <div class="mb-8">
-        <h2 class="section-title">Search for a product</h2>
-      </div>
-      <div class="grid">
-        <!-- Product Search Section -->
+  <div class="grid-container">
+    <h2>Search for <span class="text-flexlink-medium-gray">a product</span></h2>
+    <div class="grid">
+      <!-- Product Search Section -->
+      <div class="search-container">
         <div class="search-form">
           <div class="search-input-wrapper">
             <%= icon_tag "search", alt: "Search", class: "search-icon" %>
