@@ -3,9 +3,9 @@
   <p><small>Responsive layout: L=24cols, M=12cols, S=6cols, XS=3cols</small></p>
 
   <h3>24 boxes</h3>
-  <div class="grid-item demo-grid">
+  <div class="grid">
     <% 24.times do |i| %>
-      <div class="demo-box grid-span-1"><%= i + 1 %></div>
+      <div class="demo-box col-span-1"><%= i + 1 %></div>
     <% end %>
   </div>
 </div>
@@ -14,11 +14,11 @@
   <div class="grid-container">
 
     <h3>12 boxes</h3>
-    <div class="grid-item demo-grid">
+    <div class="grid">
       <% 12.times do |i| %>
-        <div class="demo-box grid-span-3"><%= i + 1 %></div>
+        <div class="demo-box col-span-3"><%= i + 1 %></div>
       <% end %>
-      <div class="demo-box grid-span-3 grid-span-l-12 grid-span-m-12 grid-span-s-6">rest</div>
+          <div class="demo-box col-span-3 sm:col-span-6 md:col-span-12">rest</div>
     </div>
   </div>
 </section>

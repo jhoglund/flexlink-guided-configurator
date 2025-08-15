@@ -31,80 +31,12 @@
       </div>
       <%= javascript_import_module_tag "debug" %>
     <% end %>
-    <!-- Header/Navigation -->
-    <header class="header">
-      <div class="container">
-        <div class="header-content">
-          <!-- Logo and Company Info -->
-          <div class="logo">
-            <%= image_tag "flexlink-logo.svg", class: "logo-icon", alt: "FlexLink" %>
-          </div>
-          <!-- Main Navigation -->
-          <nav class="nav">
-            <%= link_to "Home", root_path, class: "nav-link" %>
-            <div style="position: relative;">
-              <a href="#" class="nav-link" style="display: flex; align-items: center;">
-                Industries
-                <i class="fas fa-chevron-down" style="margin-left: 0.25rem; font-size: 0.75rem;"></i>
-              </a>
-            </div>
-            <%= link_to "Systems", systems_path, class: "nav-link" %>
-            <a href="#" class="nav-link">Build your own system</a>
-            <a href="#" class="nav-link">FAQ</a>
-            <a href="#" class="nav-link">Contact us</a>
-          </nav>
-          <!-- Right Side Actions -->
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <!-- Language Selector -->
-            <div style="display: flex; align-items: center; gap: 0.25rem; color: var(--gray-700);">
-              <i class="fas fa-globe" style="font-size: 0.875rem;"></i>
-              <span style="font-size: 0.875rem;">Eng</span>
-              <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
-            </div>
-            <!-- Icons -->
-            <div style="display: flex; align-items: center; gap: 0.75rem;">
-              <button class="nav-link" style="background: none; border: none; padding: 0;">
-                <i class="fas fa-search"></i>
-              </button>
-              <button class="nav-link" style="background: none; border: none; padding: 0;">
-                <i class="fas fa-user"></i>
-              </button>
-              <button class="nav-link" style="background: none; border: none; padding: 0; position: relative;">
-                <i class="fas fa-shopping-cart"></i>
-                <span style="position: absolute; top: -0.25rem; right: -0.25rem; background: var(--flexlink-red); color: white; font-size: 0.75rem; border-radius: 50%; width: 1rem; height: 1rem; display: flex; align-items: center; justify-content: center;">0</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- Dynamic Breadcrumbs -->
-    <%= breadcrumbs %>
-    <!-- Main Content -->
-    <main class="container" style="padding: 2rem 0;">
-      <!-- Flash Messages -->
-      <% if notice %>
-        <div style="margin-bottom: 1.5rem; background: rgb(240 253 244); border: 1px solid rgb(187 247 208); color: rgb(21 128 61); padding: 0.75rem 1rem; border-radius: 0.5rem;" role="alert">
-          <span style="display: block;"><%= notice %></span>
-        </div>
-      <% end %>
-      <% if alert %>
-        <div style="margin-bottom: 1.5rem; background: rgb(254 242 242); border: 1px solid rgb(254 202 202); color: rgb(185 28 28); padding: 0.75rem 1rem; border-radius: 0.5rem;" role="alert">
-          <span style="display: block;"><%= alert %></span>
-        </div>
-      <% end %>
-      <% flash.each do |name, msg| %>
-        <% if msg.is_a?(String) %>
-          <div style="margin-bottom: 1.5rem; background: rgb(239 246 255); border: 1px solid rgb(191 219 254); color: rgb(30 64 175); padding: 0.75rem 1rem; border-radius: 0.5rem;" role="alert">
-            <span style="display: block;"><%= msg %></span>
-          </div>
-        <% end %>
-      <% end %>
+    <main>
       <%= yield %>
     </main>
     <!-- Footer -->
     <footer class="footer">
-      <div class="container">
+      <div class="grid-container">
         <div class="footer-grid">
           <div>
             <div class="footer-logo">

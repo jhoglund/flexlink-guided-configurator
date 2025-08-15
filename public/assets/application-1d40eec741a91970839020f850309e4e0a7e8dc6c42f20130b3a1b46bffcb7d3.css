@@ -75,41 +75,15 @@ h6 {
 /* FlexLink Brand Colors moved to variables.css */
 
 /* Layout Components */
-.container {
-    max-width: 1512px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-@media (min-width: 640px) {
-    .container {
-        padding: 0 1.5rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .container {
-        padding: 0 2rem;
-    }
-}
 
 /* Full-width section with FlexLink light gray background */
 .section-full-width {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    padding: 3rem 0;
+    width: 100%;
 }
 
 /* FlexLink light gray background for sections */
 .bg-light-gray {
     background: var(--gray-50);
-}
-
-/* Container within full-width sections */
-.section-full-width>.container {
-    max-width: 1570px;
-    margin: 0 3rem;
-    /* padding: 0 3rem; */
 }
 
 
@@ -210,161 +184,16 @@ h6 {
     z-index: 0;
 }
 
-@media (min-width: 1024px) {
-    .hero {
-        padding: 8rem 0;
-    }
-
-    .hero>.container {
-        width: auto;
-    }
-
-    .hero-swosh-graphic {
-        display: block;
-        right: -300px;
-    }
-
-    .hero-swosh-white {
-        top: 0;
-        left: auto;
-        right: -300px;
-        width: 1022px;
-        height: 100%;
-        clip-path: path("M565.312 0C450.131 313.182 253.035 586.778 0 794.812V745.09C242.581 582.911 405.431 310.799 417.304 0H565.312Z");
-    }
-
-    .hero-robot-photo {
-        display: block;
-    }
-
-    .hero-media {
-        min-height: 640px;
-    }
-}
-
-@media (min-width: 1416px) {
-    .hero {
-        /* padding: 0 3rem; */
-    }
-
-    .hero>.container {
-        width: 740px;
-    }
-
-    .hero-swosh-graphic {
-        top: 0;
-        right: 208px;
-        width: 1022px;
-
-    }
-
-    .hero-swosh-white {
-        top: 0;
-        right: 208px;
-        width: 1022px;
-    }
-
-    .hero-robot-photo {}
-
-}
-
-/* XL container margins to match Figma side margins — ensure header and hero share same container */
-@media (min-width: 1416px) {
-    .container {
-        padding-left: var(--grid-margin-xl);
-        padding-right: var(--grid-margin-xl);
-    }
-}
-
-/* Unified 12-column grid */
-.grid-12 {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--grid-gutter);
-}
-
-/* Column spans (common) */
-.col-span-12 {
-    grid-column: span 12 / span 12;
-}
-
-.col-span-8 {
-    grid-column: span 8 / span 8;
-}
-
-.col-span-6 {
-    grid-column: span 6 / span 6;
-}
-
-.col-span-4 {
-    grid-column: span 4 / span 4;
-}
-
-.col-span-3 {
-    grid-column: span 3 / span 3;
-}
-
-.col-span-2 {
-    grid-column: span 2 / span 2;
-}
-
-/* Responsive spans */
-@media (min-width: 640px) {
-
-    /* sm */
-    .col-span-sm-6 {
-        grid-column: span 6 / span 6;
-    }
-}
-
-@media (min-width: 768px) {
-
-    /* md */
-    .col-span-md-6 {
-        grid-column: span 6 / span 6;
-    }
-
-    .col-span-md-4 {
-        grid-column: span 4 / span 4;
-    }
-
-    .col-span-md-3 {
-        grid-column: span 3 / span 3;
-    }
-}
-
-@media (min-width: 1024px) {
-
-    /* lg */
-    .col-span-lg-4 {
-        grid-column: span 4 / span 4;
-    }
-
-    .col-span-lg-3 {
-        grid-column: span 3 / span 3;
-    }
-
-    .col-span-lg-2 {
-        grid-column: span 2 / span 2;
-    }
-}
-
-@media (min-width: 1416px) {
-
-    /* xl */
-    .col-span-xl-3 {
-        grid-column: span 3 / span 3;
-    }
-
-    .col-span-xl-2 {
-        grid-column: span 2 / span 2;
-    }
-}
 
 .hero h1 {
     font-size: 2.25rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
 }
 
 @media (min-width: 768px) {
@@ -445,31 +274,9 @@ h6 {
     margin-bottom: var(--space-12);
 }
 
-/* Mobile default: 2 columns */
-.industry-grid {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-/* Tablet: 4 columns (keep 782 breakpoint) */
-@media (min-width: 782px) {
-    .industry-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* XL: exactly 8 per row */
-@media (min-width: 1416px) {
-    .industry-grid {
-        grid-template-columns: repeat(8, 1fr);
-    }
-}
 
 /* Industry Card */
 .industry-card {
-    max-width: 100%;
-    /* 170px */
-    min-width: 8.5rem;
-    /* 136px */
     height: 13.25rem;
     /* 212px */
     display: flex;
@@ -481,6 +288,8 @@ h6 {
     background: white;
     position: relative;
     z-index: 1;
+    /* Debug: add border to see grid alignment */
+    border: 2px dashed rgba(255, 0, 0, 0.3);
 }
 
 .industry-card:hover {
@@ -517,9 +326,7 @@ h6 {
     z-index: 0;
 }
 
-.build-3d-icon {
-    /* removed empty block */
-}
+
 
 .build-3d-icon svg {
     position: absolute;
@@ -767,63 +574,7 @@ h6 {
     outline-offset: 2px;
 }
 
-/* Grid Layouts */
-.grid {
-    display: grid;
-    gap: 1rem;
-}
 
-.grid-1 {
-    grid-template-columns: 1fr;
-}
-
-.grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-@media (min-width: 768px) {
-    .grid-md-2 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-md-3 {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .grid-md-4 {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .grid-lg-2 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-lg-3 {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .grid-lg-4 {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .grid-lg-6 {
-        grid-template-columns: repeat(6, 1fr);
-    }
-
-    .grid-lg-7 {
-        grid-template-columns: repeat(7, 1fr);
-    }
-
-    .grid-lg-8 {
-        grid-template-columns: repeat(8, 1fr);
-    }
-}
 
 /* Utility Classes */
 .text-center {

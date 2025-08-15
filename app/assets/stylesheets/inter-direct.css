@@ -23,20 +23,6 @@
     src: url('https://fonts.gstatic.com/s/inter/v19/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf') format('truetype');
 }
 
-.inter-direct {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 24px;
-    font-weight: 400;
-}
-
-.inter-direct-medium {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 24px;
-    font-weight: 500;
-}
-
-.inter-direct-bold {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 24px;
-    font-weight: 700;
-}
+.inter-direct { font-family: 'Inter', sans-serif !important; font-size: 24px; font-weight: 400; }
+.inter-direct-medium { font-family: 'Inter', sans-serif !important; font-size: 24px; font-weight: 500; }
+.inter-direct-bold { font-family: 'Inter', sans-serif !important; font-size: 24px; font-weight: 700; }

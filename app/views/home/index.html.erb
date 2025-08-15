@@ -1,34 +1,28 @@
 <!-- Hero Section -->
 <section class="section-full-width hero">
   <div class="grid-container">
-    <div class="hero-swosh-graphic">
-      <picture>
-        <source srcset="<%= image_path('hero-robot-photo.webp') %>" type="image/webp">
-        <%= image_tag "hero-robot-photo.jpg", alt: "Industrial robot photo", class: "hero-robot-photo" %>
-      </picture>
+    <div class="grid">
+      <div class="hero-content col-span-full">
+        <h1>Welcome to FlexLink Online Store</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+        <button class="btn btn-primary">Start shopping</button>
+      </div>
     </div>
-    <div class="hero-swosh-white"></div>
-    <h1>Welcome to FlexLink Online Store</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-    <button class="btn btn-primary">Start shopping</button>
   </div>
 </section>
 <!-- Category Selection Section -->
 <section class="section-full-width bg-light-gray">
   <div class="grid-container">
-    <div class="mb-12">
-      <h2 class="section-title"><strong>Start here and</strong> choose your industry</h2>
-    </div>
-    <!-- Industry Categories Grid -->
-    <div class="grid-item">
+    <div class="grid">
+      <!-- Industry Categories Grid -->
       <% @categories.each do |category| %>
-        <div class="industry-card grid-span-3">
+        <div class="industry-card col-span-3">
           <%= industry_card_icon(category[:name].downcase, alt: "#{category[:name]} icon") %>
           <%= industry_card_label(category[:name].downcase, alt: category[:name]) %>
         </div>
       <% end %>
       <!-- Build Your Own System Section -->
-      <div class="build-section grid-span-3 grid-span-l-12 grid-span-m-12 grid-span-s-6">
+      <div class="build-section col-span-3 sm:col-span-6 md:col-span-12">
         <div class="build-3d-icon">
           <svg width="211" height="209" viewBox="0 0 211 209" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M105.397 35.9991L28.5444 74.4255L105.397 112.852L182.294 74.4255L105.397 35.9991Z" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -48,64 +42,6 @@
             System Building
           </button>
         </div>
-      </div>
-    </div>
-  </section>
-  <section>
-    <div class="mb-8">
-      <h2 class="section-title">Search for a product</h2>
-    </div>
-    <!-- Product Search Section -->
-    <div class="search-container">
-      <div class="search-form">
-        <div class="search-input-wrapper">
-          <%= icon_tag "search", alt: "Search", class: "search-icon" %>
-          <input type="text" placeholder="What are you looking for?" class="form-input">
-        </div>
-        <div>
-          <select class="form-select">
-            <option>Filter</option>
-            <option>Automotive</option>
-            <option>E-Commerce</option>
-            <option>Food & Beverage</option>
-          </select>
-        </div>
-        <div>
-          <input type="text" placeholder="Product no" class="form-input product-no-input">
-        </div>
-        <div>
-          <button class="btn btn-primary">
-            Search
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Latest Updates Section -->
-<section class="section">
-  <div class="container">
-    <div class="mb-12">
-      <h2 class="section-title">Latest updates from Flexlink</h2>
-    </div>
-    <div class="grid-12">
-      <div class="card col-span-12 col-span-md-6 col-span-lg-4">
-        <div class="card-image"></div>
-        <h3 class="card-title">New Automation Solutions</h3>
-        <p class="card-text">Discover our latest innovations in automated conveyor systems designed for maximum efficiency.</p>
-        <a href="#" class="card-link">Learn more &rarr;</a>
-      </div>
-      <div class="card col-span-12 col-span-md-6 col-span-lg-4">
-        <div class="card-image"></div>
-        <h3 class="card-title">Industry Case Studies</h3>
-        <p class="card-text">See how leading companies have improved their production flows with FlexLink solutions.</p>
-        <a href="#" class="card-link">Learn more &rarr;</a>
-      </div>
-      <div class="card col-span-12 col-span-md-6 col-span-lg-4">
-        <div class="card-image"></div>
-        <h3 class="card-title">Maintenance Tips</h3>
-        <p class="card-text">Expert advice on maintaining your FlexLink systems for optimal performance and longevity.</p>
-        <a href="#" class="card-link">Learn more &rarr;</a>
       </div>
     </div>
   </div>
