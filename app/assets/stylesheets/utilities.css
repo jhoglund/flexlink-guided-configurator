@@ -1,6 +1,40 @@
 /* FlexLink Utility Classes */
 /* Comprehensive utility system for colors, spacing, and layout */
 
+/* ===== TYPOGRAPHY UTILITIES ===== */
+
+/* H1 Typography Utilities */
+.h1-xs { font-size: 2rem; line-height: 1.11; font-weight: 200; } /* 32px */
+.h1-sm { font-size: 2rem; line-height: 1.11; font-weight: 200; } /* 32px */
+.h1-md { font-size: 2.125rem; line-height: 1.1; font-weight: 200; } /* 34px */
+.h1-lg { font-size: 2.25rem; line-height: 1.08; font-weight: 200; } /* 36px */
+.h1-xl { font-size: 2.5rem; line-height: 1.07; font-weight: 200; } /* 40px */
+.h1-2xl { font-size: 2.75rem; line-height: 1.11; font-weight: 200; } /* 44px */
+
+/* H2 Typography Utilities */
+.h2-xs { font-size: 1.75rem; line-height: 1.11; font-weight: 200; } /* 28px */
+.h2-sm { font-size: 1.75rem; line-height: 1.11; font-weight: 200; } /* 28px */
+.h2-md { font-size: 1.875rem; line-height: 1.1; font-weight: 200; } /* 30px */
+.h2-lg { font-size: 2rem; line-height: 1.08; font-weight: 200; } /* 32px */
+.h2-xl { font-size: 2.25rem; line-height: 1.07; font-weight: 200; } /* 36px */
+.h2-2xl { font-size: 2.5rem; line-height: 1.11; font-weight: 200; } /* 40px */
+
+/* H3 Typography Utilities */
+.h3-xs { font-size: 1.25rem; line-height: 1.11; font-weight: 200; } /* 20px */
+.h3-sm { font-size: 1.25rem; line-height: 1.11; font-weight: 200; } /* 20px */
+.h3-md { font-size: 1.3125rem; line-height: 1.1; font-weight: 200; } /* 21px */
+.h3-lg { font-size: 1.375rem; line-height: 1.08; font-weight: 200; } /* 22px */
+.h3-xl { font-size: 1.5rem; line-height: 1.07; font-weight: 200; } /* 24px */
+.h3-2xl { font-size: 1.5rem; line-height: 1.11; font-weight: 200; } /* 24px */
+
+/* H4 Typography Utilities */
+.h4-xs { font-size: 1rem; line-height: 1.11; font-weight: 200; } /* 16px */
+.h4-sm { font-size: 1rem; line-height: 1.11; font-weight: 200; } /* 16px */
+.h4-md { font-size: 1.0625rem; line-height: 1.1; font-weight: 200; } /* 17px */
+.h4-lg { font-size: 1.125rem; line-height: 1.08; font-weight: 200; } /* 18px */
+.h4-xl { font-size: 1.1875rem; line-height: 1.07; font-weight: 200; } /* 19px */
+.h4-2xl { font-size: 1.25rem; line-height: 1.11; font-weight: 200; } /* 20px */
+
 /* ===== COLOR UTILITIES ===== */
 
 /* Text Colors */

@@ -135,7 +135,16 @@ export function enableDebugGrid() {
     const body = document.body;
     const btn = document.getElementById('debug-grid-toggle');
     const info = document.getElementById('debug-grid-info');
-    body.classList.add('debug-grid');
+    
+    // Create debug wrapper if it doesn't exist
+    let debugWrapper = document.getElementById('debug-grid-wrapper');
+    if (!debugWrapper) {
+        debugWrapper = document.createElement('div');
+        debugWrapper.id = 'debug-grid-wrapper';
+        debugWrapper.className = 'debug-grid';
+        body.appendChild(debugWrapper);
+    }
+    
     if (btn) { btn.textContent = 'HIDE'; btn.classList.add('active'); }
     if (info) info.style.display = 'block';
     buildNumbers();
@@ -147,7 +156,16 @@ export function toggleDebugGrid() {
     const btn = document.getElementById('debug-grid-toggle');
     const info = document.getElementById('debug-grid-info');
     const nums = document.getElementById('debug-grid-numbers');
-    const active = body.classList.toggle('debug-grid');
+    
+    let debugWrapper = document.getElementById('debug-grid-wrapper');
+    if (!debugWrapper) {
+        debugWrapper = document.createElement('div');
+        debugWrapper.id = 'debug-grid-wrapper';
+        debugWrapper.className = 'debug-grid';
+        body.appendChild(debugWrapper);
+    }
+    
+    const active = debugWrapper.classList.toggle('debug-grid');
     if (btn) btn.textContent = active ? 'HIDE' : 'GRID';
     if (info) info.style.display = active ? 'block' : 'none';
     if (nums) nums.style.display = active ? 'block' : 'none';
@@ -168,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     window.addEventListener('resize', () => {
         updateInfo();
-        if (document.body.classList.contains('debug-grid')) buildNumbers();
+        if (document.getElementById('debug-grid-wrapper')?.classList.contains('debug-grid')) buildNumbers();
     });
 });
 

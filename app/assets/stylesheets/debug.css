@@ -1,26 +1,26 @@
 /* Debug & Development Styles (development only) */
 
 /* Page scaffolding for debug/test pages */
-html,
-body {
+.debug-html,
+.debug-body {
     margin: 0;
     padding: 0;
 }
 
-body {
+.debug-body {
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color: #111827;
 }
 
 /* Grid container padding handled by grid.css */
 
-h2 {
+.debug-h2 {
     font-weight: 600;
     margin-bottom: 1rem;
     color: #111827;
 }
 
-h3 {
+.debug-h3 {
     font-weight: 600;
     margin: 1.25rem 0 .5rem;
     font-size: 1rem;
@@ -33,17 +33,17 @@ h3 {
 .demo-box { background: rgba(59, 130, 246, .12); border: 1px dashed rgba(59, 130, 246, .35); color: #374151; padding: .75rem; text-align: center; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .875rem; border-radius: .25rem; }
 
 /* Debug Grid Overlay */
-body.debug-grid {
+.debug-grid {
     --dbg-col: 2.5rem;
     /* 40px */
     --dbg-gutter: 1.5rem;
     /* 24px */
     --dbg-cycle: calc(var(--dbg-col) + var(--dbg-gutter));
     --dbg-cols: 24;
-    --dbg-width: calc(var(--dbg-cols) * var(--dbg-col) + (var(--dbg-cols) - 1) * var(--dbg-gutter));
+    --dbg-width: calc(var(--dbg-cols) * var(--dbg-cols) * var(--dbg-col) + (var(--dbg-cols) - 1) * var(--dbg-gutter));
 }
 
-body.debug-grid::before {
+.debug-grid::before {
     content: '';
     position: fixed;
     top: 0;
@@ -64,6 +64,17 @@ body.debug-grid::before {
             rgba(156, 163, 175, 0.2) var(--dbg-col) var(--dbg-cycle));
 }
 
+/* Debug wrapper positioning */
+#debug-grid-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9997;
+}
+
 #debug-grid-numbers {
     position: fixed;
     top: 8px;
@@ -81,7 +92,7 @@ body.debug-grid::before {
     width: var(--grid-width, var(--dbg-width));
 }
 
-body.debug-grid #debug-grid-numbers { display: none; }
+.debug-grid #debug-grid-numbers { display: none; }
 
 #debug-grid-numbers .num { position: static; text-align: center; }
 
