@@ -248,3 +248,6 @@
 .shadow-sm { box-shadow: var(--shadow-sm); }
 .shadow-md { box-shadow: var(--shadow-md); }
 .shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* Background Gradient Utilities */
+.bg-flx-radial-gradient-red { background: var(--flx-radial-gradient-red); }

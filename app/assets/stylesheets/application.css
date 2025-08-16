@@ -147,7 +147,7 @@ h4 { font-size: 1rem; line-height: 1.11; } /* 16px */
 /* Hero Section */
 .hero {
     position: relative;
-    background: linear-gradient(135deg, var(--flexlink-red) 0%, var(--flexlink-red-dark) 100%);
+    background: var(--flx-radial-gradient-red);
     color: white;
     padding: 4rem 0;
     text-align: left;

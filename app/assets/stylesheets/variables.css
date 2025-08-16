@@ -16,6 +16,9 @@
     --gray-700: #374151;
     --gray-800: #1f2937;
     --gray-900: #111827;
+    
+    /* Radial Gradients */
+    --flx-radial-gradient-red: radial-gradient(circle at center, #D70A32 0%, #A10221 88%);
 
     /* Spacing (rem) */
     --space-2: 0.5rem;
