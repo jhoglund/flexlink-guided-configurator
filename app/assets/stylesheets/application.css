@@ -96,88 +96,38 @@ h6 {
     text-align: left;
     z-index: 0;
 }
-
-.hero-swosh-container {
+ 
+.hero-swosh-container-small { 
     position: relative;
     width: 100%;
-    height: 100%;
+    display: block; 
 }
 
-.hero-swosh-graphic {
-    position: absolute;
-    display: none;
-    top: 0;
-    right: 208px;
-    width: 1022px;
-    height: 100%;
-    background-color: var(--flx-red);
-    clip-path: path("M1082 797H0V794.812C253.035 586.778 450.131 313.182 565.312 0H1082V797Z");
-    z-index: -1;
+@media (min-width: 628px) {
+    .hero-image-container-small { display: none; }
+    .hero-image-container-large { display: block; }
 }
 
-.hero-swosh-white {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 45px;
-    background: white;
-    clip-path: path("M402 0C316.707 17.2892 178.578 32.6621 0 44.6709V0H402Z");
-    z-index: -1;
+.hero-image-container-large {
+    position: relative;
+    top: -4rem;
+    height: calc(100% + 8rem);
+    overflow-y: clip;
+    overflow-x: visible;
 }
 
-.hero-robot-photo {
+.hero-image-container-large-inner {
     position: absolute;
-    display: none;
     top: 0;
     right: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: 0;
+    bottom: 0;
+    left: -415px;
+    overflow: clip;
 }
-
-/* Responsive Hero Layout */
-@media (min-width: 1024px) {
-
-
-    .hero-swosh-graphic {
-        display: block;
-        right: -300px;
-    }
-
-    .hero-swosh-white {
-        top: 0;
-        left: auto;
-        right: -300px;
-        width: 1022px;
-        height: 100%;
-        clip-path: path("M565.312 0C450.131 313.182 253.035 586.778 0 794.812V745.09C242.581 582.911 405.431 310.799 417.304 0H565.312Z");
-    }
-
-    .hero-robot-photo {
-        display: block;
-    }
+.hero-image {
+    position: absolute;
+    top:-2px;
 }
-
-@media (min-width: 1416px) {
-
-    .hero-swosh-graphic {
-        top: 0;
-        right: 208px;
-        width: 1022px;
-    }
-
-    .hero-swosh-white {
-        top: 0;
-        right: 208px;
-        width: 1022px;
-    }
-
-    .hero-robot-photo {}
-}
-
 
 .hero h1 {
     font-size: 2.25rem;
@@ -185,24 +135,19 @@ h6 {
     margin-bottom: 1.5rem;
 }
 
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
 .hero-content {
-    position: relative;
-    z-index: 10;
+    padding-right: 50px;
 }
 
 @media (min-width: 768px) {
     .hero h1 {
         font-size: 3.75rem;
     }
-}
-
-.hero p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-}
-
-@media (min-width: 768px) {
     .hero p {
         font-size: 1.5rem;
     }
