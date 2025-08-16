@@ -166,6 +166,10 @@ export function toggleDebugGrid() {
     }
     
     const active = debugWrapper.classList.toggle('debug-grid');
+    
+    // Store state in localStorage
+    localStorage.setItem('debugGridActive', active);
+    
     if (btn) btn.textContent = active ? 'HIDE' : 'GRID';
     if (info) info.style.display = active ? 'block' : 'none';
     if (nums) nums.style.display = active ? 'block' : 'none';
@@ -175,8 +179,25 @@ export function toggleDebugGrid() {
 document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('debug-grid-toggle');
     if (btn) btn.addEventListener('click', toggleDebugGrid);
-    // Always enable overlay by default on pages that include debug assets
-    enableDebugGrid();
+    
+    // Restore debug grid state from localStorage
+    const savedState = localStorage.getItem('debugGridActive');
+    const shouldShowGrid = savedState === 'true';
+    
+    if (shouldShowGrid) {
+        enableDebugGrid();
+    } else {
+        // Create wrapper but don't show grid
+        const body = document.body;
+        let debugWrapper = document.getElementById('debug-grid-wrapper');
+        if (!debugWrapper) {
+            debugWrapper = document.createElement('div');
+            debugWrapper.id = 'debug-grid-wrapper';
+            body.appendChild(debugWrapper);
+        }
+        if (btn) btn.textContent = 'GRID';
+    }
+    
     updateInfo();
     document.addEventListener('keydown', (e) => {
         if (e.key === 'g' || e.key === 'G') {
