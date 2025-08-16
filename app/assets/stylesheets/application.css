@@ -97,19 +97,30 @@ h6 {
     z-index: 0;
 }
  
-.hero-swosh-container-small { 
-    position: relative;
-    width: 100%;
+.hero-image-container-small { 
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 45px;
+    width: 100vw;          /* Use viewport width instead of 100% */
+    margin-left: calc(-50vw + 50%); /* Center it within the grid */
     display: block; 
 }
-
-@media (min-width: 628px) {
-    .hero-image-container-small { display: none; }
-    .hero-image-container-large { display: block; }
+.hero-image-container-small .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;           /* Add this */
+    height: 100%;          /* Add this */
+    object-fit:fill; 
 }
 
 .hero-image-container-large {
     position: relative;
+    display:none;
     top: -4rem;
     height: calc(100% + 8rem);
     overflow-y: clip;
@@ -124,7 +135,7 @@ h6 {
     left: -415px;
     overflow: clip;
 }
-.hero-image {
+.hero-image-container-large .hero-image {
     position: absolute;
     top:-2px;
 }
@@ -144,13 +155,11 @@ h6 {
     padding-right: 50px;
 }
 
-@media (min-width: 768px) {
-    .hero h1 {
-        font-size: 3.75rem;
-    }
-    .hero p {
-        font-size: 1.5rem;
-    }
+@media (min-width: 628px) {
+    .hero-image-container-small { display: none; }
+    .hero-image-container-large { display: block; }
+    .hero h1 { font-size: 3.75rem; }
+    .hero p { font-size: 1.5rem; }
 }
 
 /* Buttons */
