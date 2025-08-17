@@ -19,9 +19,9 @@
   </div>
 </section>
 <!-- Category Selection Section -->
-<section class="section-full-width bg-light-gray">
+<section class="section-full-width bg-light-gray py-16 mt-6">
   <div class="grid-container">
-    <h3>Start here and <span class="text-flexlink-medium-gray">choose your industry</span></h3>
+    <h3 class="mb-6">Start here and <span class="text-flexlink-medium-gray">choose your industry</span></h3>
     <div class="grid">
       <!-- Industry Categories Grid -->
       <% @categories.each do |category| %>
@@ -33,14 +33,15 @@
       <!-- Build Your Own System Section -->
       <div class="build-section col-span-3 sm:col-span-6 md:col-span-12">
         <div class="build-3d-icon">
-          <svg width="211" height="209" viewBox="0 0 211 209" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <%= image_tag "icons/3d-icon.svg", alt: "Build your own system", class: "build-3d-icon-" %>
+          <%# <svg width="211" height="209" viewBox="0 0 211 209" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M105.397 35.9991L28.5444 74.4255L105.397 112.852L182.294 74.4255L105.397 35.9991Z" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M105.397 112.852V205.101L182.294 166.675V74.4254L105.397 112.852Z" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M105.397 112.852V205.101L28.5444 166.675V74.4254L105.397 112.852Z" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M105.397 74.4255V3.30811" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M137.559 136.852L207.573 179.249" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M75.8825 134.778L3.30927 179.248" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          </svg> %>
         </div>
         <div class="build-content">
           <h3>Build your own <strong>system</strong></h3>
