@@ -18,7 +18,7 @@ body {
 
 /* Typography - All Heading Elements */
 h1, h2, h3, h4 {
-    font-weight: 200;
+    font-weight: 400;
     margin: 0;
     padding: 0;
 }
@@ -44,10 +44,7 @@ h4 { font-size: 1rem; line-height: 1.11; } /* 16px */
     h2 { font-size: 1.875rem; } /* 30px */
     h3 { font-size: 1.3125rem; } /* 21px */
     h4 { font-size: 1.0625rem; } /* 17px */
-    h1, h2, h3,  h4 { 
-        line-height: 1.1; 
-        font-weight: 600; 
-    }
+    h1, h2, h3,  h4 { line-height: 1.1; }
 }
 
 /* Large breakpoint: ≥ 900px */
