@@ -16,6 +16,17 @@
       <%= stylesheet_link_tag "debug", "data-turbo-track": "reload" %>
     <% end %>
     <%= javascript_importmap_tags %>
+    <script>
+      // Debug: Check if JavaScript is loading
+      console.log('🎯 Layout script loaded');
+      
+      // Check if importmap is working
+      if (typeof import === 'function') {
+        console.log('🎯 Dynamic imports available');
+      } else {
+        console.log('❌ Dynamic imports not available');
+      }
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Inter font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,55 +38,7 @@
   </head>
   <body>
     <%= debug_grid_overlay %>
-    <!-- Header/Navigation -->
-    <header class="header">
-      <div class="grid-container">
-        <div class="header-content">
-          <!-- Logo Section -->
-          <div class="header-logo">
-            <%= image_tag "flexlink-logo.svg", class: "logo-icon", alt: "FlexLink" %>
-          </div>
-          <!-- Navigation Section -->
-          <nav class="header-navigation">
-            <%= link_to "Home", root_path, class: "nav-link" %>
-            <div class="nav-dropdown">
-              <a href="#" class="nav-link">
-                Industries
-                <i class="fas fa-chevron-down"></i>
-              </a>
-            </div>
-            <a href="#" class="nav-link">Build your own system</a>
-            <a href="#" class="nav-link">FAQ</a>
-            <a href="#" class="nav-link">Contact us</a>
-          </nav>
-          <!-- Utility Section -->
-          <div class="header-utility">
-            <!-- Language Selector -->
-            <div class="language-selector">
-              <span>Eng</span>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <!-- Search Field -->
-            <div class="search-container">
-              <input type="text" class="search-input" placeholder="Search..." aria-label="Search">
-              <button class="search-btn" aria-label="Search">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-            <!-- Utility Icons -->
-            <div class="utility-icons">
-              <button class="utility-btn" aria-label="User Profile">
-                <i class="fas fa-user"></i>
-              </button>
-              <button class="utility-btn cart-btn" aria-label="Shopping Cart">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-badge">2</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <%= render 'shared/header' %>
     <main>
       <%= yield %>
     </main>

@@ -1,0 +1,167 @@
+<!-- Header/Navigation -->
+<header class="header" data-controller="header" id="main-header">
+  <div class="grid-container">
+    <div class="header-content">
+      <!-- Logo Section -->
+      <div class="header-logo">
+        <%= image_tag "flexlink-logo.svg", class: "logo-icon", alt: "FlexLink" %>
+      </div>
+      
+      <!-- Navigation Section -->
+      <nav class="header-navigation">
+        <%= link_to "Home", root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" %>
+        
+        <!-- Industries Dropdown -->
+        <div class="nav-dropdown">
+          <button class="dropdown-trigger" 
+                  data-header-target="trigger"
+                  data-action="click->header#toggle"
+                  aria-expanded="false" 
+                  aria-haspopup="true">
+            Industries
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu industries-dropdown" data-header-target="dropdown">
+            <div class="dropdown-content">
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Automotive</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Batteries</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Dairy</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">E-Commerce Solutions</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Electronics</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Food</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Lab Automation</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Optical</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Personal Care</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Pharma & Healthcare</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Tissue & Hygiene</a>
+              <a href="#" class="dropdown-item" tabindex="0" data-action="keydown->header#handleKeydown">Tobacco</a>
+            </div>
+          </div>
+        </div>
+        
+        <a href="#" class="nav-link">Build your own system</a>
+        <a href="#" class="nav-link">FAQ</a>
+        <a href="#" class="nav-link">Contact us</a>
+      </nav>
+      
+      <!-- Utility Section -->
+      <div class="header-utility">
+        <!-- Search Field -->
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search..." aria-label="Search">
+          <button class="search-btn" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        
+        <!-- Language Selector Dropdown -->
+        <div class="language-dropdown">
+          <button class="dropdown-trigger" 
+                  data-header-target="trigger"
+                  data-action="click->header#toggle"
+                  aria-expanded="false" 
+                  aria-haspopup="true">
+            <span>Eng</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu" data-header-target="dropdown">
+            <div class="dropdown-content">
+              <a href="#" class="dropdown-item" data-lang="en" tabindex="0" data-action="keydown->header#handleKeydown">English</a>
+              <a href="#" class="dropdown-item" data-lang="de" tabindex="0" data-action="keydown->header#handleKeydown">Deutsch</a>
+              <a href="#" class="dropdown-item" data-lang="fr" tabindex="0" data-action="keydown->header#handleKeydown">Français</a>
+              <a href="#" class="dropdown-item" data-lang="zh" tabindex="0" data-action="keydown->header#handleKeydown">中文</a>
+              <a href="#" class="dropdown-item" data-lang="sv" tabindex="0" data-action="keydown->header#handleKeydown">Svenska</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Utility Icons -->
+        <div class="utility-icons">
+          <button class="utility-btn" aria-label="User Profile">
+            <i class="fas fa-user"></i>
+          </button>
+          <button class="utility-btn cart-btn" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge">2</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Debug: Check if JavaScript is loading in header
+  console.log('🎯 Header script loaded');
+  
+  // Simple dropdown functionality test
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎯 DOM Content Loaded in header');
+    
+    // Test if we can find the dropdown elements
+    const industriesBtn = document.querySelector('.nav-dropdown .dropdown-trigger');
+    const languageBtn = document.querySelector('.language-dropdown .dropdown-trigger');
+    
+    console.log('🎯 Industries button found:', !!industriesBtn);
+    console.log('🎯 Language button found:', !!languageBtn);
+    
+    if (industriesBtn) {
+      industriesBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🎯 Industries button clicked!');
+        
+        const dropdown = this.closest('.nav-dropdown').querySelector('.dropdown-menu');
+        const isOpen = dropdown.classList.contains('show');
+        
+        // Close all other dropdowns first
+        document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+        document.querySelectorAll('[aria-expanded]').forEach(el => el.setAttribute('aria-expanded', 'false'));
+        
+        if (!isOpen) {
+          dropdown.classList.add('show');
+          this.setAttribute('aria-expanded', 'true');
+          console.log('🎯 Industries dropdown opened');
+        } else {
+          dropdown.classList.remove('show');
+          this.setAttribute('aria-expanded', 'false');
+          console.log('🎯 Industries dropdown closed');
+        }
+      });
+    }
+    
+    if (languageBtn) {
+      languageBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🎯 Language button clicked!');
+        
+        const dropdown = this.closest('.language-dropdown').querySelector('.dropdown-menu');
+        const isOpen = dropdown.classList.contains('show');
+        
+        // Close all other dropdowns first
+        document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+        document.querySelectorAll('[aria-expanded]').forEach(el => el.setAttribute('aria-expanded', 'false'));
+        
+        if (!isOpen) {
+          dropdown.classList.add('show');
+          this.setAttribute('aria-expanded', 'true');
+          console.log('🎯 Language dropdown opened');
+        } else {
+          dropdown.classList.remove('show');
+          this.setAttribute('aria-expanded', 'false');
+          console.log('🎯 Language dropdown closed');
+        }
+      });
+    }
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown, .language-dropdown')) {
+        document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+        document.querySelectorAll('[aria-expanded]').forEach(el => el.setAttribute('aria-expanded', 'false'));
+        console.log('🎯 Closed all dropdowns (clicked outside)');
+      }
+    });
+  });
+</script>

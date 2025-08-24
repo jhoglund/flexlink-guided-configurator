@@ -1,6 +1,25 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
-import "controllers"
+import { application } from "controllers/application"
+
+console.log('🎯 Application.js loaded')
+console.log('🎯 Application instance:', application)
+
+// Try to import and register the header controller directly
+try {
+  import("./controllers/header_controller.js").then(module => {
+    const HeaderController = module.default
+    console.log('🎯 HeaderController imported:', HeaderController)
+    application.register("header", HeaderController)
+    console.log('🎯 Header controller registered directly')
+  }).catch(error => {
+    console.error('🎯 Error importing header controller:', error)
+  })
+} catch (error) {
+  console.error('🎯 Error with dynamic import:', error)
+}
+
+
 
 // Debug Grid Overlay Toggle
 document.addEventListener('DOMContentLoaded', function () {

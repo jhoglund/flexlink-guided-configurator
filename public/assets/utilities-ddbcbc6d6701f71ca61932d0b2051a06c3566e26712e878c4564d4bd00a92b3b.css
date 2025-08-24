@@ -251,3 +251,10 @@
 
 /* Background Gradient Utilities */
 .bg-flx-radial-gradient-red { background: var(--flx-radial-gradient-red); }
+
+/* Width Utilities */
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+.w-fit { width: fit-content; }
+.w-max { width: max-content; }
+.w-min { width: min-content; }
