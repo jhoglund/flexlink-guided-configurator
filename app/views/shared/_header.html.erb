@@ -85,10 +85,67 @@
             <span class="cart-badge">2</span>
           </button>
         </div>
+        
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger-menu" aria-label="Toggle navigation menu">
+          <div class="hamburger-icon"></div>
+        </button>
       </div>
     </div>
   </div>
 </header>
+
+<!-- Mobile Navigation Overlay -->
+<div class="mobile-nav-overlay" data-header-target="mobileNav">
+  <div class="mobile-nav-header">
+    <button class="mobile-nav-close" data-action="click->header#closeMobileNav" aria-label="Close navigation menu">
+      ✕
+    </button>
+  </div>
+  
+  <div class="mobile-nav-content">
+    <a href="<%= root_path %>" class="mobile-nav-item <%= current_page?(root_path) ? 'active' : '' %>">
+      Home
+    </a>
+    
+    <div class="mobile-nav-item">
+      Industries
+      <i class="fas fa-chevron-right chevron"></i>
+    </div>
+    
+    <a href="#" class="mobile-nav-item">
+      Build your own system
+    </a>
+    
+    <a href="#" class="mobile-nav-item">
+      FAQ
+    </a>
+    
+    <a href="#" class="mobile-nav-item">
+      Contact us
+    </a>
+  </div>
+  
+  <div class="mobile-utility">
+    <a href="#" class="mobile-utility-item" aria-label="Search">
+      <i class="fas fa-search"></i>
+      <span>Search</span>
+    </a>
+    
+    <a href="#" class="mobile-utility-item" aria-label="User Profile">
+      <i class="fas fa-user"></i>
+      <span>Profile</span>
+    </a>
+    
+    <a href="#" class="mobile-utility-item" aria-label="Shopping Cart">
+      <div style="position: relative;">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge">2</span>
+      </div>
+      <span>Cart</span>
+    </a>
+  </div>
+</div>
 
 <script>
   // Debug: Check if JavaScript is loading in header
@@ -97,6 +154,58 @@
   // Simple dropdown functionality test
   document.addEventListener('DOMContentLoaded', function() {
     console.log('🎯 DOM Content Loaded in header');
+    
+    // Mobile navigation elements
+    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    const mobileNav = document.querySelector('.mobile-nav-overlay');
+    const closeBtn = document.querySelector('.mobile-nav-close');
+    
+    // Test if we can find the mobile navigation elements
+    console.log('🎯 Hamburger button found:', !!hamburgerBtn);
+    console.log('🎯 Mobile nav overlay found:', !!mobileNav);
+    console.log('🎯 Close button found:', !!closeBtn);
+    
+    // Mobile navigation toggle
+    if (hamburgerBtn && mobileNav) {
+      hamburgerBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🎯 Hamburger menu clicked!');
+        
+        // Toggle mobile navigation
+        mobileNav.classList.add('show');
+        hamburgerBtn.classList.add('open');
+        document.body.style.overflow = 'hidden'; // Prevent body scroll
+        console.log('🎯 Mobile navigation opened');
+      });
+    }
+    
+    // Close mobile navigation
+    if (closeBtn && mobileNav && hamburgerBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🎯 Close button clicked!');
+        
+        // Close mobile navigation
+        mobileNav.classList.remove('show');
+        hamburgerBtn.classList.remove('open');
+        document.body.style.overflow = ''; // Restore body scroll
+        console.log('🎯 Mobile navigation closed');
+      });
+    }
+    
+    // Close mobile navigation when clicking outside
+    if (mobileNav) {
+      mobileNav.addEventListener('click', function(e) {
+        if (e.target === mobileNav) {
+          console.log('🎯 Clicked outside mobile nav, closing...');
+          mobileNav.classList.remove('show');
+          hamburgerBtn.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+    }
     
     // Test if we can find the dropdown elements
     const industriesBtn = document.querySelector('.nav-dropdown .dropdown-trigger');
