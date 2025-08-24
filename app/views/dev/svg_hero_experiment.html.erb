@@ -1,0 +1,129 @@
+<style>
+  :root {
+    --svg-hero-graphic-height: 744px;
+  }
+
+
+    .spacer {
+      background: yellow;
+      height: 200px;
+    }
+
+    .text-shape-container {
+      position: relative;
+      background: green;
+    }
+
+    .text-shape-container-inner {
+      position: absolute;
+      background: pink;
+      top: 0;
+      right: -166px;
+      bottom: 0;
+      left: 0;
+      min-height: 560px;
+    }
+
+    .text-shape {
+      float: right;
+      height: max(calc(100%), var(--svg-hero-graphic-height));
+      width: 562px;
+      shape-margin: 2rem;
+      background: rgba(0, 0, 0, 0.5);
+
+      clip-path: polygon(
+          0% 0%,
+          74% 0%,
+          71% 13.4%,
+          67.6% 26.9%,
+          62.3% 40.3%,
+          53.4% 53.8%,
+          44.5% 67.2%,
+          35.6% 80.6%,
+          26.7% 94.1%,
+          17.8% 98.1%,
+          0% 100%,
+          100% 100%,
+          100% 0%
+      );
+      shape-outside: polygon(
+          0% 0%,           /* Bottom-left (0/562 = 0%, 0/744 = 0%) */
+          74% 0%,          /* Top curve start (416/562 = 74%, 0/744 = 0%) */
+          71% 13.4%,       /* Curve point 1 (400/562 = 71%, 100/744 = 13.4%) */
+          67.6% 26.9%,     /* Curve point 2 (380/562 = 67.6%, 200/744 = 26.9%) */
+          62.3% 40.3%,     /* Curve point 3 (350/562 = 62.3%, 300/744 = 40.3%) */
+          53.4% 53.8%,     /* Curve point 4 (300/562 = 53.4%, 400/744 = 53.8%) */
+          44.5% 67.2%,     /* Curve point 5 (250/562 = 44.5%, 500/744 = 67.2%) */
+          35.6% 80.6%,     /* Curve point 6 (200/562 = 35.6%, 600/744 = 80.6%) */
+          26.7% 94.1%,     /* Curve point 7 (150/562 = 26.7%, 700/744 = 94.1%) */
+          17.8% 98.1%,     /* Curve point 8 (100/562 = 17.8%, 730/744 = 98.1%) */
+          0% 100%,         /* Bottom curve end (0/562 = 0%, 744/744 = 100%) */
+          100% 100%,       /* Bottom-right (562/562 = 100%, 744/744 = 100%) */
+          100% 0%          /* Top-right (562/562 = 100%, 0/744 = 0%) */
+      );
+    }
+
+    .text-content {
+      /* Remove any positioning that might interfere */
+      position: relative;
+      background: rgba(0, 0, 255, 0.5);
+      height: min(calc(100%), var(--svg-hero-graphic-height));
+    }
+
+
+    .debug-hero-graphic {
+      position: relative;
+      background: yellow;
+    }
+
+    .text-shape-container-inner {
+      position: absolute;
+      background: pink;
+      top: 0;
+      right: -166px;
+      bottom: 0;
+      left: 0;
+      min-height: 560px;
+    }
+
+    .svg-hero-graphic {
+      margin-left: -416px;
+      height: max(calc(100%), var(--svg-hero-graphic-height));
+    }
+</style>
+<div class="section-full-width" style="background:var(--flx-radial-gradient-red)">
+  <div class="grid-container">
+    <div class="debug-hero grid">
+      <div class="spacer col-span-1"></div>
+      <div class="text-shape-container col-span-3 md:col-span-6 lg:col-span-11">
+        <div class="text-shape-container-inner">
+          <div class="text-shape"></div>
+          <div class="text-content">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+          </div>
+        </div>
+      </div>
+      <div id="svgTestContainer" class="debug-hero-graphic col-span-3 md:col-span-6 lg:col-span-12 bg-gray-500">
+        <svg class="svg-hero-graphic" width="1160" height="744" viewBox="0 0 1160 744" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="heroClip">
+              <path d="M563 744H56.81543C281.463 543.054 456.947 288.301 563 0V744Z"/>
+              <rect x="563" y="0" width="597" height="744"/>
+            </clipPath>
+          </defs>
+          <path d="M1160 744H1C242.683 581.693 404.833 310.105 416.68 0H1160V744Z" fill="white"/>
+          <image 
+            x="0" 
+            y="0" 
+            width="1160" 
+            height="744" 
+            href="/assets/hero-robot-photo.jpg"
+            clip-path="url(#heroClip)"
+            preserveAspectRatio="none"
+          />
+          <path d="M563 744H56.81543C281.463 543.054 456.947 288.301 563 0V744Z" fill="#D9D9D9" opacity="0.3"/>
+        </svg>
+      </div>
+    </div>
+  </div>

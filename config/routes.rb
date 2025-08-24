@@ -86,6 +86,17 @@ Rails.application.routes.draw do
   # Health check
   get 'health', to: 'health#index'
 
-  # Dev-only routes
-  get 'grid_test', to: 'dev#grid' if Rails.env.development?
+  # Development routes (only in development environment)
+  if Rails.env.development?
+    get 'dev/grid', to: 'dev#grid'
+    get 'dev/misc', to: 'dev#misc'
+    get 'dev/cutout_test', to: 'dev#cutout_test'
+
+    # Dynamic route for any dev/[testpage] - must be last to avoid conflicts
+    get 'dev/:testpage', to: 'dev#show', constraints: lambda { |req|
+      # Only match if the view file exists
+      view_path = Rails.root.join('app', 'views', 'dev', "#{req.params[:testpage]}.html.erb")
+      File.exist?(view_path)
+    }
+  end
 end

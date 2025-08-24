@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SVG Cutout Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        background: #D70A32;
+        font-family: Arial, sans-serif;
+      }
+
+      .test-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      .test-section {
+        margin: 20px 0;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: white;
+      }
+
+      .test-section:nth-child(1) {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        background-size: 200% 200%;
+        animation: gradientShift1 6s ease infinite;
+      }
+
+      .test-section:nth-child(2) {
+        background: linear-gradient(45deg, #45b7d1, #96ceb4);
+        background-size: 200% 200%;
+        animation: gradientShift2 7s ease infinite;
+      }
+
+      .test-section:nth-child(3) {
+        background: linear-gradient(45deg, #feca57, #ff9ff3);
+        background-size: 200% 200%;
+        animation: gradientShift3 8s ease infinite;
+      }
+
+      .test-section:nth-child(4) {
+        background: linear-gradient(45deg, #a8e6cf, #dcedc1);
+        background-size: 200% 200%;
+        animation: gradientShift4 5s ease infinite;
+      }
+
+      .test-section:nth-child(5) {
+        background: linear-gradient(45deg, #ff8a80, #ffd54f);
+        background-size: 200% 200%;
+        animation: gradientShift5 9s ease infinite;
+      }
+
+      @keyframes gradientShift1 {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      @keyframes gradientShift2 {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      @keyframes gradientShift3 {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      @keyframes gradientShift4 {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      @keyframes gradientShift5 {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      h1 {
+        color: #D70A32;
+        text-align: center;
+      }
+
+      .test-section {
+        margin: 20px 0;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+
+      svg {
+        display: block;
+        margin: 20px auto;
+        border: 1px solid #ccc;
+      }
+
+      /* Test 1: Basic overlapping circles */
+      .test1 circle:first-of-type {
+        fill: red;
+      }
+      .test1 circle:last-of-type {
+        fill: white;
+      }
+
+      /* Test 2: Using fill-rule evenodd */
+      .test2 path {
+        fill: white;
+        fill-rule: evenodd;
+      }
+
+      /* Test 3: Using mask approach */
+      .test3 .outer-circle {
+        fill: white;
+      }
+      .test3 .inner-circle {
+        fill: red;
+      }
+
+      /* Test 4: Using clip-path */
+      .test4 .clipped-circle {
+        fill: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <h1>SVG Cutout Effect Tests</h1>
+      <div class="test-section">
+        <h2>Test 1: Basic Overlapping Circles</h2>
+        <p>Two circles on top of each other - no cutout effect</p>
+        <svg class="test1" width="200" height="200" viewBox="0 0 200 200">
+          <circle r="50" cx="100" cy="100"/>
+          <circle r="30" cx="100" cy="100"/>
+        </svg>
+      </div>
+      <div class="test-section">
+        <h2>Test 2: Path with fill-rule evenodd</h2>
+        <p>Single path combining both circles with evenodd rule</p>
+        <svg class="test2" width="200" height="200" viewBox="0 0 200 200">
+          <path d="M 100 100 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0 Z M 100 100 m -30 0 a 30 30 0 1 0 60 0 a 30 30 0 1 0 -60 0 Z"/>
+        </svg>
+      </div>
+      <div class="test-section">
+        <h2>Test 3: Mask Approach</h2>
+        <p>Using SVG mask to create cutout</p>
+        <svg class="test3" width="200" height="200" viewBox="0 0 200 200">
+          <defs>
+            <mask id="mask1">
+              <rect width="200" height="200" fill="white"/>
+              <circle r="30" cx="100" cy="100" fill="black"/>
+            </mask>
+          </defs>
+          <circle class="outer-circle" r="50" cx="100" cy="100" mask="url(#mask1)"/>
+        </svg>
+      </div>
+      <div class="test-section">
+        <h2>Test 4: Clip-Path Approach</h2>
+        <p>Using clip-path to create cutout</p>
+        <svg class="test4" width="200" height="200" viewBox="0 0 200 200">
+          <defs>
+            <clipPath id="clip1">
+              <circle r="50" cx="100" cy="100"/>
+              <circle r="30" cx="100" cy="100"/>
+            </clipPath>
+          </defs>
+          <circle class="clipped-circle" r="50" cx="100" cy="100" clip-path="url(#clip1)"/>
+        </svg>
+      </div>
+      <div class="test-section">
+        <h2>Test 5: Compound Path with Opposite Winding</h2>
+        <p>Using opposite winding directions for subtraction</p>
+        <svg class="test2" width="200" height="200" viewBox="0 0 200 200">
+          <path d="M 100 100 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0 Z M 100 100 m -30 0 a 30 30 0 1 1 60 0 a 30 30 0 1 1 -60 0 Z"/>
+        </svg>
+      </div>
+    </div>
+  </body>
+</html>

@@ -39,6 +39,19 @@ module ApplicationHelper
     end
   end
 
+  def debug_grid_overlay
+    return unless Rails.env.development?
+    
+    content_tag(:div, class: 'debug-grid-overlay') do
+      button_tag('GRID', id: 'debug-grid-toggle', class: 'debug-toggle') +
+      content_tag(:div, id: 'debug-grid-info', class: 'debug-info') do
+        content_tag(:h4, 'Grid Debug Info') +
+        content_tag(:p, '', id: 'dbg-grid-count') +
+        javascript_import_module_tag('debug')
+      end
+    end
+  end
+
   private
 
   def convert_to_filename(category_name)

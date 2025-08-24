@@ -1,0 +1,31 @@
+<div style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+  <h1 style="color: #D70A32; margin-bottom: 1rem;">Dynamic Routing Test</h1>
+  
+  <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border: 1px solid #dee2e6; margin-bottom: 2rem;">
+    <h2 style="color: #333; margin-top: 0;">How It Works</h2>
+    <p>This page demonstrates the dynamic routing system. You can access any page by creating a file named <code>[pagename].html.erb</code> in the <code>app/views/dev/</code> directory.</p>
+    
+    <h3 style="color: #D70A32;">Example URLs:</h3>
+    <ul style="background: white; padding: 1rem; border-radius: 4px; border: 1px solid #ddd;">
+      <li><code>/dev/test_dynamic</code> → This page</li>
+      <li><code>/dev/my_custom_test</code> → Would render <code>my_custom_test.html.erb</code></li>
+      <li><code>/dev/experiment_123</code> → Would render <code>experiment_123.html.erb</code></li>
+      <li><code>/dev/anything_you_want</code> → Would render <code>anything_you_want.html.erb</code></li>
+    </ul>
+  </div>
+  
+  <div style="background: #e8f5e8; padding: 1.5rem; border-radius: 8px; border: 1px solid #28a745;">
+    <h3 style="color: #155724; margin-top: 0;">Benefits</h3>
+    <ul style="margin-bottom: 0;">
+      <li><strong>No route configuration needed</strong> - just create the view file</li>
+      <li><strong>Automatic layout application</strong> - uses the grid layout</li>
+      <li><strong>Development only</strong> - won't work in production</li>
+      <li><strong>File-based organization</strong> - easy to manage test pages</li>
+    </ul>
+  </div>
+  
+  <div style="margin-top: 2rem; text-align: center;">
+    <a href="/dev/misc" style="background: #D70A32; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 6px; margin-right: 1rem;">Go to Misc</a>
+    <a href="/dev/cutout_test" style="background: #6c757d; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 6px;">Go to Cutout Test</a>
+  </div>
+</div>

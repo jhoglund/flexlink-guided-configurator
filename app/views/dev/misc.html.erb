@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SVG Cutout Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        background: #D70A32;
+        font-family: Arial, sans-serif;
+      }
+
+      .test-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      h1 {
+        color: #D70A32;
+        text-align: center;
+      }
+
+      .test-section {
+        margin: 20px 0;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+
+      svg {
+        display: block;
+        margin: 20px auto;
+        border: 1px solid #ccc;
+      }
+
+      /* Test 1: Basic overlapping circles */
+      .test1 circle:first-of-type {
+        fill: red;
+      }
+      .test1 circle:last-of-type {
+        fill: white;
+      }
+
+      /* Test 2: Using fill-rule evenodd */
+      .test2 path {
+        fill: white;
+        fill-rule: evenodd;
+      }
+
+      /* Test 3: Using mask approach */
+      .test3 .outer-circle {
+        fill: white;
+      }
+      .test3 .inner-circle {
+        fill: red;
+      }
+
+      /* Test 4: Using clip-path */
+      .test4 .clipped-circle {
+        fill: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="display: flex; gap: 2rem; padding: 2rem; background: #f5f5f5; font-family: Arial, sans-serif; height: 100vh; box-sizing: border-box;">
+  
+  <!-- Left Column: Controls -->
+  <div style="flex: 0 0 350px; overflow-y: auto;">
+    <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <h2 style="margin: 0 0 1.5rem 0; color: #333;">Double Outline Controls</h2>
+      
+      <!-- Background Toggle -->
+      <div style="margin-bottom: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 6px; border: 1px solid #dee2e6;">
+        <h4 style="margin: 0 0 1rem 0; color: #D70A32;">Background</h4>
+        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="backgroundToggle" checked style="width: 18px; height: 18px;">
+          <span>Show Background Image</span>
+        </label>
+      </div>
+      
+      <!-- Size Controller -->
+      <div style="margin-bottom: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 6px; border: 1px solid #dee2e6;">
+        <h4 style="margin: 0 0 1rem 0; color: #D70A32;">Size Control</h4>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Scale Factor:</label>
+          <input type="range" id="scaleFactor" min="0.1" max="5.0" step="0.01" value="1.0" style="width: 100%;">
+          <span id="scaleFactorValue" style="margin-left: 0.5rem; font-weight: bold;">1.0x</span>
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Auto-fit to Background:</label>
+          <input type="checkbox" id="autoFitBackground" checked style="width: 18px; height: 18px;">
+          <span style="margin-left: 0.5rem;">Automatically scale to match background</span>
+        </div>
+      </div>
+      
+      <!-- Colors -->
+      <div style="margin-bottom: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 6px; border: 1px solid #dee2e6;">
+        <h4 style="margin: 0 0 1rem 0; color: #D70A32;">Colors</h4>
+        
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Background Color:</label>
+          <input type="color" id="backgroundColor" value="#D70A32" style="width: 100%; height: 40px; border: none; border-radius: 4px;">
+        </div>
+        
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Circle Fill Color:</label>
+          <input type="color" id="circleFillColor" value="#ffffff" style="width: 100%; height: 40px; border: none; border-radius: 4px;">
+        </div>
+        
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Transparency:</label>
+          <input type="range" id="transparency" min="0" max="100" step="1" value="80" style="width: 100%;">
+          <span id="transparencyValue" style="margin-left: 0.5rem; font-weight: bold;">80%</span>
+        </div>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- Outer Circle Controls -->
+        <div style="border: 1px solid #ddd; padding: 1rem; border-radius: 6px;">
+          <h4 style="margin: 0 0 1rem 0; color: #D70A32;">Outer Circle</h4>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Outer Width (rx):</label>
+            <input type="range" id="outerWidth" min="50" max="300" step="1" value="150" style="width: 100%;">
+            <span id="outerWidthValue" style="margin-left: 0.5rem; font-weight: bold;">150</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Outer Height (ry):</label>
+            <input type="range" id="outerHeight" min="50" max="300" step="1" value="150" style="width: 100%;">
+            <span id="outerHeightValue" style="margin-left: 0.5rem; font-weight: bold;">150</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Inner Width (rx):</label>
+            <input type="range" id="innerWidth" min="25" max="250" step="1" value="100" style="width: 100%;">
+            <span id="innerWidthValue" style="margin-left: 0.5rem; font-weight: bold;">100</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Inner Height (ry):</label>
+            <input type="range" id="innerHeight" min="25" max="250" step="1" value="100" style="width: 100%;">
+            <span id="innerHeightValue" style="margin-left: 0.5rem; font-weight: bold;">100</span>
+          </div>
+        </div>
+        
+        <!-- Position Controls -->
+        <div style="border: 1px solid #ddd; padding: 1rem; border-radius: 6px;">
+          <h4 style="margin: 0 0 1rem 0; color: #D70A32;">Position</h4>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Center X:</label>
+            <input type="range" id="centerX" min="100" max="300" step="1" value="200" style="width: 100%;">
+            <span id="centerXValue" style="margin-left: 0.5rem; font-weight: bold;">200</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Center Y:</label>
+            <input type="range" id="centerY" min="75" max="225" step="1" value="150" style="width: 100%;">
+            <span id="centerYValue" style="margin-left: 0.5rem; font-weight: bold;">150</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Rotation:</label>
+            <input type="range" id="rotation" min="-180" max="180" step="1" value="0" style="width: 100%;">
+            <span id="rotationValue" style="margin-left: 0.5rem; font-weight: bold;">0°</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Skew X:</label>
+            <input type="range" id="skewX" min="-45" max="45" step="1" value="0" style="width: 100%;">
+            <span id="skewXValue" style="margin-left: 0.5rem; font-weight: bold;">0°</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Skew Y:</label>
+            <input type="range" id="skewY" min="-45" max="45" step="1" value="0" style="width: 100%;">
+            <span id="skewYValue" style="margin-left: 0.5rem; font-weight: bold;">0°</span>
+          </div>
+        </div>
+        
+        <!-- Transform Controls -->
+        <div style="border: 1px solid #ddd; padding: 1rem; border-radius: 6px;">
+          <h4 style="margin: 0 0 1rem 0; color: #D70A32;">Transform</h4>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Rotation (degrees):</label>
+            <input type="range" id="rotation" min="-45" max="45" value="0" style="width: 100%;">
+            <span id="rotationValue" style="margin-left: 0.5rem; font-weight: bold;">0°</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Skew X:</label>
+            <input type="range" id="skewX" min="-30" max="30" value="0" style="width: 100%;">
+            <span id="skewXValue" style="margin-left: 0.5rem; font-weight: bold;">0°</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Skew Y:</label>
+            <input type="range" id="skewY" min="-30" max="30" value="0" style="width: 100%;">
+            <span id="skewYValue" style="margin-left: 0.5rem; font-weight: bold;">0°</span>
+          </div>
+        </div>
+        
+        <!-- Style Controls -->
+        <div style="border: 1px solid #ddd; padding: 1rem; border-radius: 6px;">
+          <h4 style="margin: 0 0 1rem 0; color: #D70A32;">Style</h4>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Stroke Width:</label>
+            <input type="range" id="strokeWidth" min="0" max="20" step="0.5" value="2" style="width: 100%;">
+            <span id="strokeWidthValue" style="margin-left: 0.5rem; font-weight: bold;">2</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Stroke Color:</label>
+            <input type="color" id="strokeColor" value="#ffffff" style="width: 100%; height: 40px; border: none; border-radius: 4px;">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Reset Button -->
+      <div style="margin-top: 1.5rem; text-align: center;">
+        <button id="resetBtn" style="background: #D70A32; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-size: 1rem;">Reset to Default</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column: Preview -->
+  <div style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
+    <h3 style="margin: 0; color: #333;">Double Outline Preview</h3>
+    
+    <style>
+      /* CSS for the working evenodd approach */
+      #evenoddPath {
+        fill-rule: evenodd !important;
+        /* Removed fill: #ffffff !important; to allow JavaScript control */
+        /* Removed opacity: 1 !important; to allow JavaScript control */
+      }
+      
+      #ringShape {
+        display:none;
+        fill: #ffffff !important;
+        opacity: 1 !important;
+      }
+      
+      /* Debug: Make sure the path is visible */
+      #evenoddPath {
+        stroke: none !important;
+        stroke-width: 0 !important;
+      }
+      
+      /* Ensure the SVG container shows the background */
+      #svgContainer {
+        background: transparent !important;
+      }
+    </style>
+    
+    <!-- Preview Container with Resize Handles -->
+    <div id="previewContainer" style="flex: 1; position: relative; background: #D70A32; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); overflow: hidden; min-height: 400px;">
+      
+      <!-- Background Image (Toggleable) -->
+      <div id="backgroundImage" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('<%= asset_path('slide-background.png') %>'); background-size: cover; background-position: center; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;"></div>
+      
+      <!-- SVG Container -->
+      <div id="svgContainer" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center;">
+        <svg id="previewSVG" width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+          <!-- Method 1: Fill-rule evenodd approach (EXACT COPY from working test) -->
+          <path 
+            id="evenoddPath"
+            d="M 200 150 m -150 0 a 150 150 0 1 0 300 0 a 150 150 0 1 0 -300 0 Z M 200 150 m -100 0 a 100 100 0 1 1 200 0 a 100 100 0 1 1 -200 0 Z"
+            fill="#ffffff"
+            fill-rule="evenodd"
+            opacity="0.8"
+            style="display: block;"
+          />
+          
+          <!-- Optional: Keep outlines for reference -->
+          <ellipse 
+            id="outerEllipse"
+            cx="200" 
+            cy="150" 
+            rx="150" 
+            ry="150" 
+            fill="none"
+            stroke="white"
+            stroke-width="2"
+            transform="rotate(0 200 150)"
+          />
+          <!-- Inner outline -->
+          <ellipse 
+            id="innerEllipse"
+            cx="200" 
+            cy="150" 
+            rx="100" 
+            ry="100" 
+            fill="none"
+            stroke="white"
+            stroke-width="2"
+            transform="rotate(0 200 150)"
+          />
+        </svg>
+      </div>
+      
+      <!-- Resize Handles -->
+      <div id="resizeHandle" style="position: absolute; bottom: 0; right: 0; width: 20px; height: 20px; background: #D70A32; cursor: se-resize; border-radius: 4px 0 8px 0; display: flex; align-items: center; justify-content: center;">
+        <div style="width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid white; transform: rotate(45deg);"></div>
+      </div>
+    </div>
+    
+    <!-- Preview Info -->
+    <div style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span><strong>Preview Size:</strong> <span id="previewSize">400 × 300</span></span>
+        <span><strong>Background:</strong> <span id="backgroundStatus">Hidden</span></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Declare variables but don't initialize them yet
+let controls = {};
+let values = {};
+let svgElements = {};
+let previewElements = {};
+
+// Background toggle functionality
+function setupBackgroundToggle() {
+  if (controls.backgroundToggle && previewElements.backgroundImage && previewElements.backgroundStatus && svgElements.outerEllipse && svgElements.innerEllipse) {
+    controls.backgroundToggle.addEventListener('change', () => {
+      const isVisible = controls.backgroundToggle.checked;
+      
+      if (isVisible) {
+        previewElements.backgroundImage.style.opacity = '1';
+        previewElements.backgroundStatus.textContent = 'Visible';
+        // Make outlines solid
+        svgElements.outerEllipse.style.strokeDasharray = 'none';
+        svgElements.innerEllipse.style.strokeDasharray = 'none';
+      } else {
+        previewElements.backgroundImage.style.opacity = '0';
+        previewElements.backgroundStatus.textContent = 'Hidden';
+        // Make outlines dashed
+        svgElements.outerEllipse.style.strokeDasharray = '8,4';
+        svgElements.innerEllipse.style.strokeDasharray = '8,4';
+      }
+    });
+    console.log('Background toggle event listener added');
+  }
+}
+
+// Update function
+function updateSVG() {
+  console.log('updateSVG called');
+  
+  // Only update if the evenodd path exists (the main working element)
+  if (!svgElements.evenoddPath) {
+    console.log('SVG evenodd path not found, skipping update');
+    return;
+  }
+  
+  console.log('Controls values:', {
+    outerWidth: controls.outerWidth?.value,
+    outerHeight: controls.outerHeight?.value,
+    innerWidth: controls.innerWidth?.value,
+    innerHeight: controls.innerHeight?.value,
+    centerX: controls.centerX?.value,
+    centerY: controls.centerY?.value,
+    rotation: controls.rotation?.value,
+    scaleFactor: controls.scaleFactor?.value,
+    transparency: controls.transparency?.value,
+    circleFillColor: controls.circleFillColor?.value
+  });
+  
+  const centerX = controls.centerX.value;
+  const centerY = controls.centerY.value;
+  const rotation = controls.rotation.value;
+  const skewX = controls.skewX.value;
+  const skewY = controls.skewY.value;
+  const strokeWidth = controls.strokeWidth.value;
+  const strokeColor = controls.strokeColor.value;
+  const backgroundColor = controls.backgroundColor.value;
+  const circleFillColor = controls.circleFillColor.value;
+  const transparency = controls.transparency.value;
+  
+  // Calculate scaled dimensions first
+  const outerRx = controls.outerWidth.value;
+  const outerRy = controls.outerHeight.value;
+  const innerRx = controls.innerWidth.value;
+  const innerRy = controls.innerHeight.value;
+  
+  // Apply scale factor
+  const scale = controls.scaleFactor.value;
+  const scaledOuterRx = outerRx * scale;
+  const scaledOuterRy = outerRy * scale;
+  const scaledInnerRx = innerRx * scale;
+  const scaledInnerRy = innerRy * scale;
+  
+  // Build transform string
+  let transform = `rotate(${rotation} ${centerX} ${centerY})`;
+  if (skewX != 0) transform += ` skewX(${skewX})`;
+  if (skewY != 0) transform += ` skewY(${skewY})`;
+  
+  // Update outer ellipse outline
+  if (svgElements.outerEllipse) {
+    svgElements.outerEllipse.setAttribute('cx', centerX);
+    svgElements.outerEllipse.setAttribute('cy', centerY);
+    svgElements.outerEllipse.setAttribute('rx', scaledOuterRx);
+    svgElements.outerEllipse.setAttribute('ry', scaledOuterRy);
+    svgElements.outerEllipse.setAttribute('transform', transform);
+    svgElements.outerEllipse.setAttribute('stroke-width', strokeWidth);
+    svgElements.outerEllipse.setAttribute('stroke', strokeColor);
+  }
+  
+  // Update inner ellipse outline
+  if (svgElements.innerEllipse) {
+    svgElements.innerEllipse.setAttribute('cx', centerX);
+    svgElements.innerEllipse.setAttribute('cy', centerY);
+    svgElements.innerEllipse.setAttribute('rx', scaledInnerRx);
+    svgElements.innerEllipse.setAttribute('ry', scaledInnerRy);
+    svgElements.innerEllipse.setAttribute('transform', transform);
+    svgElements.innerEllipse.setAttribute('stroke-width', strokeWidth);
+    svgElements.innerEllipse.setAttribute('stroke', strokeColor);
+  }
+  
+  // Update the evenodd path (Method 1) - ONLY if it exists
+  if (svgElements.evenoddPath) {
+    
+    // Build the path data for the evenodd approach
+    // Outer circle: clockwise (1 0), Inner circle: counter-clockwise (1 1)
+    const pathData = `M ${centerX} ${centerY} m -${scaledOuterRx} 0 a ${scaledOuterRx} ${scaledOuterRy} 0 1 0 ${scaledOuterRx * 2} 0 a ${scaledOuterRx} ${scaledOuterRy} 0 1 0 -${scaledOuterRx * 2} 0 Z M ${centerX} ${centerY} m -${scaledInnerRx} 0 a ${scaledInnerRx} ${scaledInnerRy} 0 1 1 ${scaledInnerRx * 2} 0 a ${scaledInnerRx} ${scaledInnerRy} 0 1 1 -${scaledInnerRx * 2} 0 Z`;
+    
+    svgElements.evenoddPath.setAttribute('d', pathData);
+    svgElements.evenoddPath.setAttribute('fill', circleFillColor);
+    
+    // Fix transparency: use transparency value directly (80% = 0.8 opacity)
+    svgElements.evenoddPath.setAttribute('opacity', transparency / 100);
+    
+    // Add rotation transform to the main path
+    svgElements.evenoddPath.setAttribute('transform', transform);
+    
+    console.log('Updated evenodd path with new data:', pathData);
+    console.log('Applied transform:', transform);
+    console.log('Applied opacity:', transparency / 100);
+    console.log('Applied scale:', scale);
+  }
+  
+  // Update the preview container background color
+  const previewContainer = document.getElementById('previewContainer');
+  if (previewContainer) {
+    previewContainer.style.background = backgroundColor;
+  }
+  
+  console.log('SVG update completed successfully');
+}
+
+// Update value displays
+function updateValueDisplay(control, valueElement, suffix = '') {
+  valueElement.textContent = control.value + suffix;
+}
+
+// Event listeners are now set up in setupEventListeners() function
+// which is called after safe initialization
+
+// Resize functionality
+let isResizing = false;
+const resizeHandle = document.getElementById('resizeHandle');
+const previewContainer = document.getElementById('previewContainer');
+const svgContainer = document.getElementById('svgContainer');
+
+resizeHandle.addEventListener('mousedown', (e) => {
+  isResizing = true;
+  e.preventDefault();
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isResizing) return;
+  
+  const rect = previewContainer.getBoundingClientRect();
+  const newWidth = e.clientX - rect.left;
+  const newHeight = e.clientY - rect.top;
+  
+  if (newWidth > 200 && newHeight > 150) {
+    previewContainer.style.width = newWidth + 'px';
+    previewContainer.style.height = newHeight + 'px';
+    
+    // Update SVG size
+    const svgSize = Math.min(newWidth - 40, newHeight - 40);
+    previewElements.previewSVG.style.width = svgSize + 'px';
+    previewElements.previewSVG.style.height = svgSize + 'px';
+    
+    // Update size display
+    previewElements.previewSize.textContent = `${Math.round(newWidth)} × ${Math.round(newHeight)}`;
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  isResizing = false;
+});
+
+// Safe initialization function
+function safeInitialize() {
+  // Set up the controls without calling updateSVG
+  console.log('Initializing controls safely...');
+  
+  // Get all the control elements
+  controls = {
+    backgroundToggle: document.getElementById('backgroundToggle'),
+    outerWidth: document.getElementById('outerWidth'),
+    outerHeight: document.getElementById('outerHeight'),
+    innerWidth: document.getElementById('innerWidth'),
+    innerHeight: document.getElementById('innerHeight'),
+    centerX: document.getElementById('centerX'),
+    centerY: document.getElementById('centerY'),
+    rotation: document.getElementById('rotation'),
+    skewX: document.getElementById('skewX'),
+    skewY: document.getElementById('skewY'),
+    strokeWidth: document.getElementById('strokeWidth'),
+    strokeColor: document.getElementById('strokeColor'),
+    backgroundColor: document.getElementById('backgroundColor'),
+    circleFillColor: document.getElementById('circleFillColor'),
+    transparency: document.getElementById('transparency'),
+    scaleFactor: document.getElementById('scaleFactor'),
+    autoFitBackground: document.getElementById('autoFitBackground')
+  };
+  
+  console.log('Controls found:', Object.keys(controls).map(key => ({
+    key,
+    found: !!controls[key],
+    type: controls[key]?.type,
+    id: controls[key]?.id
+  })));
+
+  values = {
+    outerWidth: document.getElementById('outerWidthValue'),
+    outerHeight: document.getElementById('outerHeightValue'),
+    innerWidth: document.getElementById('innerWidthValue'),
+    innerHeight: document.getElementById('innerHeightValue'),
+    centerX: document.getElementById('centerXValue'),
+    centerY: document.getElementById('centerYValue'),
+    rotation: document.getElementById('rotationValue'),
+    skewX: document.getElementById('skewXValue'),
+    skewY: document.getElementById('skewYValue'),
+    strokeWidth: document.getElementById('strokeWidthValue'),
+    transparency: document.getElementById('transparencyValue'),
+    scaleFactor: document.getElementById('scaleFactorValue')
+  };
+
+  svgElements = {
+    outerEllipse: document.getElementById('outerEllipse'),
+    innerEllipse: document.getElementById('innerEllipse'),
+    evenoddPath: document.getElementById('evenoddPath')
+  };
+
+  previewElements = {
+    backgroundImage: document.getElementById('backgroundImage'),
+    previewSVG: document.getElementById('previewSVG'),
+    previewSize: document.getElementById('previewSize'),
+    backgroundStatus: document.getElementById('backgroundStatus')
+  };
+  
+  // Debug: Log what elements were found
+  console.log('SVG Elements found:', {
+    outerEllipse: !!svgElements.outerEllipse,
+    innerEllipse: !!svgElements.innerEllipse,
+    evenoddPath: !!svgElements.evenoddPath
+  });
+  
+  console.log('Preview Elements found:', {
+    backgroundImage: !!previewElements.backgroundImage,
+    previewSVG: !!previewElements.previewSVG,
+    previewSize: !!previewElements.previewSize,
+    backgroundStatus: !!previewElements.backgroundStatus
+  });
+
+  // Verify all required elements exist
+  const requiredElements = [
+    'outerWidth', 'outerHeight', 'innerWidth', 'innerHeight',
+    'centerX', 'centerY', 'rotation', 'skewX', 'skewY',
+    'strokeWidth', 'strokeColor', 'backgroundColor', 'circleFillColor', 'transparency',
+    'scaleFactor', 'autoFitBackground'
+  ];
+  
+  const missingElements = requiredElements.filter(id => !document.getElementById(id));
+  if (missingElements.length > 0) {
+    console.error('Missing elements:', missingElements);
+    return;
+  }
+  
+  // Set initial values for the controls
+  controls.outerWidth.value = 150;
+  controls.outerHeight.value = 150;
+  controls.innerWidth.value = 100;
+  controls.innerHeight.value = 100;
+  controls.centerX.value = 200;
+  controls.centerY.value = 150;
+  controls.rotation.value = 0;
+  controls.skewX.value = 0;
+  controls.skewY.value = 0;
+  controls.strokeWidth.value = 2;
+  controls.strokeColor.value = '#ffffff';
+  controls.backgroundColor.value = '#D70A32';
+  controls.circleFillColor.value = '#ffffff';
+  controls.transparency.value = 80;
+  controls.scaleFactor.value = 1.0;
+  controls.autoFitBackground.checked = true;
+  controls.backgroundToggle.checked = true; // Show background by default
+  
+  // Update displays without updating SVG
+  Object.keys(controls).forEach(key => {
+    if (values[key]) {
+      const suffix = key.includes('rotation') || key.includes('skew') ? '°' : key === 'transparency' ? '%' : key === 'scaleFactor' ? 'x' : '';
+      updateValueDisplay(controls[key], values[key], suffix);
+    }
+  });
+  
+  // Set the preview container background color
+  const previewContainer = document.getElementById('previewContainer');
+  if (previewContainer) {
+    previewContainer.style.background = controls.backgroundColor.value;
+  }
+  
+  // Set up event listeners AFTER elements are confirmed to exist
+  setupEventListeners();
+  
+  // Set background image visible by default
+  if (previewElements.backgroundImage && previewElements.backgroundStatus) {
+    previewElements.backgroundImage.style.opacity = '1';
+    previewElements.backgroundStatus.textContent = 'Visible';
+  }
+  
+  // Apply initial values to the SVG
+  updateSVG();
+  
+  console.log('Controls initialized safely');
+}
+
+// Set up event listeners
+function setupEventListeners() {
+  console.log('Setting up event listeners...');
+  
+  // Add event listeners for range inputs
+  Object.keys(controls).forEach(key => {
+    const control = controls[key];
+    const valueElement = values[key];
+    
+    console.log(`Setting up event listener for ${key}:`, {
+      control: !!control,
+      controlType: control?.type,
+      valueElement: !!valueElement
+    });
+    
+    if (control && control.type === 'range') {
+      control.addEventListener('input', () => {
+        console.log(`${key} changed to:`, control.value);
+        if (valueElement) {
+          const suffix = key.includes('rotation') || key.includes('skew') ? '°' : key === 'transparency' ? '%' : key === 'scaleFactor' ? 'x' : '';
+          updateValueDisplay(control, valueElement, suffix);
+        }
+        updateSVG();
+      });
+      console.log(`Added event listener for ${key}`);
+    } else if (control && control.type === 'color') {
+      control.addEventListener('input', () => {
+        console.log(`${key} changed to:`, control.value);
+        updateSVG();
+      });
+      console.log(`Added event listener for ${key}`);
+    } else if (control && control.type === 'checkbox') {
+      control.addEventListener('change', () => {
+        console.log(`${key} changed to:`, control.checked);
+        updateSVG();
+      });
+      console.log(`Added event listener for ${key}`);
+    }
+  });
+  
+  // Set up reset button
+  const resetBtn = document.getElementById('resetBtn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      controls.outerWidth.value = 150;
+      controls.outerHeight.value = 150;
+      controls.innerWidth.value = 100;
+      controls.innerHeight.value = 100;
+      controls.centerX.value = 200;
+      controls.centerY.value = 150;
+      controls.rotation.value = 0;
+      controls.skewX.value = 0;
+      controls.skewY.value = 0;
+      controls.strokeWidth.value = 2;
+      controls.strokeColor.value = '#ffffff';
+      controls.backgroundColor.value = '#D70A32';
+      controls.circleFillColor.value = '#ffffff';
+      controls.transparency.value = 80;
+      controls.scaleFactor.value = 1.0;
+      controls.autoFitBackground.checked = true;
+      controls.backgroundToggle.checked = true; // Show background by default
+      
+      // Update displays
+      Object.keys(controls).forEach(key => {
+        if (values[key]) {
+          const suffix = key.includes('rotation') || key.includes('skew') ? '°' : key === 'transparency' ? '%' : key === 'scaleFactor' ? 'x' : '';
+          updateValueDisplay(controls[key], values[key], suffix);
+        }
+      });
+      
+      // Reset background
+      if (previewElements.backgroundImage) {
+        previewElements.backgroundImage.style.opacity = '0';
+      }
+      if (previewElements.backgroundStatus) {
+        previewElements.backgroundStatus.textContent = 'Hidden';
+      }
+      if (svgElements.outerEllipse) {
+        svgElements.outerEllipse.style.strokeDasharray = 'none';
+      }
+      if (svgElements.innerEllipse) {
+        svgElements.innerEllipse.style.strokeDasharray = 'none';
+      }
+      
+      updateSVG();
+    });
+    console.log('Reset button event listener added');
+  }
+
+  // Set up background toggle functionality
+  setupBackgroundToggle();
+  
+  console.log('Event listeners setup complete');
+}
+
+// Initialize
+safeInitialize();
+</script>

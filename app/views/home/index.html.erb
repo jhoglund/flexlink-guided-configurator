@@ -6,7 +6,6 @@
     <div class="hero-content">
       <h1>Welcome to FlexLink Online Store</h1>
       <p class="my-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-      <button class="btn btn-primary">Start shopping</button>
     </div>
   </div>
 </section>
@@ -41,32 +40,30 @@
   </div>
   <div class="grid-container">
     <h3 class="mt-16 mb-6">Search for <span class="text-flexlink-medium-gray">a product</span></h3>
-    <div class="grid">
+    <div class="search-form grid">
       <!-- Product Search Section -->
-      <div class="search-container">
-        <div class="search-form">
-          <div class="search-input-wrapper">
-            <%= icon_tag "search", alt: "Search", class: "search-icon" %>
-            <input type="text" placeholder="What are you looking for?" class="form-input">
-          </div>
-          <div>
-            <select class="form-select">
-              <option>Filter</option>
-              <option>Automotive</option>
-              <option>E-Commerce</option>
-              <option>Food & Beverage</option>
-            </select>
-          </div>
-          <div>
-            <input type="text" placeholder="Product no" class="form-input product-no-input">
-          </div>
-          <div>
-            <button class="btn btn-primary">
-              Search
-            </button>
-          </div>
-        </div>
+      <div style="position: relative;" class="col-span-4 lg:col-span-9">
+        <%= icon_tag "search", alt: "Search", class: "search-icon" %>
+        <input type="text" placeholder="What are you looking for?" class="form-input">
+      </div>
+      <div class="col-span-3 lg:col-span-5">
+        <select class="form-select w-full">
+          <option>Filter</option>
+          <option>Automotive</option>
+          <option>E-Commerce</option>
+          <option>Food & Beverage</option>
+        </select>
+      </div>
+      <div class="col-span-2 lg:col-span-4">
+        <input type="text" placeholder="Product no" class="form-input product-no-input w-full">
+      </div>
+      <div class="col-span-3 lg:col-span-6">
+        <button class="btn btn-primary w-full">
+          Search
+        </button>
       </div>
     </div>
   </div>
+</div>
+</div>
 </section>

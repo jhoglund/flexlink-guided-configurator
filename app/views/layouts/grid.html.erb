@@ -1,27 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Grid Test</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "grid", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <% if Rails.env.development? %>
-      <%= stylesheet_link_tag "debug", "data-turbo-track": "reload" %>
-      <%= javascript_import_module_tag "debug" %>
-    <% end %>
-  </head>
-  <body>
-    <% if Rails.env.development? %>
-      <button id="debug-grid-toggle" class="debug-toggle">HIDE</button>
-      <div id="debug-grid-info" class="debug-info">
-        <h4>Grid Debug Info</h4>
-        <p id="dbg-grid-count"></p>
-        <!-- values populated by debug.js -->
-      </div>
-      <!-- numbers removed -->
-    <% end %>
+<head>
+  <title>FlexLink Configurator</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "variables", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "base", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "grid", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "layout", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "components", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "utilities", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <% if Rails.env.development? %>
+    <%= stylesheet_link_tag "debug", "data-turbo-track": "reload" %>
+  <% end %>
+  <%= javascript_importmap_tags %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <!-- Inter font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  </style>
+</head>
+<body>
+  <%= debug_grid_overlay %>
+  <main>
     <%= yield %>
-  </body>
+  </main>
+</body>
 </html>
