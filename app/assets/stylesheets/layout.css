@@ -15,18 +15,53 @@
     border-bottom: 1px solid var(--gray-200);
 }
 
+/* Header container - uses same centering logic as grid-container */
+.header-container {
+    width: var(--grid-width);
+    margin: 0 auto;
+}
+
 .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 61px; /* Match Figma height */
-    gap: 128px; /* Match Figma gap between sections */
+    gap: clamp(24px, 4vw, 128px); /* More aggressive responsive gap: min 24px, max 128px */
 }
 
 /* Logo Section */
 .header-logo {
     display: flex;
     align-items: center;
+}
+
+/* Responsive header adjustments for smaller screens */
+@media (max-width: 1200px) {
+    .header-content {
+        gap: clamp(16px, 3vw, 64px); /* Even smaller gaps on medium screens */
+    }
+    
+    .header-navigation {
+        gap: clamp(0.25rem, 1vw, 1.5rem); /* Tighter navigation gaps */
+    }
+    
+    .header-utility {
+        gap: clamp(0.75rem, 1vw, 1.25rem); /* Tighter utility gaps */
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        gap: 24px; /* Fixed minimum gap on small screens */
+    }
+    
+    .header-navigation {
+        gap: 0.5rem; /* Fixed small gap on small screens */
+    }
+    
+    .header-utility {
+        gap: 0.75rem; /* Fixed small gap on small screens */
+    }
 }
 
 .logo-icon {
@@ -38,7 +73,7 @@
 .header-navigation {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: clamp(0.5rem, 1.5vw, 2rem); /* More aggressive responsive gap: min 0.5rem, max 2rem */
     flex: 1;
     justify-content: center;
 }
@@ -47,6 +82,7 @@
     color: var(--gray-700);
     text-decoration: none;
     transition: color 0.2s;
+    white-space: nowrap;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -177,7 +213,7 @@
 .header-utility {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: clamp(1rem, 1.5vw, 1.5rem); /* Responsive gap: min 1rem, max 1.5rem */
 }
 
 /* Search Field */
@@ -232,7 +268,7 @@
 .utility-icons {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: clamp(0.75rem, 1vw, 1rem); /* Responsive gap: min 0.75rem, max 1rem */
 }
 
 .utility-btn {
