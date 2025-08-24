@@ -164,7 +164,8 @@
     position: relative;
 }
 
-.language-dropdown .dropdown-menu {
+/* Right-aligned dropdowns (e.g., language selector) */
+.dropdown-menu.dropdown-right {
     right: 0;
     left: auto;
     min-width: 160px;

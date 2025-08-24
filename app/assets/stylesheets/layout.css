@@ -156,7 +156,7 @@
 
 /* Industries Dropdown */
 .industries-dropdown {
-    min-width: 220px;
+    min-width: 320px;
 }
 
 /* Global Dropdown System */
@@ -164,7 +164,8 @@
     position: relative;
 }
 
-.language-dropdown .dropdown-menu {
+/* Right-aligned dropdowns (e.g., language selector) */
+.dropdown-menu.dropdown-right {
     right: 0;
     left: auto;
     min-width: 160px;
