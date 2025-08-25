@@ -35,7 +35,7 @@
     left: -24px;
     right: -24px;
     height: 45px;
-    background-image: url('hero-swosh-white-mobile.svg');
+    background-image: url(/assets/hero-swosh-white-mobile.svg);
     background-repeat: no-repeat;
     background-position: left top;
     background-size: stretch;
@@ -74,7 +74,7 @@
         right: 0;
         bottom: 0;
         z-index:0;
-        background-image: url('hero-image.svg');
+        background-image: url(/assets/hero-image.svg);
         background-position: left top;
     
     }

@@ -1,0 +1,542 @@
+/* Header - Navigation & Mobile Menu Styles */
+/* ========================================= */
+
+/* Header */
+.header {
+    background: white;
+    padding: 0;
+    font-size: 1rem; /* 16px */
+    line-height: 1.1;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Header container - uses same centering logic as grid-container */
+.header-container {
+    width: var(--grid-width);
+    margin: 0 auto;
+    /* Ensure proper responsive behavior */
+    transition: width 0.1s ease;
+    /* Debug: Add border to see container boundaries */
+    /* border: 2px solid red; */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 61px; /* Match Figma height */
+    gap: clamp(24px, 4vw, 128px); /* More aggressive responsive gap: min 24px, max 128px */
+}
+
+/* Logo Section */
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon {
+    width: 155px;
+    height: 61px;
+}
+
+/* Hamburger menu - hidden by default */
+.hamburger-menu {
+    display: none;
+}
+
+/* Navigation Section */
+.header-navigation {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 2rem); /* More aggressive responsive gap: min 0.5rem, max 2rem */
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-link {
+    color: var(--gray-700);
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.nav-link:hover { 
+}
+
+.nav-link.active {
+    color: var(--flexlink-red);
+    font-weight: 600;
+}
+
+/* Dropdown Styles */
+.nav-dropdown {
+    position: relative;
+}
+
+.header-navigation {
+    position: relative;
+}
+
+.nav-dropdown .fa-chevron-down {
+    font-size: 0.75rem;
+    margin-left: 0.25rem;
+}
+
+.dropdown-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 4px;
+    transition: color 0.2s;
+    font-weight: 500;
+}
+
+.dropdown-trigger:hover {
+    color: var(--flexlink-red);
+}
+
+/* Override hover effects when dropdown is open */
+.dropdown-trigger[aria-expanded="true"]:hover {
+    color: var(--gray-700);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-content {
+    padding: 0.5rem 0;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--gray-700);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: var(--gray-50);
+    color: var(--flexlink-red) !important;
+}
+
+/* Gray separator lines between dropdown items - full width */
+.dropdown-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--gray-200);
+}
+
+/* Industries Dropdown */
+.industries-dropdown {
+    min-width: 320px;
+}
+
+/* Global Dropdown System */
+.language-dropdown {
+    position: relative;
+}
+
+/* Right-aligned dropdowns (e.g., language selector) */
+.dropdown-menu.dropdown-right {
+    right: 0;
+    left: auto;
+    min-width: 160px;
+}
+
+/* Utility Section */
+.header-utility {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 1.5vw, 1.5rem); /* Responsive gap: min 1rem, max 1.5rem */
+}
+
+/* Search Field */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 200px;
+    height: 36px;
+    padding: 0 40px 0 12px;
+    border: none;
+    border-radius: 18px; /* Full left/right radius for pill shape */
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    background: #F7F5F5; /* Light gray background as per screenshot */
+    transition: background-color 0.2s, outline 0.2s;
+}
+
+.search-input:focus {
+    outline: 2px solid var(--flexlink-red); /* 2px outline on active state */
+    background: white; /* White background on focus */
+}
+
+.search-input::placeholder {
+    color: var(--gray-400);
+}
+
+.search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--gray-500);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.search-btn:hover {
+    color: var(--flexlink-red);
+    background-color: var(--gray-100);
+}
+
+.utility-icons {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 1vw, 1rem); /* Responsive gap: min 0.75rem, max 1rem */
+}
+
+.utility-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.utility-btn:hover { 
+    color: var(--flexlink-red); 
+}
+
+.cart-btn {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -0.25rem;
+    right: -0.25rem;
+    background: var(--flexlink-red);
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+/* Responsive header adjustments for smaller screens */
+@media (max-width: 1200px) {
+    .header-content {
+        gap: clamp(16px, 3vw, 64px); /* Even smaller gaps on medium screens */
+    }
+    
+    .header-navigation {
+        gap: clamp(0.25rem, 1vw, 1.5rem); /* Tighter navigation gaps */
+    }
+    
+    .header-utility {
+        gap: clamp(0.75rem, 1vw, 1.25rem); /* Tighter utility gaps */
+    }
+}
+
+/* Critical range: 1240px to 900px - Ensure header continues shrinking with grid */
+@media (max-width: 1240px) and (min-width: 901px) {
+    .header-content {
+        gap: clamp(12px, 2.5vw, 48px); /* More aggressive gap reduction */
+    }
+    
+    .header-navigation {
+        gap: clamp(0.25rem, 0.8vw, 1rem); /* Tighter navigation gaps */
+        /* Prevent navigation from breaking layout */
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+    
+    .header-utility {
+        gap: clamp(0.5rem, 0.8vw, 1rem); /* Tighter utility gaps */
+        /* Ensure utility items don't break */
+        flex-shrink: 0;
+    }
+    
+    /* Ensure header container continues shrinking proportionally */
+    .header-container {
+        width: var(--grid-width);
+        margin: 0 auto;
+    }
+    
+    /* Prevent navigation items from wrapping and breaking layout */
+    .nav-link {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+}
+
+/* 900px breakpoint - Mobile hamburger menu */
+@media (max-width: 900px) {
+    .header-navigation {
+        display: none; /* Hide main navigation */
+    }
+    
+    .header-utility .search-container {
+        display: none; /* Hide search field */
+    }
+    
+    .header-utility .language-dropdown {
+        display: none; /* Hide language dropdown */
+    }
+    
+    /* Show hamburger menu button */
+    .hamburger-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-left: auto;
+    }
+    
+    .hamburger-menu .hamburger-icon {
+        width: 24px;
+        height: 2px;
+        background: var(--gray-700);
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .hamburger-menu .hamburger-icon::before,
+    .hamburger-menu .hamburger-icon::after {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 2px;
+        background: var(--gray-700);
+        transition: all 0.3s ease;
+    }
+    
+    .hamburger-menu .hamburger-icon::before {
+        top: -8px;
+    }
+    
+    .hamburger-menu .hamburger-icon::after {
+        bottom: -8px;
+    }
+    
+    /* Hamburger menu open state */
+    .hamburger-menu.open .hamburger-icon {
+        background: transparent;
+    }
+    
+    .hamburger-menu.open .hamburger-icon::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
+    
+    .hamburger-menu.open .hamburger-icon::after {
+        transform: rotate(-45deg);
+        bottom: 0;
+    }
+    
+    /* Mobile navigation overlay */
+    .mobile-nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .mobile-nav-overlay.show {
+        transform: translateX(0);
+    }
+    
+    /* Mobile navigation header */
+    .mobile-nav-header {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .mobile-nav-close {
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--flexlink-red);
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    
+    /* Mobile navigation content */
+    .mobile-nav-content {
+        flex: 1;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .mobile-nav-item {
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 1.125rem;
+        font-weight: 500;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--gray-100);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .mobile-nav-item:hover {
+        color: var(--flexlink-red);
+    }
+    
+    .mobile-nav-item .chevron {
+        color: var(--gray-400);
+        font-size: 0.875rem;
+    }
+    
+    /* Mobile utility section */
+    .mobile-utility {
+        padding: 1rem;
+        border-top: 1px solid var(--gray-200);
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+    
+    .mobile-utility-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 0.875rem;
+    }
+    
+    .mobile-utility-item i {
+        font-size: 1.5rem;
+    }
+    
+    .mobile-utility-item .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: var(--flexlink-red);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+}
+
+/* Hide mobile navigation overlay above 900px */
+@media (min-width: 901px) {
+    .mobile-nav-overlay {
+        display: none !important;
+    }
+    
+    .hamburger-menu {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        gap: 24px; /* Fixed minimum gap on small screens */
+    }
+    
+    .header-navigation {
+        gap: 0.5rem; /* Fixed small gap on small screens */
+    }
+    
+    .header-utility {
+        gap: 0.75rem; /* Fixed small gap on small screens */
+    }
+}
+
+/* Additional responsive adjustments */
+@media (max-width: 900px) {
+    .header-navigation {
+        display: none; /* Hide navigation on mobile */
+    }
+    
+    .header-content {
+        gap: 32px;
+        justify-content: space-between;
+    }
+}
