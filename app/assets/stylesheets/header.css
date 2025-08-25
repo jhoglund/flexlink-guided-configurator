@@ -21,17 +21,19 @@
 }
 
 .header-content {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "logo navigation utility";
+    gap: var(--gutter);
     align-items: center;
-    justify-content: space-between;
     height: 61px; /* Match Figma height */
-    gap: clamp(24px, 4vw, 128px); /* More aggressive responsive gap: min 24px, max 128px */
 }
 
 /* Logo Section */
 .header-logo {
     display: flex;
     align-items: center;
+    grid-area: logo;
 }
 
 .logo-icon {
@@ -51,6 +53,7 @@
     gap: clamp(0.5rem, 1.5vw, 2rem); /* More aggressive responsive gap: min 0.5rem, max 2rem */
     flex: 1;
     justify-content: center;
+    grid-area: navigation;
 }
 
 .nav-link {
@@ -186,6 +189,7 @@
     display: flex;
     align-items: center;
     gap: clamp(1rem, 1.5vw, 1.5rem); /* Responsive gap: min 1rem, max 1.5rem */
+    grid-area: utility;
 }
 
 /* Search Field */
@@ -278,55 +282,14 @@
     font-weight: 600;
 }
 
-/* Responsive header adjustments for smaller screens */
-@media (max-width: 1200px) {
-    .header-content {
-        gap: clamp(16px, 3vw, 64px); /* Even smaller gaps on medium screens */
-    }
-    
-    .header-navigation {
-        gap: clamp(0.25rem, 1vw, 1.5rem); /* Tighter navigation gaps */
-    }
-    
-    .header-utility {
-        gap: clamp(0.75rem, 1vw, 1.25rem); /* Tighter utility gaps */
-    }
-}
-
-/* Critical range: 1240px to 900px - Ensure header continues shrinking with grid */
-@media (max-width: 1240px) and (min-width: 901px) {
-    .header-content {
-        gap: clamp(12px, 2.5vw, 48px); /* More aggressive gap reduction */
-    }
-    
-    .header-navigation {
-        gap: clamp(0.25rem, 0.8vw, 1rem); /* Tighter navigation gaps */
-        /* Prevent navigation from breaking layout */
-        flex-wrap: nowrap;
-        overflow: hidden;
-    }
-    
-    .header-utility {
-        gap: clamp(0.5rem, 0.8vw, 1rem); /* Tighter utility gaps */
-        /* Ensure utility items don't break */
-        flex-shrink: 0;
-    }
-    
-    /* Ensure header container continues shrinking proportionally */
-    .header-container {
-        width: var(--grid-width);
-        margin: 0 auto;
-    }
-    
-    /* Prevent navigation items from wrapping and breaking layout */
-    .nav-link {
-        white-space: nowrap;
-        flex-shrink: 0;
-    }
-}
-
 /* 900px breakpoint - Mobile hamburger menu */
 @media (max-width: 900px) {
+    .header-content {
+        grid-template-columns: auto auto;
+        grid-template-areas: "logo utility";
+        gap: var(--gutter);
+    }
+    
     .header-navigation {
         display: none; /* Hide main navigation */
     }
@@ -515,20 +478,6 @@
     }
 }
 
-@media (max-width: 768px) {
-    .header-content {
-        gap: 24px; /* Fixed minimum gap on small screens */
-    }
-    
-    .header-navigation {
-        gap: 0.5rem; /* Fixed small gap on small screens */
-    }
-    
-    .header-utility {
-        gap: 0.75rem; /* Fixed small gap on small screens */
-    }
-}
-
 /* Additional responsive adjustments */
 @media (max-width: 900px) {
     .header-navigation {
@@ -536,7 +485,6 @@
     }
     
     .header-content {
-        gap: 32px;
-        justify-content: space-between;
+        gap: var(--gutter);
     }
 }
