@@ -23,10 +23,12 @@
 .header-content {
     display: grid;
     grid-template-columns: auto 1fr auto;
+    grid-template-rows: 61px;
     grid-template-areas: "logo navigation utility";
     gap: var(--gutter);
     align-items: center;
     height: 61px; /* Match Figma height */
+    width: 100%;
 }
 
 /* Logo Section */
@@ -50,10 +52,10 @@
 .header-navigation {
     display: flex;
     align-items: center;
-    gap: clamp(0.5rem, 1.5vw, 2rem); /* More aggressive responsive gap: min 0.5rem, max 2rem */
-    flex: 1;
-    justify-content: center;
+    gap: var(--gutter);
     grid-area: navigation;
+    justify-self: center;
+    width: 100%;
 }
 
 .nav-link {
@@ -77,10 +79,6 @@
 
 /* Dropdown Styles */
 .nav-dropdown {
-    position: relative;
-}
-
-.header-navigation {
     position: relative;
 }
 
@@ -482,9 +480,5 @@
 @media (max-width: 900px) {
     .header-navigation {
         display: none; /* Hide navigation on mobile */
-    }
-    
-    .header-content {
-        gap: var(--gutter);
     }
 }
