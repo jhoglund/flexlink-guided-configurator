@@ -19,6 +19,10 @@
 .header-container {
     width: var(--grid-width);
     margin: 0 auto;
+    /* Ensure proper responsive behavior */
+    transition: width 0.1s ease;
+    /* Debug: Add border to see container boundaries */
+    /* border: 2px solid red; */
 }
 
 .header-content {
@@ -52,6 +56,38 @@
     
     .header-utility {
         gap: clamp(0.75rem, 1vw, 1.25rem); /* Tighter utility gaps */
+    }
+}
+
+/* Critical range: 1240px to 900px - Ensure header continues shrinking with grid */
+@media (max-width: 1240px) and (min-width: 901px) {
+    .header-content {
+        gap: clamp(12px, 2.5vw, 48px); /* More aggressive gap reduction */
+    }
+    
+    .header-navigation {
+        gap: clamp(0.25rem, 0.8vw, 1rem); /* Tighter navigation gaps */
+        /* Prevent navigation from breaking layout */
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+    
+    .header-utility {
+        gap: clamp(0.5rem, 0.8vw, 1rem); /* Tighter utility gaps */
+        /* Ensure utility items don't break */
+        flex-shrink: 0;
+    }
+    
+    /* Ensure header container continues shrinking proportionally */
+    .header-container {
+        width: var(--grid-width);
+        margin: 0 auto;
+    }
+    
+    /* Prevent navigation items from wrapping and breaking layout */
+    .nav-link {
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 }
 
@@ -231,6 +267,17 @@
         justify-content: center;
         font-size: 0.75rem;
         font-weight: 600;
+    }
+}
+
+/* Hide mobile navigation overlay above 900px */
+@media (min-width: 901px) {
+    .mobile-nav-overlay {
+        display: none !important;
+    }
+    
+    .hamburger-menu {
+        display: none !important;
     }
 }
 
@@ -493,13 +540,15 @@
 }
 
 /* Responsive adjustments */
+/* Reduce gap on smaller screens */
+/* 
 @media (max-width: 1220px) {
     .header-content {
-        gap: 64px; /* Reduce gap on smaller screens */
+        gap: 64px; 
     }
-}
+} */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .header-navigation {
         display: none; /* Hide navigation on mobile */
     }
